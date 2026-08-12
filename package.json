@@ -1,0 +1,12 @@
+{
+  "name": "portfolio-raj",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "wrangler pages dev . --compatibility-date=2026-01-01",
+    "deploy": "wrangler pages deploy . --project-name=portfolio-raj"
+  },
+  "devDependencies": {
+    "wrangler": "^3.114.17"
+  }
+}

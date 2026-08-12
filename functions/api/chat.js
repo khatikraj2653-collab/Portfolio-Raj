@@ -1,0 +1,112 @@
+import { SYSTEM_PROMPT } from "../_lib/knowledge.js";
+
+const MAX_MESSAGE_LEN = 800;
+const MAX_HISTORY_TURNS = 6; // 6 messages = 3 user/assistant pairs
+const MODEL = "gpt-4o-mini";
+const MAX_OUTPUT_TOKENS = 400;
+
+function jsonResponse(body, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+function sanitizeHistory(history) {
+  if (!Array.isArray(history)) return [];
+  return history
+    .filter(
+      (m) =>
+        m &&
+        (m.role === "user" || m.role === "assistant") &&
+        typeof m.content === "string"
+    )
+    .slice(-MAX_HISTORY_TURNS)
+    .map((m) => ({
+      role: m.role,
+      content: m.content.slice(0, MAX_MESSAGE_LEN),
+    }));
+}
+
+export async function onRequestPost({ request, env }) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return jsonResponse({ error: "Invalid JSON body." }, 400);
+  }
+
+  const message = typeof body?.message === "string" ? body.message.trim() : "";
+  if (!message) {
+    return jsonResponse({ error: "Message is required." }, 400);
+  }
+  if (message.length > MAX_MESSAGE_LEN) {
+    return jsonResponse(
+      { error: `Message is too long (max ${MAX_MESSAGE_LEN} characters).` },
+      400
+    );
+  }
+
+  if (!env.OPENAI_API_KEY) {
+    return jsonResponse(
+      { error: "Chat is not configured yet. Please email khatikraj2653@gmail.com." },
+      500
+    );
+  }
+
+  const history = sanitizeHistory(body?.history);
+
+  const messages = [
+    { role: "system", content: SYSTEM_PROMPT },
+    ...history,
+    { role: "user", content: message },
+  ];
+
+  let upstream;
+  try {
+    upstream = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        temperature: 0,
+        max_tokens: MAX_OUTPUT_TOKENS,
+        messages,
+      }),
+    });
+  } catch (err) {
+    console.error("OpenAI fetch failed:", err);
+    return jsonResponse(
+      { error: "Couldn't reach the assistant right now. Please try again shortly." },
+      502
+    );
+  }
+
+  if (!upstream.ok) {
+    const detail = await upstream.text().catch(() => "");
+    console.error("OpenAI API error:", upstream.status, detail);
+    return jsonResponse(
+      { error: "The assistant hit an error. Please try again shortly." },
+      502
+    );
+  }
+
+  const data = await upstream.json();
+  const reply = data?.choices?.[0]?.message?.content?.trim();
+
+  if (!reply) {
+    return jsonResponse(
+      { error: "No response generated. Please try again." },
+      502
+    );
+  }
+
+  return jsonResponse({ reply });
+}
+
+export async function onRequestGet() {
+  return jsonResponse({ error: "Use POST." }, 405);
+}
