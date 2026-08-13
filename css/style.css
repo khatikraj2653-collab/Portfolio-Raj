@@ -22,6 +22,21 @@
   --rail-w:280px;
 }
 
+:root[data-theme="dark"]{
+  --bg:#15171C;
+  --bg-alt:#1D2028;
+  --ink:#F2F0EA;
+  --muted:#A6A9B1;
+  --faint:#6D707A;
+  --line:#2C2F38;
+  --indigo:#7C8CC4;
+  --indigo-soft:#20263D;
+  --gold:#D6B368;
+  --gold-soft:#2E2818;
+  --green:#7FBF8E;
+  --green-soft:#1B2B20;
+}
+
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 @media (prefers-reduced-motion: reduce){
@@ -32,6 +47,7 @@ html{scroll-behavior:smooth;}
 body{
   background:var(--bg);
   color:var(--ink);
+  transition:background .2s ease,color .2s ease;
   font-family:var(--sans);
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
@@ -126,6 +142,13 @@ a{color:inherit;text-decoration:none;}
   transition:color .15s ease;
 }
 .rail-bottom a:hover{color:var(--indigo);}
+.theme-toggle{
+  font-family:var(--mono);font-size:12px;color:var(--muted);
+  background:none;border:1px solid var(--line);border-radius:2px;
+  padding:6px 10px;width:fit-content;cursor:pointer;
+  transition:color .15s ease,border-color .15s ease;
+}
+.theme-toggle:hover{color:var(--indigo);border-color:var(--indigo);}
 
 /* ===========================================================
    Main content
@@ -170,6 +193,13 @@ main{min-width:0;}
   display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:start;
 }
 .hero-intro{color:var(--muted);font-size:16.5px;max-width:440px;}
+.btn-cv{
+  display:inline-block;margin:20px 0 32px;padding:12px 22px;
+  font-family:var(--mono);font-size:12.5px;letter-spacing:0.02em;
+  color:var(--bg);background:var(--indigo);border-radius:2px;
+  text-decoration:none;transition:background .15s ease,transform .15s ease;
+}
+.btn-cv:hover{background:#1e2a4d;transform:translateY(-1px);}
 .stat-list{display:grid;grid-template-columns:1fr 1fr;gap:24px 20px;}
 .stat-list div{border-top:1px solid var(--line);padding-top:10px;transition:border-color .2s ease;}
 .stat-list div:hover{border-color:var(--indigo);}
@@ -275,6 +305,9 @@ main{min-width:0;}
   transition:border-color .15s ease, background .15s ease, transform .15s ease;
 }
 .skill-grid span:hover{border-color:var(--indigo);background:var(--indigo-soft);transform:translateY(-2px);}
+
+.github-stats{display:flex;flex-wrap:wrap;gap:16px;margin-top:32px;}
+.github-stats img{max-width:100%;height:auto;border-radius:2px;}
 
 /* ---------- Contact ---------- */
 .contact-section{border-bottom:none;}

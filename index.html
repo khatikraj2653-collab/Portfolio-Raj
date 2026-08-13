@@ -3,8 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  (function() {
+    var saved = localStorage.getItem('theme');
+    if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  })();
+</script>
 <title>Raj Tejpal Khatik — AI/ML Engineer</title>
 <meta name="description" content="Raj Tejpal Khatik — AI/ML Engineer specializing in Agentic AI & GenAI systems. MSc Applied AI, University of Warwick.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Raj Tejpal Khatik — AI/ML Engineer">
+<meta property="og:description" content="Agentic AI & GenAI systems — causal-chain equity analysis, hallucination detection, and the research behind each one. MSc Applied AI, University of Warwick.">
+<meta property="og:image" content="https://portfolio-raj.pages.dev/og-image.png">
+<meta property="og:url" content="https://portfolio-raj.pages.dev/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Raj Tejpal Khatik — AI/ML Engineer">
+<meta name="twitter:description" content="Agentic AI & GenAI systems — causal-chain equity analysis, hallucination detection, and the research behind each one.">
+<meta name="twitter:image" content="https://portfolio-raj.pages.dev/og-image.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -41,6 +59,8 @@
       <a href="https://www.linkedin.com/in/raj-khatik-6ab086395" target="_blank" rel="noopener">LinkedIn ↗</a>
       <a href="https://github.com/khatikraj2653-collab" target="_blank" rel="noopener">GitHub ↗</a>
       <a href="mailto:khatikraj2653@gmail.com">Email ↗</a>
+      <a href="https://wa.me/447799394985" target="_blank" rel="noopener">WhatsApp ↗</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">Dark mode</button>
     </div>
   </aside>
 
@@ -57,6 +77,7 @@
           systems — from causal-chain equity analysis to hallucination detection — and publish the research behind
           each one.
         </p>
+        <a class="btn-cv" href="Raj_Tejpal_Khatik_CV.pdf" download>Download CV ↓</a>
         <dl class="stat-list">
           <div><dt>Projects deployed</dt><dd>6</dd></div>
           <div><dt>Preprints live</dt><dd>4</dd></div>
@@ -336,6 +357,15 @@
         <span>Streamlit</span>
         <span>FastAPI</span>
       </div>
+
+      <div class="github-stats reveal">
+        <a href="https://github.com/khatikraj2653-collab" target="_blank" rel="noopener">
+          <img src="https://img.shields.io/github/followers/khatikraj2653-collab?style=flat-square&label=Followers&labelColor=2B3A67&color=2B3A67" alt="GitHub followers">
+        </a>
+        <a href="https://github.com/khatikraj2653-collab?tab=repositories" target="_blank" rel="noopener">
+          <img src="https://img.shields.io/badge/GitHub-View%20repositories-2B3A67?style=flat-square" alt="View GitHub repositories">
+        </a>
+      </div>
     </section>
 
     <section id="ask-ai" class="section">
@@ -382,6 +412,10 @@
           <span class="contact-label">GitHub</span>
           <span class="contact-value">github.com/khatikraj2653-collab</span>
         </a>
+        <a href="https://wa.me/447799394985" target="_blank" rel="noopener">
+          <span class="contact-label">Phone / WhatsApp</span>
+          <span class="contact-value">+44 7799 394985</span>
+        </a>
       </div>
 
       <div class="footer-bar">
@@ -414,5 +448,15 @@
 
 <script src="js/main.js"></script>
 <script src="js/chat.js"></script>
+
+<!--
+  Cloudflare Web Analytics — privacy-friendly, no cookies, free.
+  To enable: after deploying to Cloudflare Pages, go to
+  https://dash.cloudflare.com -> Analytics & Logs -> Web Analytics,
+  add this site, and it will give you a token to replace YOUR_TOKEN_HERE below.
+  Then uncomment the script tag.
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "YOUR_TOKEN_HERE"}'></script>
+-->
 </body>
 </html>

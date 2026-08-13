@@ -5,6 +5,28 @@ const MAX_HISTORY_TURNS = 6; // 6 messages = 3 user/assistant pairs
 const MODEL = "gpt-4o-mini";
 const MAX_OUTPUT_TOKENS = 400;
 
+// Per-IP sliding window limit. Lives in the isolate's memory, so it only
+// throttles requests handled by the same warm isolate — not a durable
+// global limit (that would need a Cloudflare KV/Durable Object binding).
+// Still a meaningful guard against a single client hammering the endpoint.
+const RATE_LIMIT_MAX = 8;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const requestLog = new Map(); // ip -> array of request timestamps
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const timestamps = (requestLog.get(ip) || []).filter(
+    (t) => now - t < RATE_LIMIT_WINDOW_MS
+  );
+  timestamps.push(now);
+  requestLog.set(ip, timestamps);
+
+  // Periodically prevent unbounded growth from many distinct IPs.
+  if (requestLog.size > 5000) requestLog.clear();
+
+  return timestamps.length > RATE_LIMIT_MAX;
+}
+
 function jsonResponse(body, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
@@ -29,6 +51,14 @@ function sanitizeHistory(history) {
 }
 
 export async function onRequestPost({ request, env }) {
+  const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+  if (isRateLimited(ip)) {
+    return jsonResponse(
+      { error: "Too many messages sent too quickly. Please wait a moment and try again." },
+      429
+    );
+  }
+
   let body;
   try {
     body = await request.json();

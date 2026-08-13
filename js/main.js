@@ -2,6 +2,22 @@
 // so content stays visible by default if JS fails to load.
 document.documentElement.classList.add('js-ready');
 
+// Dark mode toggle, persisted in localStorage
+const themeToggle = document.getElementById('themeToggle');
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  if (themeToggle) themeToggle.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+}
+const savedTheme = localStorage.getItem('theme');
+applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem('theme', next);
+  });
+}
+
 // Mobile rail toggle
 const toggle = document.getElementById('mobileToggle');
 const rail = document.getElementById('rail');

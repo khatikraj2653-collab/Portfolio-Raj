@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio-dev",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["wrangler", "pages", "dev", ".", "--compatibility-date=2026-01-01", "--port=8788"],
+      "port": 8788
+    }
+  ]
+}
