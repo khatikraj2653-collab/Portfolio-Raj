@@ -40,5 +40,20 @@ export async function onRequestGet({ request, env }) {
     fetchRecent(env.ANALYTICS, "chat", 200),
   ]);
 
-  return jsonResponse({ visits, chats });
+  const OTHER_APPS = ["semibot", "goldbot", "silverbot", "hallucinationdetector"];
+  const apps = {};
+  await Promise.all(
+    OTHER_APPS.map(async (app) => {
+      const [appVisits, appSearches, appChats] = await Promise.all([
+        fetchRecent(env.ANALYTICS, `${app}:visit`, 200),
+        fetchRecent(env.ANALYTICS, `${app}:search`, 200),
+        fetchRecent(env.ANALYTICS, `${app}:chat`, 200),
+      ]);
+      if (appVisits.length || appSearches.length || appChats.length) {
+        apps[app] = { visits: appVisits, searches: appSearches, chats: appChats };
+      }
+    })
+  );
+
+  return jsonResponse({ visits, chats, apps });
 }

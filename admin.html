@@ -22,12 +22,28 @@
     width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:4px;
     font-size:14px; margin-bottom:10px;
   }
-  #loginBox button, .refresh-btn{
+  #loginBox button, .refresh-btn, .back-btn{
     padding:10px 18px; background:var(--indigo); color:#fff; border:none; border-radius:4px;
     cursor:pointer; font-size:14px;
   }
+  .back-btn{background:none; color:var(--indigo); border:1px solid var(--line); padding:8px 14px;}
+  .back-btn:hover{border-color:var(--indigo);}
   #error{color:#B3261E; font-size:13px; margin-top:8px; min-height:18px;}
   #dashboard{display:none;}
+  .top-bar{display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;}
+
+  .site-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:16px;}
+  .site-card{
+    border:1px solid var(--line); border-radius:8px; padding:22px 20px; background:#fff;
+    cursor:pointer; text-align:left; transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .site-card:hover{border-color:var(--indigo); box-shadow:0 4px 14px rgba(43,58,103,0.1);}
+  .site-card .name{font-size:16px; font-weight:700; margin-bottom:10px;}
+  .site-card .mini-stats{display:flex; gap:16px; flex-wrap:wrap;}
+  .site-card .mini-stat .num{font-size:20px; font-weight:700;}
+  .site-card .mini-stat .label{font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.04em;}
+  .site-card .empty{color:var(--muted); font-size:12px;}
+
   .stats-row{display:flex; gap:16px; margin-bottom:28px; flex-wrap:wrap;}
   .stat-card{
     border:1px solid var(--line); border-radius:6px; padding:16px 20px; min-width:140px;
@@ -43,7 +59,8 @@
   .a{color:var(--muted); font-size:12px; max-width:420px;}
   .table-wrap{overflow-x:auto;}
   h2{font-size:16px; margin:24px 0 10px;}
-  .top-bar{display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;}
+  .empty-note{color:var(--muted); font-size:13px; margin-bottom:24px;}
+  .header-actions{display:flex; gap:10px; align-items:center;}
 </style>
 </head>
 <body>
@@ -57,35 +74,30 @@
 </div>
 
 <div id="dashboard">
-  <div class="top-bar">
-    <div>
-      <h1>Site Analytics</h1>
-      <p class="sub">Private — not linked from the public site.</p>
+
+  <div id="overviewScreen">
+    <div class="top-bar">
+      <div>
+        <h1>Site Analytics</h1>
+        <p class="sub">Private — not linked from any public site. Click a site to see its detail.</p>
+      </div>
+      <button class="refresh-btn" id="refreshBtn">Refresh</button>
     </div>
-    <button class="refresh-btn" id="refreshBtn">Refresh</button>
+    <div class="site-grid" id="siteGrid"></div>
   </div>
 
-  <div class="stats-row">
-    <div class="stat-card"><div class="num" id="visitCount">-</div><div class="label">Page visits</div></div>
-    <div class="stat-card"><div class="num" id="chatCount">-</div><div class="label">Chat questions</div></div>
-    <div class="stat-card"><div class="num" id="uniqueCount">-</div><div class="label">Unique visitors</div></div>
+  <div id="detailScreen" style="display:none;">
+    <div class="top-bar">
+      <div class="header-actions">
+        <button class="back-btn" id="backBtn">&larr; Back</button>
+        <h1 id="detailTitle" style="margin:0;"></h1>
+      </div>
+      <button class="refresh-btn" id="refreshBtn2">Refresh</button>
+    </div>
+    <div id="detailStats" class="stats-row"></div>
+    <div id="detailBody"></div>
   </div>
 
-  <h2>Recent visits</h2>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>When</th><th>Page</th><th>Location</th><th>Referrer</th><th>Device</th></tr></thead>
-      <tbody id="visitsBody"></tbody>
-    </table>
-  </div>
-
-  <h2>Recent chat questions</h2>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>When</th><th>Location</th><th>Question</th><th>Answer</th></tr></thead>
-      <tbody id="chatsBody"></tbody>
-    </table>
-  </div>
 </div>
 
 <script>
@@ -93,10 +105,21 @@ const loginBox = document.getElementById('loginBox');
 const dashboard = document.getElementById('dashboard');
 const errorEl = document.getElementById('error');
 const pwInput = document.getElementById('pwInput');
+const overviewScreen = document.getElementById('overviewScreen');
+const detailScreen = document.getElementById('detailScreen');
+
+let lastData = null;
+
+const SITE_LABELS = {
+  portfolio: 'Portfolio website',
+  semibot: 'SemiBot',
+  goldbot: 'GoldBot',
+  silverbot: 'SilverBot',
+  hallucinationdetector: 'Hallucination Detector',
+};
 
 function fmtTime(iso) {
-  const d = new Date(iso);
-  return d.toLocaleString();
+  return new Date(iso).toLocaleString();
 }
 
 function fmtLocation(row) {
@@ -108,6 +131,12 @@ function fmtDevice(ua) {
   if (/Mobi|Android/i.test(ua)) return 'Mobile';
   if (/iPad|Tablet/i.test(ua)) return 'Tablet';
   return 'Desktop';
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
 }
 
 async function loadDashboard(password) {
@@ -129,41 +158,122 @@ async function loadDashboard(password) {
   }
   const data = await res.json();
   sessionStorage.setItem('adminPw', password);
+  lastData = data;
 
-  document.getElementById('visitCount').textContent = data.visits.length;
-  document.getElementById('chatCount').textContent = data.chats.length;
-  const unique = new Set(data.visits.map(v => v.visitorHash)).size;
-  document.getElementById('uniqueCount').textContent = unique;
-
-  const visitsBody = document.getElementById('visitsBody');
-  visitsBody.innerHTML = data.visits.map(v => `
-    <tr>
-      <td>${fmtTime(v.timestamp)}</td>
-      <td>${v.path}</td>
-      <td>${fmtLocation(v)}</td>
-      <td>${v.referrer ? new URL(v.referrer).hostname : 'Direct'}</td>
-      <td>${fmtDevice(v.userAgent)}</td>
-    </tr>
-  `).join('');
-
-  const chatsBody = document.getElementById('chatsBody');
-  chatsBody.innerHTML = data.chats.map(c => `
-    <tr>
-      <td>${fmtTime(c.timestamp)}</td>
-      <td>${fmtLocation(c)}</td>
-      <td class="q">${escapeHtml(c.question)}</td>
-      <td class="a">${escapeHtml(c.reply).slice(0, 200)}</td>
-    </tr>
-  `).join('');
+  renderOverview();
 
   loginBox.style.display = 'none';
   dashboard.style.display = 'block';
+  showOverview();
 }
 
-function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str || '';
-  return div.innerHTML;
+function siteData(key) {
+  if (key === 'portfolio') {
+    return { visits: lastData.visits || [], searches: [], chats: lastData.chats || [] };
+  }
+  const a = (lastData.apps || {})[key];
+  return a || { visits: [], searches: [], chats: [] };
+}
+
+function renderOverview() {
+  const keys = ['portfolio', ...Object.keys(lastData.apps || {})];
+  const grid = document.getElementById('siteGrid');
+  grid.innerHTML = keys.map(key => {
+    const d = siteData(key);
+    const total = d.visits.length + d.searches.length + d.chats.length;
+    const label = SITE_LABELS[key] || key;
+    if (!total) {
+      return `<div class="site-card" data-key="${key}">
+        <div class="name">${label}</div>
+        <div class="empty">No activity yet</div>
+      </div>`;
+    }
+    const stats = [
+      { n: d.visits.length, l: 'Visits' },
+      ...(d.searches.length ? [{ n: d.searches.length, l: 'Searches' }] : []),
+      { n: d.chats.length, l: 'Chats' },
+    ];
+    return `<div class="site-card" data-key="${key}">
+      <div class="name">${label}</div>
+      <div class="mini-stats">
+        ${stats.map(s => `<div class="mini-stat"><div class="num">${s.n}</div><div class="label">${s.l}</div></div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  grid.querySelectorAll('.site-card').forEach(card => {
+    card.addEventListener('click', () => showDetail(card.dataset.key));
+  });
+}
+
+function showOverview() {
+  overviewScreen.style.display = 'block';
+  detailScreen.style.display = 'none';
+}
+
+function showDetail(key) {
+  const d = siteData(key);
+  const label = SITE_LABELS[key] || key;
+  document.getElementById('detailTitle').textContent = label;
+
+  const unique = new Set(d.visits.map(v => v.visitorHash)).size;
+  const statCards = [
+    { n: d.visits.length, l: 'Page visits' },
+    ...(d.searches.length || key !== 'portfolio' ? [{ n: d.searches.length, l: 'Searches' }] : []),
+    { n: d.chats.length, l: 'Chat questions' },
+    { n: unique, l: 'Unique visitors' },
+  ];
+  document.getElementById('detailStats').innerHTML = statCards.map(s =>
+    `<div class="stat-card"><div class="num">${s.n}</div><div class="label">${s.l}</div></div>`
+  ).join('');
+
+  let body = '';
+
+  if (!d.visits.length && !d.searches.length && !d.chats.length) {
+    body = `<p class="empty-note">No activity recorded yet for ${label}.</p>`;
+  }
+
+  if (d.visits.length) {
+    body += `<h2>Recent visits</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>When</th><th>Page</th><th>Location</th><th>Referrer</th><th>Device</th></tr></thead>
+      <tbody>${d.visits.map(v => `
+        <tr>
+          <td>${fmtTime(v.timestamp)}</td>
+          <td>${v.path || v.detail || '-'}</td>
+          <td>${fmtLocation(v)}</td>
+          <td>${v.referrer ? (() => { try { return new URL(v.referrer).hostname; } catch { return v.referrer; } })() : 'Direct'}</td>
+          <td>${fmtDevice(v.userAgent)}</td>
+        </tr>`).join('')}</tbody>
+    </table></div>`;
+  }
+
+  if (d.searches.length) {
+    body += `<h2>Recent searches</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>When</th><th>Search / detail</th></tr></thead>
+      <tbody>${d.searches.map(s => `<tr><td>${fmtTime(s.timestamp)}</td><td>${escapeHtml(s.detail)}</td></tr>`).join('')}</tbody>
+    </table></div>`;
+  }
+
+  if (d.chats.length) {
+    body += `<h2>Recent chat questions</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>When</th><th>Location</th><th>Question</th><th>Answer</th></tr></thead>
+      <tbody>${d.chats.map(c => `
+        <tr>
+          <td>${fmtTime(c.timestamp)}</td>
+          <td>${fmtLocation(c)}</td>
+          <td class="q">${escapeHtml(c.question)}</td>
+          <td class="a">${escapeHtml(c.reply).slice(0, 200)}</td>
+        </tr>`).join('')}</tbody>
+    </table></div>`;
+  }
+
+  document.getElementById('detailBody').innerHTML = body;
+
+  overviewScreen.style.display = 'none';
+  detailScreen.style.display = 'block';
 }
 
 document.getElementById('loginBtn').addEventListener('click', () => loadDashboard(pwInput.value));
@@ -172,6 +282,11 @@ document.getElementById('refreshBtn').addEventListener('click', () => {
   const pw = sessionStorage.getItem('adminPw');
   if (pw) loadDashboard(pw);
 });
+document.getElementById('refreshBtn2').addEventListener('click', () => {
+  const pw = sessionStorage.getItem('adminPw');
+  if (pw) loadDashboard(pw);
+});
+document.getElementById('backBtn').addEventListener('click', showOverview);
 
 const savedPw = sessionStorage.getItem('adminPw');
 if (savedPw) loadDashboard(savedPw);
