@@ -1,4 +1,5 @@
 import { SYSTEM_PROMPT } from "../_lib/knowledge.js";
+import { hashIp, putLog } from "../_lib/log.js";
 
 const MAX_MESSAGE_LEN = 800;
 const MAX_HISTORY_TURNS = 6; // 6 messages = 3 user/assistant pairs
@@ -52,6 +53,7 @@ function sanitizeHistory(history) {
 
 export async function onRequestPost({ request, env }) {
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+  const cf = request.cf || {};
   if (isRateLimited(ip)) {
     return jsonResponse(
       { error: "Too many messages sent too quickly. Please wait a moment and try again." },
@@ -132,6 +134,17 @@ export async function onRequestPost({ request, env }) {
       { error: "No response generated. Please try again." },
       502
     );
+  }
+
+  if (env.ANALYTICS) {
+    await putLog(env.ANALYTICS, "chat", {
+      question: message,
+      reply,
+      timestamp: new Date().toISOString(),
+      country: cf.country || null,
+      city: cf.city || null,
+      visitorHash: await hashIp(ip),
+    });
   }
 
   return jsonResponse({ reply });
