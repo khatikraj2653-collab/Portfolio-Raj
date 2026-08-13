@@ -1,0 +1,7 @@
+name = "portfolio-raj"
+compatibility_date = "2025-07-18"
+pages_build_output_dir = "."
+
+[[kv_namespaces]]
+binding = "ANALYTICS"
+id = "62dc7050a8f04cdbb43ce74bf81d80ca"
