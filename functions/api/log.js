@@ -1,4 +1,4 @@
-import { putLog } from "../_lib/log.js";
+import { hashIp, putLog } from "../_lib/log.js";
 
 // Public logging endpoint for the other tools (SemiBot, GoldBot, SilverBot,
 // Hallucination Detector) to report visits/searches/questions into the same
@@ -44,6 +44,10 @@ export async function onRequestPost({ request, env }) {
     return jsonResponse({ error: "Invalid or missing app/type." }, 400);
   }
 
+  const visitorIp = clean(body.visitorIp);
+  const userAgent = clean(body.userAgent);
+  const referrer = clean(body.referrer);
+
   await putLog(env.ANALYTICS, `${app}:${type}`, {
     app,
     type,
@@ -51,6 +55,9 @@ export async function onRequestPost({ request, env }) {
     question: clean(body.question),
     reply: clean(body.reply),
     timestamp: new Date().toISOString(),
+    visitorHash: visitorIp ? await hashIp(visitorIp) : null,
+    userAgent,
+    referrer,
   });
 
   return jsonResponse({ ok: true });
