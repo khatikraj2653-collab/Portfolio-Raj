@@ -1,11 +1,10 @@
 import { hashIp, putLog } from "../_lib/log.js";
 
-// Contact form submission handler. Every submission is logged to KV
-// regardless of email outcome, so nothing is ever lost even if the email
-// provider is down or misconfigured. Actual delivery to the owner's inbox
-// goes through Web3Forms (free, no custom domain required — unlike
-// Cloudflare's native Email Routing, which needs a Cloudflare-managed
-// domain with MX records, not available on the free *.pages.dev subdomain).
+// Contact form logging endpoint. Every submission is logged to KV here so
+// nothing is ever lost, visible in the admin dashboard regardless of email
+// outcome. Actual email delivery happens client-side directly to Web3Forms
+// (see js/main.js) — Web3Forms' free plan only accepts submissions
+// originating from the browser, not server-to-server calls from here.
 
 const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_MS = 60_000;
@@ -73,29 +72,7 @@ export async function onRequestPost({ request, env }) {
     });
   }
 
-  let emailed = false;
-  if (env.WEB3FORMS_KEY) {
-    try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          access_key: env.WEB3FORMS_KEY,
-          subject: `[Portfolio] ${subject}`,
-          from_name: name,
-          replyto: email,
-          message: `From: ${name} <${email}>\n\n${message}`,
-        }),
-      });
-      const data = await res.json();
-      emailed = !!data.success;
-      if (!emailed) console.error("Web3Forms rejected submission:", data);
-    } catch (err) {
-      console.error("Web3Forms send failed:", err);
-    }
-  }
-
-  return jsonResponse({ ok: true, emailed });
+  return jsonResponse({ ok: true });
 }
 
 export async function onRequestGet() {

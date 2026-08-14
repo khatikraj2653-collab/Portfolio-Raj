@@ -58,9 +58,13 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 revealEls.forEach(el => revealObserver.observe(el));
 
-// Contact form submission
+// Contact form submission — email delivery goes straight from the browser
+// to Web3Forms (their free plan only accepts client-side submissions, not
+// server-to-server calls), while a parallel call to our own /api/contact
+// logs the submission to the admin dashboard regardless of email outcome.
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
+  const WEB3FORMS_ACCESS_KEY = '3dcb2bf4-66aa-4cab-bb3c-af2ff462b37d'; // public key — safe to expose client-side
   const submitBtn = document.getElementById('msgSubmitBtn');
   const statusEl = document.getElementById('msgFormStatus');
 
@@ -79,20 +83,33 @@ if (contactForm) {
     statusEl.textContent = '';
     statusEl.className = 'msg-form-status';
 
+    // Log to our own dashboard — best-effort, doesn't block the email send.
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).catch(() => {});
+
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `[Portfolio] ${payload.subject}`,
+          from_name: payload.name,
+          replyto: payload.email,
+          message: `From: ${payload.name} <${payload.email}>\n\n${payload.message}`,
+        }),
       });
       const data = await res.json();
 
-      if (res.ok) {
+      if (data.success) {
         statusEl.textContent = "Message sent — I'll get back to you soon.";
         statusEl.className = 'msg-form-status ok';
         contactForm.reset();
       } else {
-        statusEl.textContent = data.error || 'Something went wrong. Please try again.';
+        statusEl.textContent = data.message || 'Something went wrong. Please try again.';
         statusEl.className = 'msg-form-status err';
       }
     } catch {
