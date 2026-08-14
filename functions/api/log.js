@@ -6,7 +6,7 @@ import { putLog } from "../_lib/log.js";
 // admin dashboard. Called server-to-server from each tool's Python
 // backend — never from a visitor's browser — so no CORS is needed.
 
-const ALLOWED_APPS = ["semibot", "goldbot", "silverbot", "hallucinationdetector"];
+const ALLOWED_APPS = ["semibot", "goldbot", "silverbot", "hallucinationdetector", "retailresearch"];
 const ALLOWED_TYPES = ["visit", "search", "chat"];
 const MAX_FIELD_LEN = 2000;
 

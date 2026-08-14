@@ -40,7 +40,7 @@ export async function onRequestGet({ request, env }) {
     fetchRecent(env.ANALYTICS, "chat", 200),
   ]);
 
-  const OTHER_APPS = ["semibot", "goldbot", "silverbot", "hallucinationdetector"];
+  const OTHER_APPS = ["semibot", "goldbot", "silverbot", "hallucinationdetector", "retailresearch"];
   const apps = {};
   await Promise.all(
     OTHER_APPS.map(async (app) => {
