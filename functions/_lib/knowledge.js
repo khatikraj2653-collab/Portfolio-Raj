@@ -151,27 +151,36 @@ All four preprints are live on SSRN and in active submission to peer-reviewed jo
 
 DISSERTATION
 "Understanding the Role of Artificial Intelligence in Life Cycle Assessment" — supervised
-by Dr. You Wu, WMG, University of Warwick. Two of three objectives complete; due
-September 2026.
+by Dr. You Wu, WMG, University of Warwick. Complete, September 2026.
 
-- Objective 1 — Landscape Review (in progress): Reviewing how AI features are used
-  across conventional and emerging LCA software tools, and how these map onto stages of
-  the LCA workflow.
-- Objective 2 — Applied ML on LCI Data (complete): Unsupervised learning on the
-  ecoinvent 3.11 dataset (25,412 activity-geography records). Identified 49.6%
-  redundancy across 68 raw climate indicators and reduced to 7 conceptually distinct
-  features before clustering. Key result: KMeans (k=8) silhouette 0.689, up from 0.533
-  on raw features. Isolation Forest flagged 509 anomalies (2%), 57.7% corroborated by
-  clustering. Stack: KMeans, Isolation Forest, PCA, Yeo-Johnson, Python.
-- Objective 3 — LLM Evaluation on LCA Tasks (complete): Compared GPT-4o-mini and Claude
-  Haiku 4.5 on two LCA-specific tasks via direct API calls — structured field extraction,
-  and ISO 14044 goal-and-scope drafting. Claude's extraction errors were zero;
-  GPT-4o-mini's were concentrated in a single, systematic unit-parsing pattern. On
-  drafting, Claude consistently used more precise regulatory terminology (e.g.
-  "comparative assertions," explicit allocation methodology) that GPT-4o-mini omitted in
-  every case. Key result: Claude Haiku 4.5 100% exact-match vs. GPT-4o-mini 87.0%
-  (n=100, McNemar's p=0.0002). Stack: GPT-4o-mini, Claude Haiku 4.5, McNemar's Test,
-  ISO 14044.
+- Objective 1 — Landscape Review (complete): Combined a recent systematic literature
+  review (538 papers screened from 1,509 candidates, 209 analysed in full) with a
+  structured review of 8 commercial AI-powered LCA platforms, mapped against the four
+  ISO 14040/14044 workflow stages. Key result: both research attention and commercial
+  tooling concentrate almost exclusively on the Life Cycle Inventory stage — none of the
+  8 platforms reviewed target AI-assisted goal-and-scope drafting or interpretation, the
+  gap Objective 3 addresses directly. Stack: Literature Review, PRISMA, ISO 14040/14044.
+- Objective 2 — Applied ML on LCI Data (complete): Multi-method unsupervised learning on
+  the ecoinvent 3.11 dataset (25,412 activity-geography records). Reduced 68 redundant
+  climate indicators (49.6% of pairs correlated >0.98) to 7 conceptually distinct
+  features, then cross-validated three clustering algorithms and two anomaly detectors
+  against each other rather than trusting a single method. Key result: KMeans and
+  Agglomerative converged closely (silhouette 0.689 vs. 0.686, k=8). Isolation Forest
+  flagged 509 anomalies (2%); near-zero agreement with LOF (Jaccard 0.001) was traced to
+  23.2% of activities sharing duplicate climate-impact profiles — a genuine data
+  artefact, not a false positive. Stack: KMeans, Agglomerative, DBSCAN, Isolation Forest,
+  LOF, PCA, Yeo-Johnson, Python.
+- Objective 3 — LLM Evaluation on LCA Tasks (complete): Evaluated six LLMs — Claude
+  Haiku 4.5, GPT-4o-mini, GPT-5.6 Terra, Gemini 3.5 Flash, Llama 3.3 70B, GPT-OSS 120B —
+  on structured extraction and ISO 14044 goal-and-scope drafting, sampled directly from
+  ecoinvent 3.11. An initial near-universal 100% extraction accuracy across 5 of 6
+  models, on a task with directly quoted answer spans, collapsed dramatically once a
+  harder, paraphrased variant removed that shortcut. Key result: paraphrased extraction
+  accuracy dropped by up to 65 percentage points (GPT-4o-mini 91%→26%; GPT-OSS 120B
+  100%→44%). Gemini 3.5 Flash held up best (100%→86%), significantly outperforming the
+  two weakest models (Cochran's Q=66.7, p<0.000001). Stack: Claude Haiku 4.5,
+  GPT-4o-mini, GPT-5.6 Terra, Gemini 3.5 Flash, Llama 3.3 70B, GPT-OSS 120B, Cochran's Q,
+  McNemar's Test, ISO 14044.
 
 SKILLS
 LangGraph, LangChain, RAG, FAISS, Agentic AI, Python, Streamlit, FastAPI.
