@@ -337,6 +337,11 @@ main{min-width:0;}
 }
 .entry:first-child{border-top:1px solid var(--line);}
 .entry:hover{border-left-color:var(--indigo);background:var(--bg-alt);}
+.entry-thumb{
+  grid-column:1 / -1;width:100%;aspect-ratio:900/405;object-fit:cover;
+  border-radius:6px;border:1px solid var(--line);margin-bottom:4px;
+  background:var(--bg-alt);
+}
 .entry-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .entry-head h3{font-family:var(--serif);font-weight:600;font-size:22px;}
 .badge{
