@@ -92,22 +92,74 @@
 
     <section id="profile" class="section hero-section">
       <div class="section-num">§1</div>
-      <h1 class="hero-headline">Building agentic AI<br>systems that <em>reason</em>,<br>not just retrieve.</h1>
 
-      <div class="hero-meta">
-        <p class="hero-intro">
-          MSc Applied AI candidate at the University of Warwick, graduating September 2026, with two years of
-          prior industry experience in data analytics and ML engineering. I design multi-agent, retrieval-augmented
-          systems — from causal-chain equity analysis to hallucination detection — and publish the research behind
-          each one.
+      <div class="hero-grid">
+        <div class="hero-left">
+          <span class="hero-status"><span class="status-dot"></span>Available for new opportunities</span>
+          <p class="hero-eyebrow">HELLO, I'M</p>
+          <h1 class="hero-name">Raj Tejpal<br>Khatik</h1>
+          <p class="hero-role"><span class="role-a">AI/ML Engineer</span> <span class="role-sep">|</span> <span class="role-b">Agentic AI Systems</span> <span class="role-sep">|</span> <span class="role-c">GenAI Research</span></p>
+          <p class="hero-intro">
+            MSc Applied AI candidate at the University of Warwick, graduating September 2026, with two years of
+            prior industry experience in data analytics and ML engineering. I design multi-agent, retrieval-augmented
+            systems — from causal-chain equity analysis to hallucination detection — and publish the research behind
+            each one.
+          </p>
+          <div class="hero-ctas">
+            <a class="btn-cv" href="Raj_Tejpal_Khatik_CV.pdf" download>Download CV ↓</a>
+            <a class="btn-outline" href="#projects">Explore My Work</a>
+          </div>
+          <div class="hero-socials">
+            <a href="mailto:khatikraj2653@gmail.com" aria-label="Email" title="Email">✉</a>
+            <a href="https://www.linkedin.com/in/raj-khatik-6ab086395" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">in</a>
+            <a href="https://github.com/khatikraj2653-collab" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">GH</a>
+            <a href="https://wa.me/447799394985" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp">WA</a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="avatar-wrap">
+            <div class="avatar-ring"></div>
+            <div class="avatar-circle">RK</div>
+            <span class="floating-badge badge-pos-1">🤖 Agentic AI</span>
+            <span class="floating-badge badge-pos-2">🔬 Researcher</span>
+          </div>
+          <dl class="stat-list">
+            <div><dt>Projects deployed</dt><dd>6</dd></div>
+            <div><dt>Preprints live</dt><dd>4</dd></div>
+            <div><dt>Domains covered</dt><dd>Semis · Gold · Silver</dd></div>
+            <div><dt>Graduating</dt><dd>Sept 2026</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="about-block reveal">
+        <div class="about-head">
+          <div class="about-avatar-sm">RK</div>
+          <div>
+            <div class="about-name">Raj Tejpal Khatik</div>
+            <div class="about-role">AI/ML Engineer · Agentic AI &amp; GenAI Systems</div>
+            <div class="about-location">📍 London, UK</div>
+          </div>
+        </div>
+        <p class="about-bio">
+          I'm an AI/ML Engineer building agentic, retrieval-augmented systems that reason through causal chains rather
+          than surface correlated signals. Currently completing my MSc in Applied AI at the University of Warwick, I
+          bring two years of prior industry experience in data analytics and ML engineering, and I publish the
+          research behind every system I ship — six deployed projects, four live preprints. Based in London, UK, and
+          open to AI/ML Engineer, GenAI Engineer, and Agentic AI roles.
         </p>
-        <a class="btn-cv" href="Raj_Tejpal_Khatik_CV.pdf" download>Download CV ↓</a>
-        <dl class="stat-list">
-          <div><dt>Projects deployed</dt><dd>6</dd></div>
-          <div><dt>Preprints live</dt><dd>4</dd></div>
-          <div><dt>Domains covered</dt><dd>Semis · Gold · Silver</dd></div>
-          <div><dt>Graduating</dt><dd>Sept 2026</dd></div>
-        </dl>
+        <h3 class="core-skills-title">Core Skills</h3>
+        <div class="core-skills-grid">
+          <span><i class="dot"></i>LangGraph &amp; Multi-Agent Orchestration</span>
+          <span><i class="dot"></i>RAG &amp; FAISS Retrieval</span>
+          <span><i class="dot"></i>Python &amp; FastAPI</span>
+          <span><i class="dot"></i>Streamlit &amp; Full-Stack Delivery</span>
+          <span><i class="dot"></i>Statistical Validation &amp; Testing</span>
+          <span><i class="dot"></i>LLM Evaluation &amp; Hallucination Detection</span>
+          <span><i class="dot"></i>Causal-Chain Equity Analysis</span>
+          <span><i class="dot"></i>Research Publishing (SSRN)</span>
+        </div>
       </div>
     </section>
 
@@ -422,6 +474,28 @@
       <div class="section-num">§9</div>
       <h2 class="section-title reveal">Let's talk.</h2>
       <p class="section-lede reveal">Open to AI/ML Engineer, GenAI Engineer, and Agentic AI roles — also exploring PhD positions in CS/AI and applied economics.</p>
+
+      <div class="msg-form-wrap reveal">
+        <h3 class="msg-form-title">Send a Message</h3>
+        <form id="contactForm" class="msg-form">
+          <div class="msg-form-row">
+            <label>Full Name
+              <input type="text" name="name" placeholder="Your full name" required>
+            </label>
+            <label>Email Address
+              <input type="email" name="email" placeholder="your.email@example.com" required>
+            </label>
+          </div>
+          <label>Subject
+            <input type="text" name="subject" placeholder="What's this about?" required>
+          </label>
+          <label>Message
+            <textarea name="message" rows="6" placeholder="Tell me about your project or how I can help..." required></textarea>
+          </label>
+          <button type="submit" class="msg-form-submit" id="msgSubmitBtn">Send Message →</button>
+          <p class="msg-form-status" id="msgFormStatus" role="status"></p>
+        </form>
+      </div>
 
       <div class="contact-grid reveal">
         <a href="mailto:khatikraj2653@gmail.com">

@@ -57,3 +57,50 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 revealEls.forEach(el => revealObserver.observe(el));
+
+// Contact form submission
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  const submitBtn = document.getElementById('msgSubmitBtn');
+  const statusEl = document.getElementById('msgFormStatus');
+
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(contactForm);
+    const payload = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      subject: formData.get('subject'),
+      message: formData.get('message'),
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    statusEl.textContent = '';
+    statusEl.className = 'msg-form-status';
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        statusEl.textContent = "Message sent — I'll get back to you soon.";
+        statusEl.className = 'msg-form-status ok';
+        contactForm.reset();
+      } else {
+        statusEl.textContent = data.error || 'Something went wrong. Please try again.';
+        statusEl.className = 'msg-form-status err';
+      }
+    } catch {
+      statusEl.textContent = 'Network error. Please try again.';
+      statusEl.className = 'msg-form-status err';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Message →';
+    }
+  });
+}
