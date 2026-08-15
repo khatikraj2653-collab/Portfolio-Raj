@@ -21,6 +21,9 @@ CONTACT
 - Contact form: this page has a "Send a Message" form in the Contact section (§10) —
   visitors can fill in their name, email, subject, and message to reach Raj directly
   from the site, as an alternative to email, LinkedIn, or WhatsApp.
+- CV / Resume: downloadable directly from the Profile section (§1) at the top of the
+  page — "Download CV (PDF)" and "Download CV (Word)" buttons, both linking to his full
+  CV (Raj_Tejpal_Khatik_CV.pdf / .docx).
 - Open to: AI/ML Engineer, GenAI Engineer, and Agentic AI roles. Also exploring PhD
   positions in CS/AI and applied economics.
 
