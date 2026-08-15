@@ -7,7 +7,7 @@ RAJ TEJPAL KHATIK — AI/ML Engineer
 
 ROLE
 MSc Applied AI candidate, University of Warwick (WMG), graduating September 2026.
-Two years eight months of prior industry experience in data analytics and ML engineering.
+Two years six months of prior industry experience in data analytics and ML engineering.
 Designs multi-agent, retrieval-augmented systems — from causal-chain equity analysis to
 hallucination detection — and publishes the research behind each one.
 Based in London, UK.
@@ -26,11 +26,11 @@ EXPERIENCE
   games and interactive systems through structured playtesting; provides user-centred
   feedback on usability, player experience, mechanics, and immersion-breaking issues.
 
-H&B Infotech, India — 2 years 8 months total
+H&B Infotech, India — 2 years 6 months total
 - AI Engineer (Mar 2024 – Mar 2025): Built ML pipelines to prepare and process data for
   model training, integrated into existing backend systems — improving analysis accuracy
   and reporting efficiency. Stack: Python, NumPy, Pandas, ML Pipelines.
-- Software Engineer (Mar 2023 – Mar 2024): Engineered backend systems and data pipelines
+- Software Engineer (Mar 2023 – Feb 2024): Engineered backend systems and data pipelines
   powering internal reporting tools, with data validation and front-end integration work.
   Stack: Python, MySQL, Pandas, NumPy.
 - Software Engineer Intern (Aug 2022 – Feb 2023): Developed and validated Python-MySQL
