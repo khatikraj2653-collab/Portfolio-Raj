@@ -20,7 +20,12 @@ CONTACT
 - Open to: AI/ML Engineer, GenAI Engineer, and Agentic AI roles. Also exploring PhD
   positions in CS/AI and applied economics.
 
-EXPERIENCE (H&B Infotech, India — 2 years 8 months total)
+EXPERIENCE
+- Play Tester, Fusion UX Lab, University of Warwick (Nov 2025 – Aug 2026): Evaluates video
+  games and interactive systems through structured playtesting; provides user-centred
+  feedback on usability, player experience, mechanics, and immersion-breaking issues.
+
+H&B Infotech, India — 2 years 8 months total
 - AI Engineer (Mar 2024 – Mar 2025): Built ML pipelines to prepare and process data for
   model training, integrated into existing backend systems — improving analysis accuracy
   and reporting efficiency. Stack: Python, NumPy, Pandas, ML Pipelines.
@@ -124,7 +129,7 @@ All four preprints are live on SSRN and in active submission to peer-reviewed jo
    SSRN 7199998. An 18-factor causal-chain RAG system for semiconductor equities. Across
    426 observations, directional accuracy scales from 41.7% to 84.0% with market
    capitalization — a statistically confirmed gradient (p<0.001) that a single aggregate
-   figure would conceal entirely.
+   figure would conceal entirely. Presented at University of Warwick.
    Link: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7199998
 
 2. "GoldBot: A Multi-Factor Safe-Haven Analyzer for Gold — Cross-Regime Evidence for
@@ -146,7 +151,7 @@ All four preprints are live on SSRN and in active submission to peer-reviewed jo
    SSRN 7200222. A six-signal ensemble evaluated with formal significance testing across
    three benchmarks, including a quadrant analysis that overturns the system's own
    confidence-ordering assumption, and fifteen adversarial examples exposing reproducible
-   failure modes.
+   failure modes. Presented at University of Warwick.
    Link: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7200222
 
 DISSERTATION
@@ -183,7 +188,15 @@ by Dr. You Wu, WMG, University of Warwick. Complete, September 2026.
   McNemar's Test, ISO 14044.
 
 SKILLS
-LangGraph, LangChain, RAG, FAISS, Agentic AI, Python, Streamlit, FastAPI.
+LangGraph, LangChain, RAG, FAISS, Agentic AI, Python, Streamlit, FastAPI, GenAI, Prompt
+Engineering, NumPy, Pandas, SQL/SQLite, Statistical Testing, Power BI, Git/GitHub,
+Streamlit Community Cloud, Cloudflare Pages/Workers.
+
+CERTIFICATIONS
+- Financial Markets — Yale University (Coursera), taught by Prof. Robert Shiller.
+- GenAI Enhanced Financial Analysis Specialization — Microsoft (Coursera): Generative AI,
+  Excel Copilot & Power BI for financial forecasting and analytics.
+- Generative AI Engineering — IBM (Coursera).
 
 SUMMARY STATS
 6 projects deployed. 4 preprints live on SSRN. Domains covered: Semiconductors, Gold,
