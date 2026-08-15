@@ -102,11 +102,39 @@ if (fab && panel) {
     panel.classList.add("is-open");
     fab.classList.add("is-hidden");
     document.getElementById("bubbleInput").focus();
+    dismissChatHint();
   });
   closeBtn.addEventListener("click", () => {
     panel.classList.remove("is-open");
     fab.classList.remove("is-hidden");
   });
+}
+
+// ---------- First-visit greeting hint ----------
+// Shows once ever (per browser) so a first-time visitor knows the
+// floating icon is a chatbot, without having to click it to find out.
+const chatHint = document.getElementById("chatHint");
+const chatHintClose = document.getElementById("chatHintClose");
+const CHAT_HINT_SEEN_KEY = "chatHintSeen";
+let chatHintTimers = [];
+
+function dismissChatHint() {
+  chatHintTimers.forEach(clearTimeout);
+  chatHintTimers = [];
+  if (chatHint) chatHint.classList.remove("is-visible");
+  if (fab) fab.classList.remove("is-pulsing");
+  localStorage.setItem(CHAT_HINT_SEEN_KEY, "1");
+}
+
+if (chatHint && fab && !localStorage.getItem(CHAT_HINT_SEEN_KEY)) {
+  chatHintTimers.push(
+    setTimeout(() => {
+      chatHint.classList.add("is-visible");
+      fab.classList.add("is-pulsing");
+    }, 1500),
+    setTimeout(dismissChatHint, 9500) // 1.5s delay + ~8s visible
+  );
+  if (chatHintClose) chatHintClose.addEventListener("click", dismissChatHint);
 }
 
 // ---------- Inline "Ask AI" section ----------
