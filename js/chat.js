@@ -110,12 +110,11 @@ if (fab && panel) {
   });
 }
 
-// ---------- First-visit greeting hint ----------
-// Shows once ever (per browser) so a first-time visitor knows the
-// floating icon is a chatbot, without having to click it to find out.
+// ---------- Greeting hint ----------
+// Shows on every page load/refresh so visitors know the floating
+// icon is a chatbot, without having to click it to find out.
 const chatHint = document.getElementById("chatHint");
 const chatHintClose = document.getElementById("chatHintClose");
-const CHAT_HINT_SEEN_KEY = "chatHintSeen";
 let chatHintTimers = [];
 
 function dismissChatHint() {
@@ -123,10 +122,9 @@ function dismissChatHint() {
   chatHintTimers = [];
   if (chatHint) chatHint.classList.remove("is-visible");
   if (fab) fab.classList.remove("is-pulsing");
-  localStorage.setItem(CHAT_HINT_SEEN_KEY, "1");
 }
 
-if (chatHint && fab && !localStorage.getItem(CHAT_HINT_SEEN_KEY)) {
+if (chatHint && fab) {
   chatHintTimers.push(
     setTimeout(() => {
       chatHint.classList.add("is-visible");
