@@ -1,4 +1,5 @@
-import { SYSTEM_PROMPT } from "../_lib/knowledge.js";
+import { buildSystemPrompt } from "../_lib/knowledge.js";
+import { getLivePageText } from "../_lib/livePage.js";
 import { hashIp, putLog } from "../_lib/log.js";
 
 const MAX_MESSAGE_LEN = 800;
@@ -88,8 +89,11 @@ export async function onRequestPost({ request, env }) {
 
   const history = sanitizeHistory(body?.history);
 
+  const origin = new URL(request.url).origin;
+  const livePageText = await getLivePageText(origin);
+
   const messages = [
-    { role: "system", content: SYSTEM_PROMPT },
+    { role: "system", content: buildSystemPrompt(livePageText) },
     ...history,
     { role: "user", content: message },
   ];
