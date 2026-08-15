@@ -404,6 +404,10 @@ main{min-width:0;}
   font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.05em;
   background:var(--gold-soft);color:var(--gold);padding:3px 9px;border-radius:2px;
 }
+.biblio-presented{
+  font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.05em;
+  background:var(--green-soft);color:var(--green);padding:3px 9px;border-radius:2px;
+}
 .biblio-meta a{
   font-family:var(--mono);font-size:12px;color:var(--indigo);
   border-bottom:1px solid transparent;word-break:break-word;
