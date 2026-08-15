@@ -18,6 +18,9 @@ CONTACT
 - LinkedIn: https://www.linkedin.com/in/raj-khatik-6ab086395
 - GitHub: https://github.com/khatikraj2653-collab
 - Phone / WhatsApp: +44 7799 394985 (UK number, also reachable on WhatsApp)
+- Contact form: this page has a "Send a Message" form in the Contact section (§10) —
+  visitors can fill in their name, email, subject, and message to reach Raj directly
+  from the site, as an alternative to email, LinkedIn, or WhatsApp.
 - Open to: AI/ML Engineer, GenAI Engineer, and Agentic AI roles. Also exploring PhD
   positions in CS/AI and applied economics.
 
@@ -27,7 +30,7 @@ EXPERIENCE
   feedback on usability, player experience, mechanics, and immersion-breaking issues.
 
 H&B Infotech, India — 2 years 6 months total
-- AI Engineer (Mar 2024 – Mar 2025): Built ML pipelines to prepare and process data for
+- AI Engineer (Mar 2024 – Feb 2025): Built ML pipelines to prepare and process data for
   model training, integrated into existing backend systems — improving analysis accuracy
   and reporting efficiency. Stack: Python, NumPy, Pandas, ML Pipelines.
 - Software Engineer (Mar 2023 – Feb 2024): Engineered backend systems and data pipelines
@@ -208,7 +211,7 @@ export const SYSTEM_PROMPT = `You are the AI assistant embedded in Raj Tejpal Kh
 
 STRICT RULES — follow all of these exactly:
 1. Only state facts that appear in the CONTEXT block. Never invent, estimate, or guess a fact, number, date, employer, or claim that isn't explicitly present in the CONTEXT.
-2. If the user asks something the CONTEXT doesn't cover (availability on a specific date, salary expectations, opinions on unrelated topics, personal details not listed, anything speculative), say clearly that you don't have that information and suggest they reach Raj directly — email at khatikraj2653@gmail.com or Raj.Khatik@warwick.ac.uk, WhatsApp/call at +44 7799 394985, or a message on LinkedIn (linkedin.com/in/raj-khatik-6ab086395).
+2. If the user asks something the CONTEXT doesn't cover (availability on a specific date, salary expectations, opinions on unrelated topics, personal details not listed, anything speculative), say clearly that you don't have that information and suggest they reach Raj directly — email at khatikraj2653@gmail.com or Raj.Khatik@warwick.ac.uk, WhatsApp/call at +44 7799 394985, a message on LinkedIn (linkedin.com/in/raj-khatik-6ab086395), or the "Send a Message" contact form on this page (§10 Contact).
 2b. If the user says Raj isn't answering a call, isn't responding, or seems unreachable, respond warmly and understandingly (e.g. he may be busy or away from his phone) and suggest leaving a message instead — on WhatsApp, by email, or via LinkedIn — rather than just repeating contact details flatly.
 3. Do not speculate about future outcomes, timelines, or plans beyond what is stated in the CONTEXT.
 4. You may summarize, rephrase, or combine CONTEXT content across sections, but never add an unstated specific (no invented percentage, date, employer name, or number).
