@@ -596,3 +596,113 @@ main{min-width:0;}
   .section{padding:56px 24px 56px 40px;}
   .section-num{left:8px;top:58px;}
 }
+
+/* ===========================================================
+   Scroll progress bar
+=========================================================== */
+.scroll-progress{
+  position:fixed;top:0;left:0;height:3px;width:0%;
+  background:var(--indigo);z-index:400;
+  transition:width .08s linear;
+}
+
+/* ===========================================================
+   Section anchor offset — keeps jumped-to content clear of the
+   sticky mobile header
+=========================================================== */
+.section, .entry[id]{scroll-margin-top:80px;}
+
+/* ===========================================================
+   Nav keyboard-shortcut hints + quick-jump trigger
+=========================================================== */
+.nav-key{
+  margin-left:auto;
+  font-family:var(--mono);font-size:10px;color:var(--faint);
+  border:1px solid var(--line);border-radius:3px;padding:1px 6px;
+  background:var(--bg-alt);
+}
+.palette-trigger{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  width:100%;margin:0 0 20px;
+  font-family:var(--mono);font-size:12px;color:var(--muted);
+  background:none;border:1px solid var(--line);border-radius:3px;
+  padding:8px 10px;cursor:pointer;
+  transition:color .15s ease,border-color .15s ease;
+}
+.palette-trigger:hover{color:var(--indigo);border-color:var(--indigo);}
+
+/* ===========================================================
+   Command palette
+=========================================================== */
+.cp-overlay{
+  display:none;position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,0.45);
+  padding:12vh 20px 0;
+}
+.cp-overlay.is-open{display:block;}
+.cp-box{
+  width:100%;max-width:560px;margin:0 auto;
+  background:var(--bg);border:1px solid var(--line);border-radius:8px;
+  box-shadow:0 24px 70px rgba(0,0,0,0.35);
+  overflow:hidden;
+}
+.cp-input{
+  width:100%;border:none;border-bottom:1px solid var(--line);
+  background:none;color:var(--ink);
+  font-family:var(--sans);font-size:16px;padding:18px 20px;outline:none;
+}
+.cp-results{list-style:none;max-height:50vh;overflow-y:auto;}
+.cp-result{
+  display:flex;align-items:baseline;gap:10px;
+  padding:12px 20px;cursor:pointer;
+  font-family:var(--sans);font-size:14px;color:var(--ink);
+}
+.cp-result .cp-kind{
+  font-family:var(--mono);font-size:10px;color:var(--faint);
+  text-transform:uppercase;letter-spacing:0.05em;margin-left:auto;flex-shrink:0;
+}
+.cp-result.is-active, .cp-result:hover{background:var(--indigo-soft);}
+.cp-empty{padding:20px;font-family:var(--mono);font-size:12.5px;color:var(--faint);}
+.cp-footer{
+  display:flex;gap:16px;padding:10px 20px;
+  border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10.5px;color:var(--faint);
+}
+
+/* ===========================================================
+   Project filter chips
+=========================================================== */
+.project-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;}
+.filter-chip{
+  font-family:var(--mono);font-size:11.5px;color:var(--muted);
+  background:var(--bg-alt);border:1px solid transparent;border-radius:20px;
+  padding:6px 14px;cursor:pointer;
+  transition:background .15s ease,color .15s ease,border-color .15s ease;
+}
+.filter-chip:hover{border-color:var(--indigo);}
+.filter-chip.is-active{background:var(--indigo);color:#fff;}
+.entry.is-filtered-out{display:none;}
+
+/* ===========================================================
+   Copy-to-clipboard buttons (Contact section)
+=========================================================== */
+.contact-grid a{position:relative;}
+.copy-btn{
+  position:absolute;top:16px;right:16px;
+  font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.04em;
+  color:var(--faint);background:var(--bg);border:1px solid var(--line);border-radius:3px;
+  padding:4px 8px;cursor:pointer;opacity:0;
+  transition:opacity .15s ease,color .15s ease,border-color .15s ease;
+}
+.contact-grid a:hover .copy-btn{opacity:1;}
+.copy-btn:hover{color:var(--indigo);border-color:var(--indigo);}
+.copy-btn.is-copied{opacity:1;color:var(--green);border-color:var(--green);}
+@media (hover:none){.copy-btn{opacity:1;}}
+
+/* ===========================================================
+   Reading-time badges (Papers / Dissertation)
+=========================================================== */
+.reading-time{
+  font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.05em;
+  color:var(--faint);background:var(--bg-alt);padding:3px 9px;border-radius:2px;
+}

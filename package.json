@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "wrangler pages dev . --compatibility-date=2026-01-01",
+    "predeploy": "node -e \"require('fs').writeFileSync('last-updated.json', JSON.stringify({date: new Date().toISOString()}))\"",
     "deploy": "wrangler pages deploy . --project-name=portfolio-raj"
   },
   "devDependencies": {
