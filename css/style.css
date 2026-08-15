@@ -489,10 +489,12 @@ main{min-width:0;}
 }
 
 .footer-bar{
-  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;
   font-family:var(--mono);font-size:11px;color:var(--faint);
   border-top:1px solid var(--line);padding-top:24px;
 }
+.footer-bar a{transition:color .15s ease;}
+.footer-bar a:hover{color:var(--indigo);}
 
 /* ===========================================================
    Chat — shared components (floating bubble + inline Ask AI section)
