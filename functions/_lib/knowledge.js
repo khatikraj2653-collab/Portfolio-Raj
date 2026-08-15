@@ -10,6 +10,7 @@ MSc Applied AI candidate, University of Warwick (WMG), graduating September 2026
 Two years eight months of prior industry experience in data analytics and ML engineering.
 Designs multi-agent, retrieval-augmented systems — from causal-chain equity analysis to
 hallucination detection — and publishes the research behind each one.
+Based in London, UK.
 
 CONTACT
 - Personal email: khatikraj2653@gmail.com
