@@ -5,20 +5,13 @@ function jsonResponse(body, status = 200) {
   });
 }
 
+// Reads log entries straight off kv.list()'s metadata — no per-entry kv.get()
+// fan-out — since that used to blow past Cloudflare's subrequest limit once
+// log volume grew (each admin request could trigger hundreds of KV gets).
 async function fetchRecent(kv, prefix, limit) {
   const list = await kv.list({ prefix: `${prefix}:`, limit: 1000 });
   const recentKeys = list.keys.slice(-limit).reverse(); // newest first
-  const values = await Promise.all(
-    recentKeys.map(async (k) => {
-      const raw = await kv.get(k.name);
-      try {
-        return JSON.parse(raw);
-      } catch {
-        return null;
-      }
-    })
-  );
-  return values.filter(Boolean);
+  return recentKeys.map((k) => k.metadata).filter(Boolean);
 }
 
 export async function onRequestGet({ request, env }) {
