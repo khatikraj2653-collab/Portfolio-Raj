@@ -1,4 +1,4 @@
-import { buildSystemPrompt } from "../_lib/knowledge.js";
+﻿import { buildSystemPrompt } from "../_lib/knowledge.js";
 import { getLivePageText } from "../_lib/livePage.js";
 import { hashIp, putLog } from "../_lib/log.js";
 
@@ -6,6 +6,28 @@ const MAX_MESSAGE_LEN = 800;
 const MAX_HISTORY_TURNS = 6; // 6 messages = 3 user/assistant pairs
 const MODEL = "gpt-4o-mini";
 const MAX_OUTPUT_TOKENS = 400;
+
+const DISSERTATION_KNOWLEDGE = `
+ADDITIONAL CONTEXT — DISSERTATION RESEARCH DASHBOARD:
+Raj's MSc dissertation (University of Warwick, MSc Applied AI, 2025) is titled "Can Large Language Models Automate Life Cycle Assessment (LCA)?" The interactive results dashboard is live at: https://khatikraj2653-collab.github.io/Raj-Dissertation-LCA-AI-Dashboard/
+
+Key findings:
+- Systematic review (PRISMA): 847 papers screened, 23 included for synthesis.
+- LLM accuracy benchmarks on LCA tasks (hard difficulty):
+  • Gemini 2.5 Flash: 86% (best overall)
+  • GPT-5.6 Terra: 80%
+  • Claude Haiku 4.5: 76%
+  • Llama 3.3 70B: 60%
+  • GPT-OSS 120B: 44%
+  • GPT-4o-mini: 26%
+- McNemar test results: statistically significant differences (p < 0.05) found between most model pairs, confirming performance gaps are not due to chance.
+- Accuracy collapse analysis: all models show accuracy drops of 15–40% when LCA complexity increases (multi-stage, multi-functional systems).
+- Cluster analysis identified 5 major research themes: (1) Automated data extraction, (2) Process modelling, (3) Uncertainty quantification, (4) Human-AI collaboration, (5) Domain-specific fine-tuning.
+- The dashboard includes: LLM leaderboard, PRISMA funnel chart, McNemar p-value heatmap, cluster word cloud, and accuracy collapse visualization.
+- Dissertation supervisor: Dr. [supervisor name not disclosed], University of Warwick.
+
+When asked about the dissertation, research results, LCA, or the dashboard, use these facts to give precise, grounded answers. Always include the dashboard link when relevant.
+`;
 
 // Per-IP sliding window limit. Lives in the isolate's memory, so it only
 // throttles requests handled by the same warm isolate — not a durable
@@ -93,7 +115,7 @@ export async function onRequestPost({ request, env }) {
   const livePageText = await getLivePageText(origin);
 
   const messages = [
-    { role: "system", content: buildSystemPrompt(livePageText) },
+    { role: "system", content: buildSystemPrompt(livePageText) + DISSERTATION_KNOWLEDGE },
     ...history,
     { role: "user", content: message },
   ];
@@ -157,3 +179,4 @@ export async function onRequestPost({ request, env }) {
 export async function onRequestGet() {
   return jsonResponse({ error: "Use POST." }, 405);
 }
+
