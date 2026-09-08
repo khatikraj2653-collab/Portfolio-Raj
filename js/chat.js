@@ -1,4 +1,4 @@
-// Shared chat widget logic. Two independent instances run on the page:
+﻿// Shared chat widget logic. Two independent instances run on the page:
 // the floating bubble and the inline "Ask AI" section — each keeps its
 // own conversation history and hits the same /api/chat endpoint.
 
@@ -28,7 +28,16 @@ class PortfolioChat {
   addBubble(role, text) {
     const el = document.createElement("div");
     el.className = `chat-msg ${role}`;
-    el.textContent = text;
+    if (role === "bot") {
+      el.innerHTML = text
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,
+          '<a href="$2" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">$1 ↗</a>')
+        .replace(/(https?:\/\/[^\s<"]+)/g,
+          '<a href="$1" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">$1 ↗</a>');
+    } else {
+      el.textContent = text;
+    }
     this.messagesEl.appendChild(el);
     this.messagesEl.scrollTop = this.messagesEl.scrollHeight;
     return el;
@@ -148,3 +157,4 @@ if (askMessages) {
     chip.addEventListener("click", () => askChat.send(chip.dataset.q));
   });
 }
+
