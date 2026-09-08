@@ -475,8 +475,29 @@
       <div class="section-num">§6</div>
       <h2 class="section-title reveal">Dissertation</h2>
       <p class="section-lede reveal"><em>Understanding the Role of Artificial Intelligence in Life Cycle Assessment</em> — supervised by Dr. You Wu, WMG, University of Warwick. Dissertation complete, September 2026.</p>
-      <div class="entry-links reveal" style="margin-bottom:1.5rem">
-        <a href="https://khatikraj2653-collab.github.io/Raj-Dissertation-LCA-AI-Dashboard/" target="_blank" rel="noopener">Interactive results dashboard · khatikraj2653-collab.github.io/Raj-Dissertation-LCA-AI-Dashboard ↗</a>
+      <style>
+        .diss-dashboard-card{background:var(--bg-alt);border:1px solid var(--line);border-left:3px solid var(--indigo);border-radius:3px;padding:24px 28px;transition:border-color .15s,box-shadow .15s,background .15s;}
+        .diss-dashboard-card:hover{border-color:var(--indigo);box-shadow:0 6px 24px rgba(34,50,107,0.1);background:var(--bg);}
+        .ddc-inner{display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+        .ddc-left{flex:1;min-width:220px;}
+        .ddc-badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);background:var(--green-soft);border:1px solid var(--green);border-radius:20px;padding:3px 10px 3px 8px;margin-bottom:12px;}
+        .ddc-title{font-family:var(--serif);font-weight:600;font-size:19px;margin-bottom:6px;color:var(--ink);}
+        .ddc-desc{font-family:var(--sans);font-size:13.5px;color:var(--muted);line-height:1.6;max-width:480px;margin:0;}
+        .ddc-right{flex-shrink:0;}
+        .ddc-btn{white-space:nowrap;font-size:13px !important;padding:11px 22px !important;}
+        @media(max-width:600px){.ddc-inner{flex-direction:column;align-items:flex-start;}}
+      </style>
+      <div class="diss-dashboard-card reveal" style="margin-bottom:2rem">
+        <div class="ddc-inner">
+          <div class="ddc-left">
+            <div class="ddc-badge"><span class="status-dot"></span>Live dashboard</div>
+            <h4 class="ddc-title">Interactive Research Results</h4>
+            <p class="ddc-desc">All dissertation findings in one place — LLM leaderboard, PRISMA funnel, McNemar p-value heatmap, cluster word cloud, and accuracy collapse analysis.</p>
+          </div>
+          <div class="ddc-right">
+            <a href="https://khatikraj2653-collab.github.io/Raj-Dissertation-LCA-AI-Dashboard/" target="_blank" rel="noopener" class="btn-cv ddc-btn">View Dashboard ↗</a>
+          </div>
+        </div>
       </div>
 
       <div class="entry-list">
