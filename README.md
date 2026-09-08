@@ -1,4 +1,4 @@
-# Portfolio-Raj
+ # Portfolio-Raj
 
 Personal portfolio site for Raj Khatik — MSc Applied AI candidate, University of Warwick (WMG) — showcasing his agentic AI / GenAI projects (SemiBot, GoldBot, SilverBot, Hallucination Detector, HITL Email Agent, Retail Research Assistant), published research, dissertation, and a chat assistant grounded in the site's own content.
 
