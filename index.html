@@ -112,6 +112,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<style>
+  .entry-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  .entry-links a{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:12px;font-weight:500;padding:7px 16px;border-radius:20px;text-decoration:none;transition:opacity .15s,background .15s,border-color .15s;white-space:nowrap;letter-spacing:.01em;}
+  .entry-links a.link-demo{background:var(--indigo);color:#fff;border:1px solid var(--indigo);}
+  .entry-links a.link-demo:hover{opacity:.82;}
+  .entry-links a.link-source{background:transparent;color:var(--ink);border:1px solid var(--line);}
+  .entry-links a.link-source:hover{border-color:var(--muted);background:var(--bg-alt);}
+  .biblio-link-btn{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;text-decoration:none;background:transparent;color:var(--ink);border:1px solid var(--line);transition:border-color .15s,background .15s;margin-top:6px;}
+  .biblio-link-btn:hover{border-color:var(--muted);background:var(--bg-alt);}
+</style>
 </head>
 <body>
 
@@ -331,8 +341,8 @@
             <span>LangGraph</span><span>FAISS</span><span>GPT-4o-mini</span><span>Streamlit</span><span>SQLite</span><span>LangSmith</span>
           </div>
           <div class="entry-links">
-            <a href="https://semibot-raj.streamlit.app" target="_blank" rel="noopener">Live demo · semibot-raj.streamlit.app ↗</a>
-            <a href="https://github.com/khatikraj2653-collab/SemiBot" target="_blank" rel="noopener">Source · github.com/khatikraj2653-collab/SemiBot ↗</a>
+            <a href="https://semibot-raj.streamlit.app" target="_blank" rel="noopener" class="link-demo">Live demo ↗</a>
+            <a href="https://github.com/khatikraj2653-collab/SemiBot" target="_blank" rel="noopener" class="link-source">Source code ↗</a>
           </div>
         </article>
 
@@ -348,8 +358,8 @@
             <span>LangGraph</span><span>FAISS</span><span>RAG</span><span>Streamlit</span><span>MCP/Tavily</span>
           </div>
           <div class="entry-links">
-            <a href="https://goldbot-raj.streamlit.app" target="_blank" rel="noopener">Live demo · goldbot-raj.streamlit.app ↗</a>
-            <a href="https://github.com/khatikraj2653-collab/GoldBot" target="_blank" rel="noopener">Source · github.com/khatikraj2653-collab/GoldBot ↗</a>
+            <a href="https://goldbot-raj.streamlit.app" target="_blank" rel="noopener" class="link-demo">Live demo ↗</a>
+            <a href="https://github.com/khatikraj2653-collab/GoldBot" target="_blank" rel="noopener" class="link-source">Source code ↗</a>
           </div>
         </article>
 
@@ -365,8 +375,8 @@
             <span>LangGraph</span><span>FAISS</span><span>RAG</span><span>Streamlit</span>
           </div>
           <div class="entry-links">
-            <a href="https://silverbot-raj.streamlit.app" target="_blank" rel="noopener">Live demo · silverbot-raj.streamlit.app ↗</a>
-            <a href="https://github.com/khatikraj2653-collab/SilverBot" target="_blank" rel="noopener">Source · github.com/khatikraj2653-collab/SilverBot ↗</a>
+            <a href="https://silverbot-raj.streamlit.app" target="_blank" rel="noopener" class="link-demo">Live demo ↗</a>
+            <a href="https://github.com/khatikraj2653-collab/SilverBot" target="_blank" rel="noopener" class="link-source">Source code ↗</a>
           </div>
         </article>
 
@@ -383,8 +393,8 @@
             <span>LangGraph</span><span>NLI</span><span>LLM-as-Judge</span><span>Python</span>
           </div>
           <div class="entry-links">
-            <a href="https://hallucinationdetecto.streamlit.app" target="_blank" rel="noopener">Live demo · hallucinationdetecto.streamlit.app ↗</a>
-            <a href="https://github.com/khatikraj2653-collab/HallucinationDetecto" target="_blank" rel="noopener">Source · github.com/khatikraj2653-collab/HallucinationDetecto ↗</a>
+            <a href="https://hallucinationdetecto.streamlit.app" target="_blank" rel="noopener" class="link-demo">Live demo ↗</a>
+            <a href="https://github.com/khatikraj2653-collab/HallucinationDetecto" target="_blank" rel="noopener" class="link-source">Source code ↗</a>
           </div>
         </article>
 
@@ -400,7 +410,7 @@
             <span>LangGraph</span><span>FastAPI</span><span>Chrome Ext (MV3)</span><span>Gmail API</span>
           </div>
           <div class="entry-links">
-            <a href="https://github.com/khatikraj2653-collab/EmailHITLAgent" target="_blank" rel="noopener">Source · github.com/khatikraj2653-collab/EmailHITLAgent ↗</a>
+            <a href="https://github.com/khatikraj2653-collab/EmailHITLAgent" target="_blank" rel="noopener" class="link-source">Source code ↗</a>
           </div>
         </article>
 
@@ -416,8 +426,8 @@
             <span>LangGraph</span><span>FAISS</span><span>Streamlit</span><span>Python</span>
           </div>
           <div class="entry-links">
-            <a href="https://retailresearch-raj.streamlit.app" target="_blank" rel="noopener">Live demo · retailresearch-raj.streamlit.app ↗</a>
-            <a href="https://github.com/khatikraj2653-collab/RetailResearchAssistant" target="_blank" rel="noopener">Source · github.com/khatikraj2653-collab/RetailResearchAssistant ↗</a>
+            <a href="https://retailresearch-raj.streamlit.app" target="_blank" rel="noopener" class="link-demo">Live demo ↗</a>
+            <a href="https://github.com/khatikraj2653-collab/RetailResearchAssistant" target="_blank" rel="noopener" class="link-source">Source code ↗</a>
           </div>
         </article>
 
@@ -437,7 +447,7 @@
             <span class="biblio-id">SSRN 7199998</span>
             <span class="biblio-status">Under review</span>
             <span class="biblio-presented">Presented at University of Warwick</span>
-            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7199998" target="_blank" rel="noopener">papers.ssrn.com/sol3/papers.cfm?abstract_id=7199998 ↗</a>
+            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7199998" target="_blank" rel="noopener" class="biblio-link-btn">Read on SSRN ↗</a>
           </span>
         </li>
         <li class="reveal">
@@ -446,7 +456,7 @@
           <span class="biblio-meta">
             <span class="biblio-id">SSRN 7200198</span>
             <span class="biblio-status">Under review</span>
-            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7200198" target="_blank" rel="noopener">papers.ssrn.com/sol3/papers.cfm?abstract_id=7200198 ↗</a>
+            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7200198" target="_blank" rel="noopener" class="biblio-link-btn">Read on SSRN ↗</a>
           </span>
         </li>
         <li class="reveal">
@@ -455,7 +465,7 @@
           <span class="biblio-meta">
             <span class="biblio-id">SSRN 7203201</span>
             <span class="biblio-status">Under review</span>
-            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7203201" target="_blank" rel="noopener">papers.ssrn.com/sol3/papers.cfm?abstract_id=7203201 ↗</a>
+            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7203201" target="_blank" rel="noopener" class="biblio-link-btn">Read on SSRN ↗</a>
           </span>
         </li>
         <li class="reveal">
@@ -465,7 +475,7 @@
             <span class="biblio-id">SSRN 7200222</span>
             <span class="biblio-status">Under review</span>
             <span class="biblio-presented">Presented at University of Warwick</span>
-            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7200222" target="_blank" rel="noopener">papers.ssrn.com/sol3/papers.cfm?abstract_id=7200222 ↗</a>
+            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7200222" target="_blank" rel="noopener" class="biblio-link-btn">Read on SSRN ↗</a>
           </span>
         </li>
       </ol>
