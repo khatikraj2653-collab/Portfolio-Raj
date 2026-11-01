@@ -6,8 +6,8 @@ export const KNOWLEDGE_DOC = `
 RAJ TEJPAL KHATIK — AI/ML Engineer
 
 ROLE
-MSc Applied AI candidate, University of Warwick (WMG), graduating September 2026.
-Two years six months of prior industry experience in data analytics and ML engineering.
+MSc Applied AI, University of Warwick (WMG) — programme completed September 2026, final result pending (not yet awarded).
+2+ years (2 years 8 months) of prior industry experience in data analytics and ML engineering.
 Designs multi-agent, retrieval-augmented systems — from causal-chain equity analysis to
 hallucination detection — and publishes the research behind each one.
 Based in London, UK.
@@ -32,11 +32,11 @@ EXPERIENCE
   games and interactive systems through structured playtesting; provides user-centred
   feedback on usability, player experience, mechanics, and immersion-breaking issues.
 
-H&B Infotech, India — 2 years 6 months total
-- AI Engineer (Mar 2024 – Feb 2025): Built ML pipelines to prepare and process data for
+H&B Infotech, India — 2 years 8 months total
+- AI Engineer (Mar 2024 – Mar 2025): Built ML pipelines to prepare and process data for
   model training, integrated into existing backend systems — improving analysis accuracy
   and reporting efficiency. Stack: Python, NumPy, Pandas, ML Pipelines.
-- Software Engineer (Mar 2023 – Feb 2024): Engineered backend systems and data pipelines
+- Software Engineer (Mar 2023 – Mar 2024): Engineered backend systems and data pipelines
   powering internal reporting tools, with data validation and front-end integration work.
   Stack: Python, MySQL, Pandas, NumPy.
 - Software Engineer Intern (Aug 2022 – Feb 2023): Developed and validated Python-MySQL
@@ -44,13 +44,13 @@ H&B Infotech, India — 2 years 6 months total
   Stack: Python, MySQL, HTML/CSS, JavaScript, React.
 
 EDUCATION
-- MSc Artificial Intelligence, University of Warwick, WMG — September 2025 to September
-  2026 (in progress).
-- BEng, Computer Science & Engineering, Gujarat Technological University — August 2021 to
+- MSc Applied Artificial Intelligence, University of Warwick, WMG — September 2025 to
+  September 2026. Programme completed; final result pending (not yet awarded).
+- BE, Computer Science & Engineering, Gujarat Technological University — August 2021 to
   May 2025, CGPA 8.49 / 10.
 
 PROJECTS
-Six deployed systems, each paired with a published paper, built on a shared architecture —
+Six systems (five deployed, one open-source), with four published preprints, built on a shared architecture —
 LangGraph orchestration, FAISS retrieval, Streamlit interfaces — applied to a different
 domain each time.
 
@@ -61,8 +61,7 @@ domain each time.
    rather than a single opaque verdict.
    Key result: across 426 observations and 48 tickers, directional accuracy scales from
    84.0% (>$1T market cap) to 41.7% (mid-cap) — confirmed via logistic regression
-   (p<0.001) and robust to sub-sector controls. The mega-cap subset exceeds every
-   comparable published benchmark.
+   (p<0.001) and robust to sub-sector controls.
    Stack: LangGraph, FAISS, GPT-4o-mini, Streamlit, SQLite, LangSmith.
    Live demo: https://semibot-raj.streamlit.app
    Source: https://github.com/khatikraj2653-collab/SemiBot
@@ -100,7 +99,7 @@ domain each time.
    alone.
    Key result: 72.4–92.2% accuracy across three benchmarks. A quadrant analysis
    overturned the system's own design assumption: "flagged + consistent" claims were
-   100% real hallucinations (n=4), beating the architecture's own "high-confidence"
+   100% real hallucinations (n=4, small sample), beating the architecture's own "high-confidence"
    category (66.7%).
    Stack: LangGraph, NLI, LLM-as-Judge, Python.
    Live demo: https://hallucinationdetecto.streamlit.app
@@ -163,7 +162,7 @@ All four preprints are live on SSRN and in active submission to peer-reviewed jo
 
 DISSERTATION
 "Understanding the Role of Artificial Intelligence in Life Cycle Assessment" — supervised
-by Dr. You Wu, WMG, University of Warwick. Complete, September 2026.
+by Dr. You Wu, WMG, University of Warwick. Submitted September 2026; result pending.
 
 - Objective 1 — Landscape Review (complete): Combined a recent systematic literature
   review (538 papers screened from 1,509 candidates, 209 analysed in full) with a
@@ -206,8 +205,9 @@ CERTIFICATIONS
 - Generative AI Engineering — IBM (Coursera).
 
 SUMMARY STATS
-6 projects deployed. 4 preprints live on SSRN. Domains covered: Semiconductors, Gold,
-Silver. Graduating September 2026.
+6 projects (5 deployed, 1 open-source). 4 preprints live on SSRN. Domains: equity
+research, safe-haven metals, LLM reliability, agentic email, retail research. MSc programme
+completed September 2026; final result pending.
 `.trim();
 
 /**
