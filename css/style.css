@@ -782,3 +782,4 @@ button.biblio-link-btn{cursor:pointer;}
 .ri-note a{color:var(--indigo);}
 .entry-list>.entry,.demo-details,.demo-body{min-width:0;max-width:100%;}
 .arch-wrap{max-width:100%;}
+.demo-details{grid-column:1 / -1;}
