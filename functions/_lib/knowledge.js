@@ -23,9 +23,22 @@ CONTACT
   from the site, as an alternative to email, LinkedIn, or WhatsApp.
 - CV / Resume: downloadable directly from the Profile section (§1) at the top of the
   page — "Download CV (PDF)" and "Download CV (Word)" buttons, both linking to his full
-  CV (Raj_Tejpal_Khatik_CV.pdf / .docx).
-- Open to: AI/ML Engineer, GenAI Engineer, and Agentic AI roles. Also exploring PhD
-  positions in CS/AI and applied economics.
+  CV (Raj_Khatik_CV_2026.pdf / .docx).
+- Open to: AI/ML Engineer, GenAI Engineer, and Agentic AI roles. Also looking for PhD
+  positions in CS/AI and applied economics (the hero badge at the top of the page says
+  "Open to AI/ML Engineer roles & PhD positions").
+- Research interests (shown under the Papers section): (1) causal and regime-aware
+  reasoning in LLM systems — SemiBot, GoldBot and SilverBot test this across market
+  regimes, and GoldBot's cross-regime backtest exposed trend-matching that a single
+  backtest would have hidden; (2) evaluating and detecting LLM failure — hallucination
+  detection with formal significance testing, multi-judge panels, and robustness to
+  paraphrase; (3) AI for sustainability analysis — LLMs and unsupervised learning on life
+  cycle assessment data, and gaps in AI-assisted LCA tooling such as goal-and-scope
+  drafting. A full research statement is available on request by email.
+- Each paper in the Papers section has a "Cite (BibTeX)" button, and each live project
+  card has an expandable demo (and, for SemiBot and Hallucination Detector, an
+  architecture diagram). The live demos run on free Streamlit hosting, so a first load
+  after idle time can take up to about 30 seconds.
 
 EXPERIENCE
 - Play Tester, Fusion UX Lab, University of Warwick (Nov 2025 – Aug 2026): Evaluates video

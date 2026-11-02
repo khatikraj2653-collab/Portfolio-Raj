@@ -96,6 +96,46 @@
       "description": "Human-in-the-loop email drafting agent that never sends without approval, built with LangGraph."
     },
     {
+      "@type": "ScholarlyArticle",
+      "headline": "A Domain-Specific Causal Chain RAG System for Semiconductor Equity Analysis",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7199998",
+      "identifier": "SSRN 7199998",
+      "datePublished": "2026",
+      "publisher": { "@type": "Organization", "name": "SSRN" },
+      "author": { "@id": "https://portfolio-raj.pages.dev/#person" },
+      "about": "Causal-chain retrieval-augmented generation for semiconductor equity analysis"
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "headline": "GoldBot: A Multi-Factor Safe-Haven Analyzer for Gold — Cross-Regime Evidence for Trend-Matching Rather Than Event Discrimination",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7200198",
+      "identifier": "SSRN 7200198",
+      "datePublished": "2026",
+      "publisher": { "@type": "Organization", "name": "SSRN" },
+      "author": { "@id": "https://portfolio-raj.pages.dev/#person" },
+      "about": "Cross-regime backtesting of a nine-factor gold safe-haven classifier"
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "headline": "SilverBot: A Dual-Regime Analyzer for Silver's Industrial-Monetary Duality — Cross-Regime Evidence for a Crisis-Type-Dependent Reversal",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7203201",
+      "identifier": "SSRN 7203201",
+      "datePublished": "2026",
+      "publisher": { "@type": "Organization", "name": "SSRN" },
+      "author": { "@id": "https://portfolio-raj.pages.dev/#person" },
+      "about": "Industrial versus monetary drivers of silver prices across four regimes"
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "headline": "Multi-Method Ensemble Framework for LLM Hallucination Detection",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7200222",
+      "identifier": "SSRN 7200222",
+      "datePublished": "2026",
+      "publisher": { "@type": "Organization", "name": "SSRN" },
+      "author": { "@id": "https://portfolio-raj.pages.dev/#person" },
+      "about": "Six-signal ensemble for detecting hallucinations in large language model output"
+    },
+    {
       "@type": "SoftwareApplication",
       "name": "Retail Research Assistant",
       "applicationCategory": "FinanceApplication",
@@ -324,6 +364,8 @@
       <h2 class="section-title reveal">Projects</h2>
       <p class="section-lede reveal">Six systems — five deployed, one open-source — with four published preprints. Built on a shared architecture — LangGraph orchestration, FAISS retrieval, Streamlit interfaces — applied to a different domain each time.</p>
 
+      <p class="wake-note reveal">Live demos run on free Streamlit hosting. If an app has been idle, its first load can take up to ~30 seconds while it wakes up.</p>
+
       <div class="project-filters reveal" id="projectFilters"></div>
 
       <div class="entry-list">
@@ -340,6 +382,53 @@
           <div class="entry-tags">
             <span>LangGraph</span><span>FAISS</span><span>GPT-4o-mini</span><span>Streamlit</span><span>SQLite</span><span>LangSmith</span>
           </div>
+          <details class="demo-details" data-gif="https://raw.githubusercontent.com/khatikraj2653-collab/SemiBot/main/semibot-demo-v3.gif" data-alt="SemiBot demo: running an 18-factor analysis on a semiconductor ticker">
+            <summary>Architecture &amp; demo</summary>
+            <div class="demo-body">
+              <div class="arch-wrap">
+                <svg class="arch-svg" viewBox="0 0 760 262" role="img" aria-label="SemiBot architecture: a ticker fans out to four parallel LangGraph subgraphs (macro, fundamental, market, external) covering 18 factors, which feed one LLM prediction step that returns a prediction with per-factor attribution.">
+                  <defs><marker id="arrS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" class="arch-arrowhead"/></marker></defs>
+                  <rect class="arch-key" x="10" y="95" width="90" height="60" rx="4"/>
+                  <text class="arch-t" x="55" y="122" text-anchor="middle">Ticker</text>
+                  <text class="arch-s" x="55" y="138" text-anchor="middle">user input</text>
+
+                  <rect class="arch-box" x="140" y="10" width="320" height="44" rx="4"/>
+                  <text class="arch-t" x="300" y="28" text-anchor="middle">Macro · 4 factors</text>
+                  <text class="arch-s" x="300" y="43" text-anchor="middle">CPI · PPI · Fed rate · USD index</text>
+                  <rect class="arch-box" x="140" y="70" width="320" height="44" rx="4"/>
+                  <text class="arch-t" x="300" y="88" text-anchor="middle">Fundamental · 4 factors</text>
+                  <text class="arch-s" x="300" y="103" text-anchor="middle">P/E · market cap · guidance · insider selling</text>
+                  <rect class="arch-box" x="140" y="130" width="320" height="44" rx="4"/>
+                  <text class="arch-t" x="300" y="148" text-anchor="middle">Market · 4 factors</text>
+                  <text class="arch-s" x="300" y="163" text-anchor="middle">sector rally · technicals · ratings · sell-the-news</text>
+                  <rect class="arch-box" x="140" y="190" width="320" height="44" rx="4"/>
+                  <text class="arch-t" x="300" y="208" text-anchor="middle">External · 6 factors</text>
+                  <text class="arch-s" x="300" y="223" text-anchor="middle">geopolitics · news · rotation · contagion · beta · supply chain (RAG)</text>
+
+                  <path class="arch-line" d="M100 125 L140 32" marker-end="url(#arrS)"/>
+                  <path class="arch-line" d="M100 125 L140 92" marker-end="url(#arrS)"/>
+                  <path class="arch-line" d="M100 125 L140 152" marker-end="url(#arrS)"/>
+                  <path class="arch-line" d="M100 125 L140 212" marker-end="url(#arrS)"/>
+                  <path class="arch-line" d="M460 32 L500 120" marker-end="url(#arrS)"/>
+                  <path class="arch-line" d="M460 92 L500 124" marker-end="url(#arrS)"/>
+                  <path class="arch-line" d="M460 152 L500 128" marker-end="url(#arrS)"/>
+                  <path class="arch-line" d="M460 212 L500 132" marker-end="url(#arrS)"/>
+
+                  <rect class="arch-key" x="500" y="90" width="120" height="70" rx="4"/>
+                  <text class="arch-t" x="560" y="119" text-anchor="middle">LLM synthesis</text>
+                  <text class="arch-s" x="560" y="135" text-anchor="middle">GPT-4o-mini</text>
+                  <text class="arch-s" x="560" y="148" text-anchor="middle">all 18 factors</text>
+                  <path class="arch-line" d="M620 125 L655 125" marker-end="url(#arrS)"/>
+                  <rect class="arch-key" x="655" y="90" width="100" height="70" rx="4"/>
+                  <text class="arch-t" x="705" y="119" text-anchor="middle">Prediction</text>
+                  <text class="arch-s" x="705" y="135" text-anchor="middle">+ per-factor</text>
+                  <text class="arch-s" x="705" y="148" text-anchor="middle">attribution</text>
+                  <text class="arch-s" x="380" y="256" text-anchor="middle">LangGraph parallel subgraphs · SQLite checkpointer · FAISS RAG · LangSmith tracing</text>
+                </svg>
+              </div>
+              <img class="demo-gif" alt="" loading="lazy" decoding="async">
+            </div>
+          </details>
           <div class="entry-links">
             <a href="https://semibot-raj.streamlit.app" target="_blank" rel="noopener" class="link-demo">Live demo ↗</a>
             <a href="https://github.com/khatikraj2653-collab/SemiBot" target="_blank" rel="noopener" class="link-source">Source code ↗</a>
@@ -357,6 +446,10 @@
           <div class="entry-tags">
             <span>LangGraph</span><span>FAISS</span><span>RAG</span><span>Streamlit</span><span>MCP/Tavily</span>
           </div>
+          <details class="demo-details" data-gif="https://raw.githubusercontent.com/khatikraj2653-collab/GoldBot/main/goldbot-demo.gif" data-alt="GoldBot demo: running a nine-factor safe-haven analysis">
+            <summary>Demo</summary>
+            <div class="demo-body"><img class="demo-gif" alt="" loading="lazy" decoding="async"></div>
+          </details>
           <div class="entry-links">
             <a href="https://goldbot-raj.streamlit.app" target="_blank" rel="noopener" class="link-demo">Live demo ↗</a>
             <a href="https://github.com/khatikraj2653-collab/GoldBot" target="_blank" rel="noopener" class="link-source">Source code ↗</a>
@@ -374,6 +467,10 @@
           <div class="entry-tags">
             <span>LangGraph</span><span>FAISS</span><span>RAG</span><span>Streamlit</span>
           </div>
+          <details class="demo-details" data-gif="https://raw.githubusercontent.com/khatikraj2653-collab/SilverBot/main/silverbot-demo.gif" data-alt="SilverBot demo: running a dual-regime silver analysis">
+            <summary>Demo</summary>
+            <div class="demo-body"><img class="demo-gif" alt="" loading="lazy" decoding="async"></div>
+          </details>
           <div class="entry-links">
             <a href="https://silverbot-raj.streamlit.app" target="_blank" rel="noopener" class="link-demo">Live demo ↗</a>
             <a href="https://github.com/khatikraj2653-collab/SilverBot" target="_blank" rel="noopener" class="link-source">Source code ↗</a>
@@ -392,6 +489,67 @@
           <div class="entry-tags">
             <span>LangGraph</span><span>NLI</span><span>LLM-as-Judge</span><span>Python</span>
           </div>
+          <details class="demo-details" data-gif="https://raw.githubusercontent.com/khatikraj2653-collab/HallucinationDetecto/main/hallucinationdetector-demo.gif" data-alt="Hallucination Detector demo: analysing an LLM answer claim by claim">
+            <summary>Architecture &amp; demo</summary>
+            <div class="demo-body">
+              <div class="arch-wrap">
+                <svg class="arch-svg" viewBox="0 0 760 290" role="img" aria-label="Hallucination Detector architecture: three sampled answers are split into claims; each claim passes a refusal check, then NLI, RAG grounding and an LLM judge panel run in parallel; a self-consistency check compares the three answers; the six signals vote to produce a verdict.">
+                  <defs><marker id="arrH" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" class="arch-arrowhead"/></marker></defs>
+                  <rect class="arch-key" x="10" y="20" width="100" height="50" rx="4"/>
+                  <text class="arch-t" x="60" y="42" text-anchor="middle">Context +</text>
+                  <text class="arch-t" x="60" y="56" text-anchor="middle">question</text>
+                  <rect class="arch-box" x="140" y="20" width="110" height="50" rx="4"/>
+                  <text class="arch-t" x="195" y="42" text-anchor="middle">3 sampled</text>
+                  <text class="arch-s" x="195" y="57" text-anchor="middle">answers (T &gt; 0)</text>
+                  <rect class="arch-box" x="280" y="20" width="100" height="50" rx="4"/>
+                  <text class="arch-t" x="330" y="42" text-anchor="middle">Claim</text>
+                  <text class="arch-t" x="330" y="56" text-anchor="middle">splitter</text>
+                  <rect class="arch-box" x="410" y="20" width="150" height="50" rx="4"/>
+                  <text class="arch-t" x="485" y="42" text-anchor="middle">check_refusal</text>
+                  <text class="arch-s" x="485" y="57" text-anchor="middle">disclaimers are skipped</text>
+                  <path class="arch-line" d="M110 45 L140 45" marker-end="url(#arrH)"/>
+                  <path class="arch-line" d="M250 45 L280 45" marker-end="url(#arrH)"/>
+                  <path class="arch-line" d="M380 45 L410 45" marker-end="url(#arrH)"/>
+
+                  <path class="arch-line" d="M485 70 L485 100"/>
+                  <path class="arch-line" d="M270 100 L650 100"/>
+                  <path class="arch-line" d="M270 100 L270 130" marker-end="url(#arrH)"/>
+                  <path class="arch-line" d="M450 100 L450 130" marker-end="url(#arrH)"/>
+                  <path class="arch-line" d="M650 100 L650 130" marker-end="url(#arrH)"/>
+                  <path class="arch-line" d="M195 70 L195 100 L90 100 L90 130" marker-end="url(#arrH)"/>
+                  <text class="arch-s" x="540" y="92">per-claim LangGraph subgraph, run in parallel</text>
+
+                  <rect class="arch-box" x="10" y="130" width="160" height="60" rx="4"/>
+                  <text class="arch-t" x="90" y="152" text-anchor="middle">Self-consistency</text>
+                  <text class="arch-s" x="90" y="167" text-anchor="middle">panel compares the</text>
+                  <text class="arch-s" x="90" y="179" text-anchor="middle">3 answers · signal 6</text>
+                  <rect class="arch-box" x="190" y="130" width="160" height="60" rx="4"/>
+                  <text class="arch-t" x="270" y="152" text-anchor="middle">NLI entailment</text>
+                  <text class="arch-s" x="270" y="167" text-anchor="middle">BART-large-MNLI</text>
+                  <text class="arch-s" x="270" y="179" text-anchor="middle">signal 1</text>
+                  <rect class="arch-box" x="370" y="130" width="160" height="60" rx="4"/>
+                  <text class="arch-t" x="450" y="152" text-anchor="middle">RAG grounding</text>
+                  <text class="arch-s" x="450" y="167" text-anchor="middle">FAISS · cosine threshold</text>
+                  <text class="arch-s" x="450" y="179" text-anchor="middle">signal 2</text>
+                  <rect class="arch-box" x="550" y="130" width="200" height="60" rx="4"/>
+                  <text class="arch-t" x="650" y="152" text-anchor="middle">LLM judge panel</text>
+                  <text class="arch-s" x="650" y="167" text-anchor="middle">OpenAI · Groq · Gemini</text>
+                  <text class="arch-s" x="650" y="179" text-anchor="middle">signals 3–5 · per-slot fallbacks</text>
+
+                  <path class="arch-line" d="M90 190 L90 215"/>
+                  <path class="arch-line" d="M270 190 L270 215"/>
+                  <path class="arch-line" d="M450 190 L450 215"/>
+                  <path class="arch-line" d="M650 190 L650 215"/>
+                  <path class="arch-line" d="M90 215 L650 215"/>
+                  <path class="arch-line" d="M380 215 L380 235" marker-end="url(#arrH)"/>
+                  <rect class="arch-key" x="230" y="235" width="300" height="42" rx="4"/>
+                  <text class="arch-t" x="380" y="254" text-anchor="middle">Ensemble vote → verdict</text>
+                  <text class="arch-s" x="380" y="268" text-anchor="middle">six signals, one vote each · score = share flagging</text>
+                </svg>
+              </div>
+              <img class="demo-gif" alt="" loading="lazy" decoding="async">
+            </div>
+          </details>
           <div class="entry-links">
             <a href="https://hallucinationdetecto.streamlit.app" target="_blank" rel="noopener" class="link-demo">Live demo ↗</a>
             <a href="https://github.com/khatikraj2653-collab/HallucinationDetecto" target="_blank" rel="noopener" class="link-source">Source code ↗</a>
@@ -425,6 +583,10 @@
           <div class="entry-tags">
             <span>LangGraph</span><span>FAISS</span><span>Streamlit</span><span>Python</span>
           </div>
+          <details class="demo-details" data-gif="https://raw.githubusercontent.com/khatikraj2653-collab/RetailResearchAssistant/main/retailresearch-demo.gif" data-alt="Retail Research Assistant demo: exploring S&amp;P 500 companies">
+            <summary>Demo</summary>
+            <div class="demo-body"><img class="demo-gif" alt="" loading="lazy" decoding="async"></div>
+          </details>
           <div class="entry-links">
             <a href="https://retailresearch-raj.streamlit.app" target="_blank" rel="noopener" class="link-demo">Live demo ↗</a>
             <a href="https://github.com/khatikraj2653-collab/RetailResearchAssistant" target="_blank" rel="noopener" class="link-source">Source code ↗</a>
@@ -448,6 +610,7 @@
             <span class="biblio-status">Under review</span>
             <span class="biblio-presented">Presented at University of Warwick</span>
             <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7199998" target="_blank" rel="noopener" class="biblio-link-btn">Read on SSRN ↗</a>
+            <button type="button" class="biblio-link-btn cite-btn" data-cite="semibot">Cite (BibTeX)</button>
           </span>
         </li>
         <li class="reveal">
@@ -457,6 +620,7 @@
             <span class="biblio-id">SSRN 7200198</span>
             <span class="biblio-status">Under review</span>
             <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7200198" target="_blank" rel="noopener" class="biblio-link-btn">Read on SSRN ↗</a>
+            <button type="button" class="biblio-link-btn cite-btn" data-cite="goldbot">Cite (BibTeX)</button>
           </span>
         </li>
         <li class="reveal">
@@ -466,6 +630,7 @@
             <span class="biblio-id">SSRN 7203201</span>
             <span class="biblio-status">Under review</span>
             <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7203201" target="_blank" rel="noopener" class="biblio-link-btn">Read on SSRN ↗</a>
+            <button type="button" class="biblio-link-btn cite-btn" data-cite="silverbot">Cite (BibTeX)</button>
           </span>
         </li>
         <li class="reveal">
@@ -476,9 +641,21 @@
             <span class="biblio-status">Under review</span>
             <span class="biblio-presented">Presented at University of Warwick</span>
             <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7200222" target="_blank" rel="noopener" class="biblio-link-btn">Read on SSRN ↗</a>
+            <button type="button" class="biblio-link-btn cite-btn" data-cite="hallucination">Cite (BibTeX)</button>
           </span>
         </li>
       </ol>
+
+      <div class="research-interests reveal" id="research-interests">
+        <h3 class="ri-title">Research interests</h3>
+        <p class="ri-lede">I am looking for PhD positions in CS/AI and applied economics. My work so far points to three connected questions:</p>
+        <ul class="ri-list">
+          <li><strong>Causal and regime-aware reasoning in LLM systems.</strong> Can retrieval-augmented agents model <em>why</em> signals move together, and do they hold up when the regime changes? SemiBot, GoldBot and SilverBot test this across market regimes; GoldBot's cross-regime backtest exposed trend-matching that a single backtest would have hidden.</li>
+          <li><strong>Evaluating and detecting LLM failure.</strong> Hallucination detection with formal significance testing, multi-judge panels, and robustness to paraphrase, including the accuracy collapse found in the dissertation.</li>
+          <li><strong>AI for sustainability analysis.</strong> LLMs and unsupervised learning on life cycle assessment data (ecoinvent), and where AI-assisted LCA tooling leaves gaps, such as goal-and-scope drafting under ISO 14040/14044.</li>
+        </ul>
+        <p class="ri-note">Happy to share a full research statement on request — <a href="mailto:khatikraj2653@gmail.com?subject=Research%20statement%20request">email me</a>.</p>
+      </div>
     </section>
 
     <section id="dissertation" class="section">
@@ -507,6 +684,7 @@
           </div>
           <div class="ddc-right">
             <a href="https://khatikraj2653-collab.github.io/Raj-Dissertation-LCA-AI-Dashboard/" target="_blank" rel="noopener" class="btn-cv ddc-btn">View Dashboard ↗</a>
+            <a href="https://github.com/khatikraj2653-collab/Raj-Dissertation" target="_blank" rel="noopener" class="biblio-link-btn ddc-btn" style="margin-top:10px">Code &amp; data (GitHub) ↗</a>
           </div>
         </div>
       </div>
@@ -572,6 +750,12 @@
         <span>Git/GitHub</span>
         <span>Streamlit Community Cloud</span>
         <span>Cloudflare Pages/Workers</span>
+        <span>LLM Evaluation</span>
+        <span>HuggingFace Transformers (NLI)</span>
+        <span>scikit-learn</span>
+        <span>LangSmith</span>
+        <span>MCP (Model Context Protocol)</span>
+        <span>GitHub Actions / CI</span>
       </div>
 
       <div class="github-stats reveal">
@@ -733,14 +917,5 @@
 <script src="js/main.js"></script>
 <script src="js/chat.js"></script>
 
-<!--
-  Cloudflare Web Analytics — privacy-friendly, no cookies, free.
-  To enable: after deploying to Cloudflare Pages, go to
-  https://dash.cloudflare.com -> Analytics & Logs -> Web Analytics,
-  add this site, and it will give you a token to replace YOUR_TOKEN_HERE below.
-  Then uncomment the script tag.
-
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "YOUR_TOKEN_HERE"}'></script>
--->
 </body>
 </html>

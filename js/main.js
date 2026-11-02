@@ -373,3 +373,93 @@ if (footerUpdated) {
     })
     .catch(() => {});
 }
+
+// ===========================================================
+// Project cards: lazy-load demo GIFs only when a panel is opened
+// ===========================================================
+document.querySelectorAll('.demo-details').forEach((details) => {
+  details.addEventListener('toggle', () => {
+    if (!details.open) return;
+    const img = details.querySelector('.demo-gif');
+    if (img && !img.getAttribute('src') && details.dataset.gif) {
+      img.alt = details.dataset.alt || '';
+      img.src = details.dataset.gif;
+    }
+  });
+});
+
+// ===========================================================
+// Papers: "Cite (BibTeX)" buttons copy a ready-made entry
+// ===========================================================
+const BIBTEX = {
+  semibot: {
+    key: 'khatik2026semibot',
+    title: 'A Domain-Specific Causal Chain RAG System for Semiconductor Equity Analysis',
+    id: '7199998',
+  },
+  goldbot: {
+    key: 'khatik2026goldbot',
+    title: 'GoldBot: A Multi-Factor Safe-Haven Analyzer for Gold --- Cross-Regime Evidence for Trend-Matching Rather Than Event Discrimination',
+    id: '7200198',
+  },
+  silverbot: {
+    key: 'khatik2026silverbot',
+    title: "SilverBot: A Dual-Regime Analyzer for Silver's Industrial-Monetary Duality --- Cross-Regime Evidence for a Crisis-Type-Dependent Reversal",
+    id: '7203201',
+  },
+  hallucination: {
+    key: 'khatik2026hallucination',
+    title: 'Multi-Method Ensemble Framework for LLM Hallucination Detection',
+    id: '7200222',
+  },
+};
+
+document.querySelectorAll('.cite-btn').forEach((btn) => {
+  btn.addEventListener('click', async () => {
+    const paper = BIBTEX[btn.dataset.cite];
+    if (!paper) return;
+    const entry = [
+      `@article{${paper.key},`,
+      '  author  = {Khatik, Raj Tejpal},',
+      `  title   = {${paper.title}},`,
+      '  journal = {SSRN Electronic Journal},',
+      '  year    = {2026},',
+      `  note    = {SSRN abstract ${paper.id}. Preprint},`,
+      `  url     = {https://papers.ssrn.com/sol3/papers.cfm?abstract_id=${paper.id}}`,
+      '}',
+    ].join('\n');
+    try {
+      await navigator.clipboard.writeText(entry);
+    } catch {
+      return;
+    }
+    const original = btn.textContent;
+    btn.textContent = 'Copied';
+    setTimeout(() => { btn.textContent = original; }, 1500);
+  });
+});
+
+// ===========================================================
+// Live-demo status dots (needs UPTIMEROBOT_API_KEY on the server;
+// without it /api/status returns no monitors and nothing is shown)
+// ===========================================================
+(function () {
+  const links = Array.from(document.querySelectorAll('#projects .link-demo'))
+    .filter((a) => a.hostname.endsWith('.streamlit.app'));
+  if (!links.length) return;
+  fetch('/api/status')
+    .then((res) => (res.ok ? res.json() : null))
+    .then((data) => {
+      if (!data || !data.monitors) return;
+      links.forEach((a) => {
+        const state = data.monitors[a.hostname];
+        if (state !== 'up' && state !== 'down') return;
+        const pip = document.createElement('span');
+        pip.className = 'status-pip';
+        pip.dataset.state = state;
+        pip.title = state === 'up' ? 'Responding (checked every 5 minutes)' : 'Currently unreachable';
+        a.appendChild(pip);
+      });
+    })
+    .catch(() => {});
+})();
