@@ -45,9 +45,10 @@
       },
       "sameAs": [
         "https://www.linkedin.com/in/raj-khatik-6ab086395",
-        "https://github.com/khatikraj2653-collab"
+        "https://github.com/khatikraj2653-collab",
+        "https://orcid.org/0009-0009-0198-0120"
       ],
-      "knowsAbout": ["Agentic AI", "GenAI", "LangGraph", "Retrieval-Augmented Generation", "LLM Evaluation", "Causal-Chain Equity Analysis"]
+      "knowsAbout": ["Agentic AI", "GenAI", "LangGraph", "Retrieval-Augmented Generation", "LLM Evaluation", "LLM Hallucination Detection", "Causal-Chain Equity Analysis", "Life Cycle Assessment"]
     },
     {
       "@type": "SoftwareApplication",
@@ -186,11 +187,12 @@
       <a href="#education"><span class="idx">§3</span>Education<kbd class="nav-key">3</kbd></a>
       <a href="#projects"><span class="idx">§4</span>Projects<kbd class="nav-key">4</kbd></a>
       <a href="#papers"><span class="idx">§5</span>Papers<kbd class="nav-key">5</kbd></a>
-      <a href="#dissertation"><span class="idx">§6</span>Dissertation<kbd class="nav-key">6</kbd></a>
-      <a href="#skills"><span class="idx">§7</span>Skills<kbd class="nav-key">7</kbd></a>
-      <a href="#certifications"><span class="idx">§8</span>Certifications<kbd class="nav-key">8</kbd></a>
-      <a href="#ask-ai"><span class="idx">§9</span>Ask AI<kbd class="nav-key">9</kbd></a>
-      <a href="#contact"><span class="idx">§10</span>Contact<kbd class="nav-key">0</kbd></a>
+      <a href="#research"><span class="idx">§6</span>Research<kbd class="nav-key">6</kbd></a>
+      <a href="#dissertation"><span class="idx">§7</span>Dissertation<kbd class="nav-key">7</kbd></a>
+      <a href="#skills"><span class="idx">§8</span>Skills<kbd class="nav-key">8</kbd></a>
+      <a href="#certifications"><span class="idx">§9</span>Certifications<kbd class="nav-key">9</kbd></a>
+      <a href="#ask-ai"><span class="idx">§10</span>Ask AI</a>
+      <a href="#contact"><span class="idx">§11</span>Contact<kbd class="nav-key">0</kbd></a>
     </nav>
 
     <button class="palette-trigger" id="paletteTrigger" type="button" aria-label="Open quick jump (Ctrl/Cmd+K)">
@@ -646,20 +648,119 @@
         </li>
       </ol>
 
-      <div class="research-interests reveal" id="research-interests">
-        <h3 class="ri-title">Research interests</h3>
-        <p class="ri-lede">I am looking for PhD positions in CS/AI and applied economics. My work so far points to three connected questions:</p>
-        <ul class="ri-list">
-          <li><strong>Causal and regime-aware reasoning in LLM systems.</strong> Can retrieval-augmented agents model <em>why</em> signals move together, and do they hold up when the regime changes? SemiBot, GoldBot and SilverBot test this across market regimes; GoldBot's cross-regime backtest exposed trend-matching that a single backtest would have hidden.</li>
-          <li><strong>Evaluating and detecting LLM failure.</strong> Hallucination detection with formal significance testing, multi-judge panels, and robustness to paraphrase, including the accuracy collapse found in the dissertation.</li>
-          <li><strong>AI for sustainability analysis.</strong> LLMs and unsupervised learning on life cycle assessment data (ecoinvent), and where AI-assisted LCA tooling leaves gaps, such as goal-and-scope drafting under ISO 14040/14044.</li>
+    </section>
+
+    <section id="research" class="section">
+      <div class="section-num">§6</div>
+      <h2 class="section-title reveal">Research Interests</h2>
+      <p class="section-lede reveal">I am looking for PhD positions in CS/AI and applied economics. My work so far — four preprints under review, a dissertation and six systems — circles three connected questions. For each one I can point to a result, and to the question I want to answer next.</p>
+
+      <div class="rs-meta reveal">
+        <a class="biblio-link-btn" href="https://orcid.org/0009-0009-0198-0120" target="_blank" rel="noopener">ORCID 0009-0009-0198-0120 ↗</a>
+        <a class="biblio-link-btn" href="#papers">Papers</a>
+        <a class="biblio-link-btn" href="Raj_Khatik_CV_2026.pdf" download>CV (PDF) ↓</a>
+        <a class="biblio-link-btn" href="mailto:khatikraj2653@gmail.com?subject=Research%20discussion">Discuss research ↗</a>
+      </div>
+
+      <div class="rs-list">
+
+        <article class="rs-card reveal" id="research-causal">
+          <div class="rs-num">01</div>
+          <div class="rs-body">
+            <h3>Causal, regime-aware reasoning in LLM systems</h3>
+            <p class="rs-q">Can a retrieval-augmented agent model <em>why</em> signals move together, and does that still hold when the regime changes? Financial markets are the testbed: outcomes can be checked, and regimes really do shift.</p>
+            <h4>What I have found</h4>
+            <ul>
+              <li><strong>SemiBot.</strong> An 18-factor causal chain over 426 observations and 48 tickers: accuracy rises with market cap, from 41.7% (mid-cap) to 84.0% (&gt;$1T), confirmed by logistic regression (p&lt;0.001) and robust to sub-sector controls.</li>
+              <li><strong>GoldBot.</strong> Across four historical regimes and 18 events, the output stayed inside a 37–50% band (SD=4.2). That is trend-matching, not event discrimination, and a single backtest would not have shown it.</li>
+              <li><strong>SilverBot.</strong> Industrial signals beat monetary ones in 3 of 4 regimes (61.7% vs 40.0%, p=0.041), then reverse in the 2020 liquidity crisis (monetary 95.0% vs industrial 65.0%).</li>
+            </ul>
+            <h4>What I want to ask next</h4>
+            <ul>
+              <li>Why does accuracy fall for mid-caps: sparser information, or genuinely different drivers?</li>
+              <li>Can a system detect that its factors have stopped applying, instead of finding out in a backtest?</li>
+              <li>Which evaluation designs, such as baselines and placebo events, separate real discrimination from trend alignment?</li>
+            </ul>
+            <div class="rs-tags">
+              <a href="#project-semibot">SemiBot</a>
+              <a href="#project-goldbot">GoldBot</a>
+              <a href="#project-silverbot">SilverBot</a>
+              <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7199998" target="_blank" rel="noopener">SSRN 7199998 ↗</a>
+              <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7200198" target="_blank" rel="noopener">SSRN 7200198 ↗</a>
+              <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7203201" target="_blank" rel="noopener">SSRN 7203201 ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="rs-card reveal" id="research-evaluation">
+          <div class="rs-num">02</div>
+          <div class="rs-body">
+            <h3>Evaluating and detecting LLM failure</h3>
+            <p class="rs-q">How do we know when an LLM is wrong, and how far should we trust the checker? I treat detectors and benchmarks as things to be evaluated, not assumed to work.</p>
+            <h4>What I have found</h4>
+            <ul>
+              <li><strong>Hallucination Detector.</strong> A six-signal ensemble (NLI, retrieval grounding, a three-model judge panel, cross-sample consistency) reached 72.4–92.2% accuracy across three benchmarks, with formal significance testing.</li>
+              <li><strong>A design assumption overturned.</strong> Claims that were "flagged + consistent" were 100% real hallucinations (n=4, a small sample), beating the architecture's own "high-confidence" category (66.7%).</li>
+              <li><strong>Judges disagree unevenly.</strong> Inter-judge agreement on 38 claims was 84.6% for Groq–Gemini but 73.1% for OpenAI–Gemini.</li>
+              <li><strong>Paraphrase collapse.</strong> In the dissertation, rewording the extraction task cut accuracy by up to 65 points (GPT-4o-mini 91%→26%), while Gemini 3.5 Flash held up best (100%→86%; Cochran's Q=66.7, p&lt;0.000001).</li>
+              <li><strong>Adversarial safety.</strong> The Retail Research Assistant passed a 100-question adversarial test, 100 of 100, with results committed to the repo.</li>
+            </ul>
+            <h4>What I want to ask next</h4>
+            <ul>
+              <li>How many judges does a panel need? The uneven agreement suggests a smaller panel may keep most of the value.</li>
+              <li>Does the quadrant result hold at a larger sample, and does it transfer beyond these benchmarks?</li>
+              <li>How should benchmark scores be reported so they survive paraphrase and prompt changes?</li>
+            </ul>
+            <div class="rs-tags">
+              <a href="#project-hallucination-detector">Hallucination Detector</a>
+              <a href="#project-retail-research-assistant">Retail Research Assistant</a>
+              <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7200222" target="_blank" rel="noopener">SSRN 7200222 ↗</a>
+              <a href="#dissertation">Dissertation Obj. 3</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="rs-card reveal" id="research-lca">
+          <div class="rs-num">03</div>
+          <div class="rs-body">
+            <h3>AI for sustainability analysis (life cycle assessment)</h3>
+            <p class="rs-q">Where can AI genuinely help with life cycle assessment, and where does it fall short of what ISO 14040/14044 requires? This is the subject of my MSc dissertation, supervised by Dr. You Wu at WMG, University of Warwick.</p>
+            <h4>What I have found</h4>
+            <ul>
+              <li><strong>A gap in tooling.</strong> A systematic review (538 papers screened from 1,509, 209 analysed in full) plus 8 commercial AI-powered LCA platforms: attention concentrates on life cycle inventory, and none of the 8 platforms target AI-assisted goal-and-scope drafting.</li>
+              <li><strong>Structure in the data.</strong> On ecoinvent 3.11 (25,412 records), 68 redundant climate indicators reduced to 7 distinct features. KMeans and Agglomerative clustering converged (silhouette 0.689 vs 0.686).</li>
+              <li><strong>A data artefact, not a model error.</strong> Isolation Forest flagged 509 anomalies (2%), and the weak agreement with LOF traced back to 23.2% of activities sharing duplicate climate-impact profiles.</li>
+              <li><strong>LLMs on LCA tasks.</strong> Six LLMs were tested on structured extraction and ISO 14044 goal-and-scope drafting, which is where the 65-point paraphrase collapse appeared.</li>
+            </ul>
+            <h4>What I want to ask next</h4>
+            <ul>
+              <li>How can AI-drafted goal-and-scope statements be evaluated against ISO 14044 in a way that is verifiable?</li>
+              <li>Can unsupervised methods audit life cycle inventory databases for duplicates and anomalies before they reach practitioners?</li>
+              <li>How do we make LLM extraction from LCA documents robust to changes in wording?</li>
+            </ul>
+            <div class="rs-tags">
+              <a href="#dissertation">Dissertation</a>
+              <a href="https://khatikraj2653-collab.github.io/Raj-Dissertation-LCA-AI-Dashboard/" target="_blank" rel="noopener">Results dashboard ↗</a>
+              <a href="https://github.com/khatikraj2653-collab/Raj-Dissertation" target="_blank" rel="noopener">Code &amp; data ↗</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="rs-method reveal">
+        <h3>How I work</h3>
+        <ul>
+          <li><strong>Significance tests, not headline accuracy:</strong> McNemar's test, Cochran's Q, logistic regression and chi-square.</li>
+          <li><strong>Results have to survive a change of conditions:</strong> cross-regime backtests, multiple benchmarks and paraphrased variants.</li>
+          <li><strong>I report what did not work:</strong> trend-matching in GoldBot, a design assumption overturned in the Hallucination Detector, a 65-point paraphrase collapse.</li>
+          <li><strong>Safety is built in:</strong> adversarial red-teaming and human-in-the-loop controls are part of the systems, not added afterwards.</li>
         </ul>
-        <p class="ri-note">Happy to share a full research statement on request — <a href="mailto:khatikraj2653@gmail.com?subject=Research%20statement%20request">email me</a>.</p>
+        <p class="rs-note">Interested in supervising or discussing any of this? <a href="mailto:khatikraj2653@gmail.com?subject=Research%20discussion">Email me</a>. I can share a research statement and the full write-ups.</p>
       </div>
     </section>
 
     <section id="dissertation" class="section">
-      <div class="section-num">§6</div>
+      <div class="section-num">§7</div>
       <h2 class="section-title reveal">Dissertation</h2>
       <p class="section-lede reveal"><em>Understanding the Role of Artificial Intelligence in Life Cycle Assessment</em> — supervised by Dr. You Wu, WMG, University of Warwick. Dissertation submitted September 2026; result pending.</p>
       <style>
@@ -729,7 +830,7 @@
     </section>
 
     <section id="skills" class="section">
-      <div class="section-num">§7</div>
+      <div class="section-num">§8</div>
       <h2 class="section-title reveal">Skills</h2>
       <div class="skill-grid reveal">
         <span>LangGraph</span>
@@ -766,7 +867,7 @@
     </section>
 
     <section id="certifications" class="section">
-      <div class="section-num">§8</div>
+      <div class="section-num">§9</div>
       <h2 class="section-title reveal">Certifications</h2>
 
       <div class="entry-list">
@@ -797,7 +898,7 @@
     </section>
 
     <section id="ask-ai" class="section">
-      <div class="section-num">§9</div>
+      <div class="section-num">§10</div>
       <h2 class="section-title reveal">Ask AI</h2>
       <p class="section-lede reveal">A small assistant grounded strictly in the content on this page — ask about my projects, papers, experience, or education. It won't guess; if it doesn't know something, it'll say so and point you to my email instead of making something up.</p>
 
@@ -819,7 +920,7 @@
     </section>
 
     <section id="contact" class="section contact-section">
-      <div class="section-num">§10</div>
+      <div class="section-num">§11</div>
       <h2 class="section-title reveal">Let's talk.</h2>
       <p class="section-lede reveal">Open to AI/ML Engineer, GenAI Engineer, and Agentic AI roles — also exploring PhD positions in CS/AI and applied economics.</p>
 

@@ -244,8 +244,8 @@ if (cpOverlay && cpInput && cpResults) {
   // ---------------------------------------------------------
   const sectionByKey = {
     '1': '#profile', '2': '#experience', '3': '#education', '4': '#projects',
-    '5': '#papers', '6': '#dissertation', '7': '#skills', '8': '#certifications',
-    '9': '#ask-ai', '0': '#contact',
+    '5': '#papers', '6': '#research', '7': '#dissertation', '8': '#skills',
+    '9': '#certifications', '0': '#contact',
   };
   document.addEventListener('keydown', (e) => {
     if (e.metaKey || e.ctrlKey || e.altKey) return;

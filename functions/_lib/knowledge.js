@@ -18,7 +18,7 @@ CONTACT
 - LinkedIn: https://www.linkedin.com/in/raj-khatik-6ab086395
 - GitHub: https://github.com/khatikraj2653-collab
 - Phone / WhatsApp: +44 7799 394985 (UK number, also reachable on WhatsApp)
-- Contact form: this page has a "Send a Message" form in the Contact section (§10) —
+- Contact form: this page has a "Send a Message" form in the Contact section (§11) —
   visitors can fill in their name, email, subject, and message to reach Raj directly
   from the site, as an alternative to email, LinkedIn, or WhatsApp.
 - CV / Resume: downloadable directly from the Profile section (§1) at the top of the
@@ -27,7 +27,7 @@ CONTACT
 - Open to: AI/ML Engineer, GenAI Engineer, and Agentic AI roles. Also looking for PhD
   positions in CS/AI and applied economics (the hero badge at the top of the page says
   "Open to AI/ML Engineer roles & PhD positions").
-- Research interests (shown under the Papers section): (1) causal and regime-aware
+- Research interests (shown in the dedicated "Research Interests" section, §6, between Papers and Dissertation, each theme with findings and next questions; ORCID 0009-0009-0198-0120): (1) causal and regime-aware
   reasoning in LLM systems — SemiBot, GoldBot and SilverBot test this across market
   regimes, and GoldBot's cross-regime backtest exposed trend-matching that a single
   backtest would have hidden; (2) evaluating and detecting LLM failure — hallucination
