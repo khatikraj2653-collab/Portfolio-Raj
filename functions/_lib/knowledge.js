@@ -27,14 +27,56 @@ CONTACT
 - Open to: AI/ML Engineer, GenAI Engineer, and Agentic AI roles. Also looking for PhD
   positions in CS/AI and applied economics (the hero badge at the top of the page says
   "Open to AI/ML Engineer roles & PhD positions").
-- Research interests (shown in the dedicated "Research Interests" section, §6, between Papers and Dissertation, each theme with findings and next questions; ORCID 0009-0009-0198-0120): (1) causal and regime-aware
-  reasoning in LLM systems — SemiBot, GoldBot and SilverBot test this across market
-  regimes, and GoldBot's cross-regime backtest exposed trend-matching that a single
-  backtest would have hidden; (2) evaluating and detecting LLM failure — hallucination
-  detection with formal significance testing, multi-judge panels, and robustness to
-  paraphrase; (3) AI for sustainability analysis — LLMs and unsupervised learning on life
-  cycle assessment data, and gaps in AI-assisted LCA tooling such as goal-and-scope
-  drafting. A full research statement is available on request by email.
+- ORCID: 0009-0009-0198-0120 (https://orcid.org/0009-0009-0198-0120).
+- Research interests: shown in the dedicated "Research Interests" section (§6, between
+  Papers and Dissertation). There are THREE themes; each has findings and its OWN
+  "next questions". When asked about next/open questions, answer ONLY from the theme the
+  user asked about — never mix themes. A full research statement is available on
+  request by email.
+
+  THEME 1 — Causal, regime-aware reasoning in LLM systems (finance as the testbed).
+  Question: can a retrieval-augmented agent model why signals move together, and does
+  that hold when the regime changes? Findings: SemiBot — accuracy rises with market cap
+  from 41.7% (mid-cap) to 84.0% (>$1T), 426 observations, 48 tickers, logistic
+  regression p<0.001. GoldBot — across four regimes and 18 events output stayed in a
+  37-50% band (SD=4.2): trend-matching, not event discrimination. SilverBot — industrial
+  beat monetary in 3 of 4 regimes (61.7% vs 40.0%, p=0.041), reversing in the 2020
+  liquidity crisis (monetary 95.0% vs industrial 65.0%). Next questions: (a) why does
+  accuracy fall for mid-caps — sparser information or genuinely different drivers?
+  (b) can a system detect that its factors have stopped applying, instead of finding
+  out in a backtest? (c) which evaluation designs (baselines, placebo events) separate
+  real discrimination from trend alignment?
+
+  THEME 2 — Evaluating and detecting LLM failure. Question: how do we know when an LLM
+  is wrong, and how far should we trust the checker? Findings: Hallucination Detector —
+  six-signal ensemble, 72.4-92.2% accuracy across three benchmarks; "flagged +
+  consistent" claims were 100% real hallucinations (n=4, small sample) vs 66.7% for the
+  "high-confidence" category; inter-judge agreement on 38 claims was 84.6% for
+  Groq-Gemini but 73.1% for OpenAI-Gemini; dissertation paraphrase test cut accuracy by
+  up to 65 points (GPT-4o-mini 91%->26%; Gemini 3.5 Flash 100%->86%; Cochran's Q=66.7,
+  p<0.000001); Retail Research Assistant passed a 100-question adversarial test, 100/100.
+  Next questions: (a) how many judges does a panel need — the uneven agreement suggests a
+  smaller panel may keep most of the value; (b) does the quadrant result hold at a larger
+  sample and transfer beyond these benchmarks; (c) how should benchmark scores be reported
+  so they survive paraphrase and prompt changes?
+
+  THEME 3 — AI for sustainability analysis (life cycle assessment, LCA). Question: where
+  can AI genuinely help with LCA, and where does it fall short of what ISO 14040/14044
+  requires? This is the MSc dissertation, supervised by Dr. You Wu (WMG). Findings:
+  systematic review of 538 papers screened from 1,509 (209 analysed in full) plus 8
+  commercial AI-powered LCA platforms — none target AI-assisted goal-and-scope drafting;
+  on ecoinvent 3.11 (25,412 records) 68 redundant climate indicators reduced to 7
+  features, KMeans and Agglomerative converged (silhouette 0.689 vs 0.686); Isolation
+  Forest flagged 509 anomalies (2%), traced to 23.2% of activities sharing duplicate
+  climate-impact profiles (a data artefact); six LLMs tested on extraction and ISO 14044
+  drafting. Next questions: (a) how can AI-drafted goal-and-scope statements be evaluated
+  against ISO 14044 in a verifiable way? (b) can unsupervised methods audit life cycle
+  inventory databases for duplicates and anomalies before they reach practitioners?
+  (c) how do we make LLM extraction from LCA documents robust to changes in wording?
+
+  Method thread: formal significance tests (McNemar's, Cochran's Q, logistic regression,
+  chi-square), cross-regime and multi-benchmark evaluation, reporting negative results,
+  and adversarial red-teaming / human-in-the-loop controls built into the systems.
 - Each paper in the Papers section has a "Cite (BibTeX)" button, and each live project
   card has an expandable demo (and, for SemiBot and Hallucination Detector, an
   architecture diagram). The live demos run on free Streamlit hosting, so a first load
