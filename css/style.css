@@ -62,15 +62,26 @@ a{color:inherit;text-decoration:none;}
 =========================================================== */
 .js-ready .reveal{
   opacity:0;
-  transform:translateY(18px);
-  transition:opacity .6s cubic-bezier(.16,.8,.3,1), transform .6s cubic-bezier(.16,.8,.3,1);
+  transform:perspective(900px) rotateY(-5deg) translateX(-36px);
+  transition:opacity .7s cubic-bezier(.16,.8,.3,1), transform .7s cubic-bezier(.16,.8,.3,1);
+}
+.js-ready .entry-list .entry.reveal:nth-child(even),
+.js-ready .section-lede.reveal{
+  transform:perspective(900px) rotateY(4deg) translateX(28px);
+}
+.js-ready .section-title.reveal{
+  transform:perspective(900px) rotateX(-7deg) translateY(24px);
+  transition-duration:.5s;
+}
+.js-ready .about-block.reveal{
+  transform:perspective(900px) rotateX(4deg) translateY(30px) scale(.97);
 }
 .js-ready .reveal.in-view{
   opacity:1;
-  transform:translateY(0);
+  transform:perspective(900px) rotateY(0) rotateX(0) translateX(0) translateY(0) scale(1);
 }
 @media (prefers-reduced-motion: reduce){
-  .js-ready .reveal{opacity:1;transform:none;}
+  .js-ready .reveal{opacity:1;transform:none !important;transition:none !important;}
 }
 
 /* ===========================================================
