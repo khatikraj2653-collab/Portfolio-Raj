@@ -1,9 +1,13 @@
 // POST /api/admin/wipe-visits
-// Deletes a batch of visit:* keys (and <app>:visit:* for the apps)
-// so historical bot-inflated counts can be cleared out. The frontend
-// calls this in a loop until { done: true } comes back. Password-gated.
+// Deletes a batch of visit:* keys (and <app>:visit:* keys) so historical
+// bot-inflated counts can be cleared out. The frontend calls this in a
+// loop until { done: true } comes back. Password-gated.
 //
 // Only touches visit entries. Chats, searches, and anything else stay.
+//
+// Cloudflare Pages Functions cap each invocation at 50 subrequests.
+// This handler processes ONE non-empty prefix per call (<=6 list peeks +
+// up to BATCH deletes = <=36 subrequests), well under the limit.
 
 function jsonResponse(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -21,35 +25,29 @@ const PREFIXES = [
   "retailresearch:visit:",
 ];
 
-const BATCH = 40; // keys deleted per call — stays under Pages Functions subrequest caps
+const BATCH = 30; // keys deleted per call
 
 export async function onRequestPost({ request, env }) {
-  if (!env.ADMIN_PASSWORD) {
-    return jsonResponse({ error: "Admin is not configured." }, 500);
-  }
-  if ((request.headers.get("X-Admin-Password") || "") !== env.ADMIN_PASSWORD) {
-    return jsonResponse({ error: "Unauthorized." }, 401);
-  }
-  if (!env.ANALYTICS) {
-    return jsonResponse({ error: "No analytics KV bound." }, 500);
-  }
+  try {
+    if (!env.ADMIN_PASSWORD) {
+      return jsonResponse({ error: "Admin is not configured." }, 500);
+    }
+    if ((request.headers.get("X-Admin-Password") || "") !== env.ADMIN_PASSWORD) {
+      return jsonResponse({ error: "Unauthorized." }, 401);
+    }
+    if (!env.ANALYTICS) {
+      return jsonResponse({ error: "No analytics KV bound." }, 500);
+    }
 
-  let deleted = 0;
+    for (const prefix of PREFIXES) {
+      const list = await env.ANALYTICS.list({ prefix, limit: BATCH });
+      if (list.keys.length === 0) continue;
+      await Promise.all(list.keys.map((k) => env.ANALYTICS.delete(k.name)));
+      return jsonResponse({ deleted: list.keys.length, done: false });
+    }
 
-  for (const prefix of PREFIXES) {
-    if (deleted >= BATCH) break;
-    const list = await env.ANALYTICS.list({ prefix, limit: BATCH - deleted });
-    if (!list.keys.length) continue;
-    await Promise.all(list.keys.map((k) => env.ANALYTICS.delete(k.name)));
-    deleted += list.keys.length;
+    return jsonResponse({ deleted: 0, done: true });
+  } catch (err) {
+    return jsonResponse({ error: String(err && err.message || err) }, 500);
   }
-
-  // Report whether any visit keys still remain across all prefixes.
-  let hasMore = false;
-  for (const prefix of PREFIXES) {
-    const peek = await env.ANALYTICS.list({ prefix, limit: 1 });
-    if (peek.keys.length) { hasMore = true; break; }
-  }
-
-  return jsonResponse({ deleted, done: !hasMore });
 }
