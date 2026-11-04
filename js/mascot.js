@@ -36,6 +36,15 @@
     contact: 'Say hello. I am open to AI/ML roles and PhD positions.'
   };
 
+  var PROJECT_INFO = {
+    'project-semibot': 'SemiBot: agentic RAG for semiconductor analysis. Real-time data meets LLM reasoning.',
+    'project-goldbot': 'GoldBot: forecasts gold prices with regime-aware ML plus a chat interface.',
+    'project-silverbot': 'SilverBot: same agentic pipeline as GoldBot, tuned for the silver market.',
+    'project-hallucination-detector': 'Hallucination Detector: catches when LLMs make things up using multi-source checks.',
+    'project-hitl-email-agent': 'HITL Email Agent: drafts and sends emails with human approval in the loop.',
+    'project-retail-research-assistant': 'Retail Research Assistant: retrieves and synthesises retail market reports with RAG.'
+  };
+
   function start() {
     if (!window.THREE || local('guide-off') === '1') { if (local('guide-off') === '1') mountRestore(); return; }
     var T = window.THREE, test = document.createElement('canvas'), gl = null;
@@ -163,9 +172,23 @@
       if (!drag.moved && Math.abs(dx) + Math.abs(dy) > 5) { drag.moved = true; anchored = false; root.classList.add('is-drag'); }
       if (drag.moved) { pos.x = drag.ox + dx; pos.y = drag.oy + dy; vx = e.clientX - drag.lx; drag.lx = e.clientX; place(); dirty = true; }
     });
+    function detectDrop() {
+      var cx = pos.x + W / 2, cy = pos.y + H / 2;
+      root.style.pointerEvents = 'none';
+      var el = document.elementFromPoint(cx, cy);
+      root.style.pointerEvents = '';
+      if (!el) return;
+      var node = el;
+      while (node && node !== document.body) {
+        if (node.id && PROJECT_INFO[node.id]) { say(PROJECT_INFO[node.id], { replace: true, interrupt: true, hop: true }); return; }
+        if (node.id === 'projectWall') { say('Drop me on a project card below to hear about it!', { replace: true, interrupt: true }); return; }
+        node = node.parentElement;
+      }
+    }
     function release(e) {
       if (!drag) return; var moved = drag.moved; drag = null; root.classList.remove('is-drag'); dropAt = performance.now(); dirty = true;
       if (!moved && e && e.type === 'pointerup') { wave(); openChat(); }
+      if (moved) detectDrop();
     }
     cv.addEventListener('pointerup', release); cv.addEventListener('pointercancel', function () { release(null); });
     cv.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); wave(); openChat(); } });
