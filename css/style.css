@@ -911,3 +911,10 @@ button.biblio-link-btn{cursor:pointer;}
 .guide-back{position:fixed;right:88px;bottom:30px;z-index:290;font-family:var(--mono);font-size:11px;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:6px 12px;cursor:pointer;}
 .guide-back:hover{border-color:var(--indigo);color:var(--ink);}
 @media print{.guide,.guide-back{display:none !important;}}
+
+/* ---------- 3D tilt cards ---------- */
+.entry{perspective:800px;transform-style:preserve-3d;}
+.entry>.tilt-wrap{transition:transform .15s ease-out;will-change:transform;transform-style:preserve-3d;position:relative;}
+.entry>.tilt-wrap>.tilt-glare{position:absolute;inset:0;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .25s ease;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,0.18) 0%,transparent 70%);}
+.entry:hover>.tilt-wrap>.tilt-glare{opacity:1;}
+@media(prefers-reduced-motion:reduce){.entry>.tilt-wrap{transition:none !important;transform:none !important;}.entry>.tilt-wrap>.tilt-glare{display:none;}}
