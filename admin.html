@@ -168,12 +168,31 @@ async function loadDashboard(password) {
   showOverview();
 }
 
+function unwrap(x) {
+  if (Array.isArray(x)) return { items: x, total: x.length, truncated: false };
+  if (x && Array.isArray(x.items)) return { items: x.items, total: x.total || 0, truncated: !!x.truncated };
+  return { items: [], total: 0, truncated: false };
+}
+
 function siteData(key) {
+  let v, s, c;
   if (key === 'portfolio') {
-    return { visits: lastData.visits || [], searches: [], chats: lastData.chats || [] };
+    v = unwrap(lastData.visits);
+    s = { items: [], total: 0, truncated: false };
+    c = unwrap(lastData.chats);
+  } else {
+    const a = (lastData.apps || {})[key] || {};
+    v = unwrap(a.visits); s = unwrap(a.searches); c = unwrap(a.chats);
   }
-  const a = (lastData.apps || {})[key];
-  return a || { visits: [], searches: [], chats: [] };
+  return {
+    visits: v.items, searches: s.items, chats: c.items,
+    totals: { visits: v.total, searches: s.total, chats: c.total },
+    truncated: { visits: v.truncated, searches: s.truncated, chats: c.truncated }
+  };
+}
+
+function fmtCount(n, truncated) {
+  return n.toLocaleString() + (truncated ? '+' : '');
 }
 
 function renderOverview() {
@@ -181,7 +200,7 @@ function renderOverview() {
   const grid = document.getElementById('siteGrid');
   grid.innerHTML = keys.map(key => {
     const d = siteData(key);
-    const total = d.visits.length + d.searches.length + d.chats.length;
+    const total = d.totals.visits + d.totals.searches + d.totals.chats;
     const label = SITE_LABELS[key] || key;
     if (!total) {
       return `<div class="site-card" data-key="${key}">
@@ -190,9 +209,9 @@ function renderOverview() {
       </div>`;
     }
     const stats = [
-      { n: d.visits.length, l: 'Visits' },
-      ...(d.searches.length ? [{ n: d.searches.length, l: 'Searches' }] : []),
-      { n: d.chats.length, l: 'Chats' },
+      { n: fmtCount(d.totals.visits, d.truncated.visits), l: 'Visits' },
+      ...(d.totals.searches ? [{ n: fmtCount(d.totals.searches, d.truncated.searches), l: 'Searches' }] : []),
+      { n: fmtCount(d.totals.chats, d.truncated.chats), l: 'Chats' },
     ];
     return `<div class="site-card" data-key="${key}">
       <div class="name">${label}</div>
@@ -219,10 +238,10 @@ function showDetail(key) {
 
   const unique = new Set(d.visits.map(v => v.visitorHash)).size;
   const statCards = [
-    { n: d.visits.length, l: 'Page visits' },
-    ...(d.searches.length || key !== 'portfolio' ? [{ n: d.searches.length, l: 'Searches' }] : []),
-    { n: d.chats.length, l: 'Chat questions' },
-    { n: unique, l: 'Unique visitors' },
+    { n: fmtCount(d.totals.visits, d.truncated.visits), l: 'Page visits' },
+    ...(d.totals.searches || key !== 'portfolio' ? [{ n: fmtCount(d.totals.searches, d.truncated.searches), l: 'Searches' }] : []),
+    { n: fmtCount(d.totals.chats, d.truncated.chats), l: 'Chat questions' },
+    { n: unique.toLocaleString(), l: 'Unique visitors (recent)' },
   ];
   document.getElementById('detailStats').innerHTML = statCards.map(s =>
     `<div class="stat-card"><div class="num">${s.n}</div><div class="label">${s.l}</div></div>`

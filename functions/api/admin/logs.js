@@ -5,13 +5,32 @@ function jsonResponse(body, status = 200) {
   });
 }
 
-// Reads log entries straight off kv.list()'s metadata — no per-entry kv.get()
-// fan-out — since that used to blow past Cloudflare's subrequest limit once
-// log volume grew (each admin request could trigger hundreds of KV gets).
-async function fetchRecent(kv, prefix, limit) {
-  const list = await kv.list({ prefix: `${prefix}:`, limit: 1000 });
-  const recentKeys = list.keys.slice(-limit).reverse(); // newest first
-  return recentKeys.map((k) => k.metadata).filter(Boolean);
+// Pages through kv.list() counting every key under `prefix:`, and keeps the
+// most recent `limit` entries' metadata for the detail view. Stops after
+// MAX_PAGES to stay well under Cloudflare's subrequest cap — if we hit the
+// cap the total is suffixed with "+" in the UI so you know it's a floor.
+const PAGE_SIZE = 1000;
+const MAX_PAGES = 20; // up to 20 000 keys counted per prefix
+
+async function fetchSummary(kv, prefix, limit) {
+  let total = 0;
+  let allKeys = [];
+  let cursor = undefined;
+  let pages = 0;
+  let truncated = false;
+
+  while (pages < MAX_PAGES) {
+    const list = await kv.list({ prefix: `${prefix}:`, limit: PAGE_SIZE, cursor });
+    total += list.keys.length;
+    allKeys = allKeys.concat(list.keys);
+    pages++;
+    if (list.list_complete || !list.cursor) break;
+    cursor = list.cursor;
+    if (pages >= MAX_PAGES && !list.list_complete) truncated = true;
+  }
+
+  const recent = allKeys.slice(-limit).reverse().map((k) => k.metadata).filter(Boolean);
+  return { items: recent, total, truncated };
 }
 
 export async function onRequestGet({ request, env }) {
@@ -25,12 +44,12 @@ export async function onRequestGet({ request, env }) {
   }
 
   if (!env.ANALYTICS) {
-    return jsonResponse({ visits: [], chats: [] });
+    return jsonResponse({ visits: { items: [], total: 0 }, chats: { items: [], total: 0 }, apps: {} });
   }
 
   const [visits, chats] = await Promise.all([
-    fetchRecent(env.ANALYTICS, "visit", 200),
-    fetchRecent(env.ANALYTICS, "chat", 200),
+    fetchSummary(env.ANALYTICS, "visit", 200),
+    fetchSummary(env.ANALYTICS, "chat", 200),
   ]);
 
   const OTHER_APPS = ["semibot", "goldbot", "silverbot", "hallucinationdetector", "retailresearch"];
@@ -38,11 +57,11 @@ export async function onRequestGet({ request, env }) {
   await Promise.all(
     OTHER_APPS.map(async (app) => {
       const [appVisits, appSearches, appChats] = await Promise.all([
-        fetchRecent(env.ANALYTICS, `${app}:visit`, 200),
-        fetchRecent(env.ANALYTICS, `${app}:search`, 200),
-        fetchRecent(env.ANALYTICS, `${app}:chat`, 200),
+        fetchSummary(env.ANALYTICS, `${app}:visit`, 200),
+        fetchSummary(env.ANALYTICS, `${app}:search`, 200),
+        fetchSummary(env.ANALYTICS, `${app}:chat`, 200),
       ]);
-      if (appVisits.length || appSearches.length || appChats.length) {
+      if (appVisits.total || appSearches.total || appChats.total) {
         apps[app] = { visits: appVisits, searches: appSearches, chats: appChats };
       }
     })
