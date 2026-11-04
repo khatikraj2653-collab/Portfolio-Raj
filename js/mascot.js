@@ -73,28 +73,33 @@
     }
     var rig = { root: new T.Group(), head: new T.Group(), body: null, armR: new T.Group(), armL: new T.Group(), sprout: new T.Group(), eyes: [], mouth: null, glb: false };
     stage.add(rig.root);
-    var CREAM = 0xf7e7c6, PINK = 0xf2a7a0, LEAF = 0x78b86a;
-    rig.body = blob(rig.root, CREAM, [0, -0.62, 0], [0.64, 0.68, 0.6]);
-    blob(rig.root, 0xfff6e2, [0, -0.6, 0.5], [0.4, 0.42, 0.2], { outline: false });
-    blob(rig.root, CREAM, [-0.3, -1.22, 0.15], [0.27, 0.16, 0.36]); blob(rig.root, CREAM, [0.3, -1.22, 0.15], [0.27, 0.16, 0.36]);
+    var CREAM = 0xeee4d4, BAND = 0x4a7c9b, LEAF = 0x78b86a;
+    rig.body = blob(rig.root, CREAM, [0, -0.62, 0], [0.66, 0.7, 0.62]);
+    blob(rig.root, 0xf5ead8, [0, -0.6, 0.5], [0.4, 0.42, 0.2], { outline: false });
+    blob(rig.root, CREAM, [-0.3, -1.22, 0.15], [0.28, 0.17, 0.36]); blob(rig.root, CREAM, [0.3, -1.22, 0.15], [0.28, 0.17, 0.36]);
     rig.head.position.set(0, 0.5, 0); rig.root.add(rig.head);
-    blob(rig.head, CREAM, [0, 0.05, 0], [0.88, 0.8, 0.82]);
-    var earL = blob(rig.head, CREAM, [-0.56, 0.78, 0], [0.26, 0.48, 0.2], { rot: [0, 0, 0.4] }), earR = blob(rig.head, CREAM, [0.56, 0.78, 0], [0.26, 0.48, 0.2], { rot: [0, 0, -0.4] });
-    blob(earL, PINK, [0, -0.05, 0.55], [0.55, 0.7, 0.4], { outline: false }); blob(earR, PINK, [0, -0.05, 0.55], [0.55, 0.7, 0.4], { outline: false });
+    blob(rig.head, CREAM, [0, 0.05, 0], [0.88, 0.82, 0.82]);
+    /* short round bear ears (no inner pink) */
+    blob(rig.head, CREAM, [-0.58, 0.64, 0], [0.22, 0.22, 0.18]); blob(rig.head, CREAM, [0.58, 0.64, 0], [0.22, 0.22, 0.18]);
+    /* headband */
+    var hb = new T.Mesh(new T.TorusGeometry(0.82, 0.06, 8, 32, Math.PI), toon(BAND));
+    hb.position.set(0, 0.28, 0.12); hb.rotation.x = -0.2; rig.head.add(hb);
     [-1, 1].forEach(function (sx) {
-      var e = blob(rig.head, 0x241a16, [sx * 0.3, 0.1, 0.74], [0.085, 0.125, 0.06], { outline: false }); rig.eyes.push(e);
+      var e = blob(rig.head, 0x1e1612, [sx * 0.3, 0.1, 0.74], [0.09, 0.11, 0.06], { outline: false }); rig.eyes.push(e);
       blob(e, 0xffffff, [0.3, 0.35, 0.9], [0.32, 0.22, 0.3], { outline: false });
-      blob(rig.head, PINK, [sx * 0.5, -0.14, 0.62], [0.13, 0.08, 0.05], { outline: false });
+      /* small eyebrow */
+      var brow = new T.Mesh(new T.BoxGeometry(0.14, 0.035, 0.04), new T.MeshBasicMaterial({ color: 0x3a2a20 }));
+      brow.position.set(sx * 0.3, 0.24, 0.76); brow.rotation.z = sx * -0.12; rig.head.add(brow);
     });
-    blob(rig.head, 0x9a5c4a, [0, -0.04, 0.8], [0.04, 0.03, 0.03], { outline: false });
-    rig.mouth = new T.Mesh(new T.TorusGeometry(0.07, 0.014, 6, 14, Math.PI), new T.MeshBasicMaterial({ color: 0x5a3328 }));
-    rig.mouth.position.set(0, -0.14, 0.8); rig.mouth.rotation.z = Math.PI; rig.head.add(rig.mouth);
+    blob(rig.head, 0x8a5440, [0, -0.04, 0.82], [0.04, 0.03, 0.03], { outline: false });
+    rig.mouth = new T.Mesh(new T.TorusGeometry(0.06, 0.016, 6, 12, Math.PI), new T.MeshBasicMaterial({ color: 0x5a3328 }));
+    rig.mouth.position.set(0, -0.13, 0.8); rig.mouth.rotation.z = Math.PI; rig.head.add(rig.mouth);
     rig.sprout.position.set(0.02, 0.8, 0); rig.head.add(rig.sprout);
     var stem = new T.Mesh(new T.CylinderGeometry(0.025, 0.035, 0.34, 8), toon(0x5f9a52)); stem.position.y = 0.16; rig.sprout.add(stem);
     blob(rig.sprout, LEAF, [0.16, 0.36, 0], [0.2, 0.09, 0.1], { rot: [0, 0, 0.5] }); blob(rig.sprout, LEAF, [-0.14, 0.32, 0], [0.18, 0.08, 0.1], { rot: [0, 0, -0.5] });
     [[rig.armL, -1], [rig.armR, 1]].forEach(function (a) {
-      a[0].position.set(a[1] * 0.62, -0.4, 0.05); rig.root.add(a[0]);
-      blob(a[0], CREAM, [a[1] * 0.1, -0.26, 0], [0.17, 0.3, 0.17], { rot: [0, 0, a[1] * 0.25] });
+      a[0].position.set(a[1] * 0.64, -0.4, 0.05); rig.root.add(a[0]);
+      blob(a[0], CREAM, [a[1] * 0.1, -0.26, 0], [0.18, 0.3, 0.18], { rot: [0, 0, a[1] * 0.25] });
     });
     rig.armL.rotation.z = 0.15; rig.armR.rotation.z = -0.15;
 
@@ -233,7 +238,7 @@
       if (!r.glb) {
         r.sprout.rotation.z = reduce ? 0 : Math.sin(t * 1.7) * 0.22 + tilt * 0.8;
         if (now > blinkAt) { blinkUntil = now + 130; blinkAt = now + 3000 + Math.random() * 3000; }
-        var by = now < blinkUntil ? 0.15 : 1; r.eyes.forEach(function (e) { e.scale.y = 0.125 * by; });
+        var by = now < blinkUntil ? 0.15 : 1; r.eyes.forEach(function (e) { e.scale.y = 0.11 * by; });
         r.mouth.scale.y = speaking && !reduce ? 0.6 + Math.abs(Math.sin(t * 16)) * 1.1 : 1;
         var w = waveAt > 0 ? (now - waveAt) / 1800 : 2, up = 0, wig = 0;
         if (w >= 0 && w < 1) { up = Math.sin(Math.min(1, w * 6) * Math.PI / 2) * (w > 0.85 ? (1 - w) / 0.15 : 1); wig = Math.sin(w * Math.PI * 9) * 0.35 * up; } else if (w >= 1) waveAt = -1;
