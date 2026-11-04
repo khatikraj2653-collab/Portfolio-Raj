@@ -224,11 +224,16 @@ main{min-width:0;}
   background:linear-gradient(135deg,var(--ink) 25%,var(--indigo) 100%);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
-.hero-role{font-size:16px;font-weight:600;margin-bottom:20px;}
+.hero-role{font-size:16px;font-weight:600;margin-bottom:20px;min-height:1.4em;}
 .hero-role .role-a{color:var(--indigo);}
 .hero-role .role-b{color:var(--gold);}
 .hero-role .role-c{color:var(--green);}
 .hero-role .role-sep{color:var(--faint);font-weight:400;margin:0 2px;}
+.hero-role .role-typed{transition:color .25s ease;}
+.hero-role .role-caret{display:inline-block;width:2px;height:1em;background:var(--indigo);margin-left:3px;vertical-align:text-bottom;animation:role-blink 1s step-end infinite;}
+.hero-role .role-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+@keyframes role-blink{0%,50%{opacity:1;}51%,100%{opacity:0;}}
+@media(prefers-reduced-motion:reduce){.hero-role .role-caret{display:none;}}
 
 .hero-intro{color:var(--muted);font-size:16.5px;max-width:480px;margin-bottom:24px;}
 
