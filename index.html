@@ -1090,11 +1090,11 @@
     <section id="ask-ai" class="section">
       <div class="section-num">§10</div>
       <h2 class="section-title reveal">Ask AI</h2>
-      <p class="section-lede reveal">My AI assistant — ask about my projects, papers, experience, AI/ML concepts, or anything else. It knows my portfolio inside-out and can help with general questions too.</p>
+      <p class="section-lede reveal">A small assistant grounded strictly in the content on this page — ask about my projects, papers, experience, or education. It won't guess; if it doesn't know something, it'll say so and point you to my email instead of making something up.</p>
 
       <div class="ask-panel reveal" id="askPanel">
         <div class="chat-messages" id="askMessages">
-          <div class="chat-msg bot">Hi — ask me anything about Raj's portfolio, AI/ML, or whatever's on your mind.</div>
+          <div class="chat-msg bot">Hi — ask me anything about Raj's projects, papers, experience, or education. I'll only answer from what's actually documented on this site.</div>
         </div>
         <div class="chat-suggestions">
           <span class="chat-suggestion" data-q="What's SemiBot and what did it find?">What's SemiBot?</span>
@@ -1103,7 +1103,7 @@
           <span class="chat-suggestion" data-q="What skills does Raj have?">Skills?</span>
         </div>
         <div class="chat-input-row">
-          <textarea class="chat-input" id="askInput" rows="1" placeholder="Ask me anything..."></textarea>
+          <textarea class="chat-input" id="askInput" rows="1" placeholder="Ask about a project, paper, or experience..."></textarea>
           <button class="chat-send" id="askSend">Send</button>
         </div>
       </div>
@@ -1176,25 +1176,25 @@
 
 <div class="chat-hint" id="chatHint" role="status">
   <button class="chat-hint-close" id="chatHintClose" aria-label="Dismiss">×</button>
-  <span>👋 I'm Raj's AI assistant — ask me anything</span>
+  <span>👋 I'm an AI assistant — ask me about Raj's projects, papers, or experience</span>
 </div>
 <button class="chat-fab" id="chatFab" aria-label="Open chat">💬</button>
 <div class="chat-panel" id="chatPanel">
   <div class="chat-header">
     <div>
       <div class="chat-header-title">Ask about Raj</div>
-      <div class="chat-header-sub">Raj's AI assistant</div>
+      <div class="chat-header-sub">Grounded in this site only</div>
     </div>
     <button class="chat-close" id="chatClose">Close</button>
   </div>
   <div class="chat-messages" id="bubbleMessages">
-    <div class="chat-msg bot">Hi — ask me anything about Raj's portfolio, AI/ML, or whatever's on your mind.</div>
+    <div class="chat-msg bot">Hi — ask me anything about Raj's projects, papers, or experience.</div>
   </div>
   <div class="chat-input-row">
     <textarea class="chat-input" id="bubbleInput" rows="1" placeholder="Type a question..."></textarea>
     <button class="chat-send" id="bubbleSend">Send</button>
   </div>
-  <div class="chat-footer-note">Knows Raj's portfolio and can answer general questions too.</div>
+  <div class="chat-footer-note">Answers are limited to what's on this page — it won't invent facts.</div>
 </div>
 
 <div class="cp-overlay" id="cpOverlay">
