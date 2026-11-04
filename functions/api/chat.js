@@ -5,7 +5,7 @@ import { hashIp, putLog } from "../_lib/log.js";
 const MAX_MESSAGE_LEN = 800;
 const MAX_HISTORY_TURNS = 6; // 6 messages = 3 user/assistant pairs
 const MODEL = "gpt-4o-mini";
-const MAX_OUTPUT_TOKENS = 400;
+const MAX_OUTPUT_TOKENS = 800;
 
 const DISSERTATION_KNOWLEDGE = `
 ADDITIONAL CONTEXT — DISSERTATION RESEARCH DASHBOARD:
