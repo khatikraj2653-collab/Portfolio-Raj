@@ -23,6 +23,7 @@
 
   /* Lines the guide says. Scripted on purpose: instant, free, and every claim is on the page. */
   var TIPS = {
+    profile: 'This is Raj. AI/ML Engineer, MSc at Warwick, and builder of agentic systems.',
     experience: 'Two years eight months at H&B Infotech, from intern to AI Engineer.',
     education: 'My MSc in Applied AI at Warwick is in here.',
     projects: 'Six systems. Try the 3D wall, and open an architecture panel to trace the flow.',
@@ -30,6 +31,7 @@
     research: 'Looking for a PhD? These are the questions I want to work on.',
     dissertation: 'My dissertation on AI in life cycle assessment. The figures at a glance are the real numbers.',
     skills: 'Select a skill to see which projects use it.',
+    certifications: 'Certified in deep learning, NLP, and generative AI.',
     'ask-ai': 'Ask me anything about my portfolio!',
     contact: 'Say hello. I am open to AI/ML roles and PhD positions.'
   };
