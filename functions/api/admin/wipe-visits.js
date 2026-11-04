@@ -25,7 +25,7 @@ const PREFIXES = [
   "retailresearch:visit:",
 ];
 
-const BATCH = 30; // keys deleted per call
+const BATCH = 20; // keys deleted per call (keeps subrequests well under 50)
 
 export async function onRequestPost({ request, env }) {
   try {

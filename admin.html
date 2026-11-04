@@ -330,8 +330,12 @@ document.getElementById('wipeBtn').addEventListener('click', async () => {
       batches++;
       status.textContent = `Wiping… deleted ${totalDeleted} so far (batch ${batches})`;
       const res = await fetch('/api/admin/wipe-visits', { method: 'POST', headers: { 'X-Admin-Password': pw } });
-      if (!res.ok) { status.textContent = 'Error: ' + res.status + ' — stopped. Try again.'; btn.disabled = false; return; }
-      const j = await res.json();
+      const j = await res.json().catch(() => ({ error: 'non-JSON response' }));
+      if (!res.ok) {
+        status.textContent = 'Error ' + res.status + ': ' + (j.error || 'unknown') + ' — deleted ' + totalDeleted + ' before stopping.';
+        btn.disabled = false;
+        return;
+      }
       totalDeleted += j.deleted || 0;
       if (j.done) break;
       if (!j.deleted) break; // safety: nothing deleted and not done, bail
