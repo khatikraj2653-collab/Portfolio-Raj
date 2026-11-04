@@ -153,6 +153,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script defer src="js/features3d.js"></script>
 <style>
   .entry-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
   .entry-links a{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:12px;font-weight:500;padding:7px 16px;border-radius:20px;text-decoration:none;transition:opacity .15s,background .15s,border-color .15s;white-space:nowrap;letter-spacing:.01em;}
@@ -368,6 +370,8 @@
 
       <p class="wake-note reveal">Live demos run on free Streamlit hosting. If an app has been idle, its first load can take up to ~30 seconds while it wakes up.</p>
 
+      <div class="project-wall reveal" id="projectWall"><canvas id="wallCv" role="img" aria-label="Interactive 3D wall of the six project cards. Hover to lift a card, click to jump to it."></canvas><p class="wall-hint">Hover a card to lift it · click to jump to the project</p></div>
+
       <div class="project-filters reveal" id="projectFilters"></div>
 
       <div class="entry-list">
@@ -449,8 +453,41 @@
             <span>LangGraph</span><span>FAISS</span><span>RAG</span><span>Streamlit</span><span>MCP/Tavily</span>
           </div>
           <details class="demo-details" data-gif="https://raw.githubusercontent.com/khatikraj2653-collab/GoldBot/main/goldbot-demo.gif" data-alt="GoldBot demo: running a nine-factor safe-haven analysis">
-            <summary>Demo</summary>
-            <div class="demo-body"><img class="demo-gif" alt="" loading="lazy" decoding="async"></div>
+            <summary>Architecture &amp; demo</summary>
+            <div class="demo-body" data-arch="project-goldbot">
+<div class="arch-wrap">
+<svg class="arch-svg" viewBox="0 0 760 272" role="img" aria-label="GoldBot architecture: a request fans out to three parallel LangGraph subgraphs (macro with four factors, safe-haven with three, geopolitical with two) whose nine factors feed one weighted-scoring step with RAG context, producing a Strength percentage.">
+<defs><marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" class="arch-arrowhead"/></marker></defs>
+<rect class="arch-key" x="10" y="100" width="90" height="56" rx="4"/>
+<text class="arch-t" x="55" y="124" text-anchor="middle">Request</text>
+<text class="arch-s" x="55" y="138" text-anchor="middle">user input</text>
+<rect class="arch-box" x="140" y="10" width="320" height="50" rx="4"/>
+<text class="arch-t" x="300" y="31" text-anchor="middle">Macro · 4 factors</text>
+<text class="arch-s" x="300" y="45" text-anchor="middle">real yields · Fed rate · USD index · inflation expectations</text>
+<rect class="arch-box" x="140" y="108" width="320" height="50" rx="4"/>
+<text class="arch-t" x="300" y="129" text-anchor="middle">Safe-haven · 3 factors</text>
+<text class="arch-s" x="300" y="143" text-anchor="middle">2Y treasury · VIX · S&amp;P 500 growth</text>
+<rect class="arch-box" x="140" y="206" width="320" height="50" rx="4"/>
+<text class="arch-t" x="300" y="227" text-anchor="middle">Geopolitical · 2 factors</text>
+<text class="arch-s" x="300" y="241" text-anchor="middle">central bank buying · geopolitical risk</text>
+<path class="arch-line" d="M100 128 L140 35" marker-end="url(#arrG)"/>
+<path class="arch-line" d="M100 128 L140 133" marker-end="url(#arrG)"/>
+<path class="arch-line" d="M100 128 L140 231" marker-end="url(#arrG)"/>
+<path class="arch-line" d="M460 35 L500 118" marker-end="url(#arrG)"/>
+<path class="arch-line" d="M460 133 L500 128" marker-end="url(#arrG)"/>
+<path class="arch-line" d="M460 231 L500 138" marker-end="url(#arrG)"/>
+<rect class="arch-key" x="500" y="93" width="130" height="70" rx="4"/>
+<text class="arch-t" x="565" y="117" text-anchor="middle">Weighted scoring</text>
+<text class="arch-s" x="565" y="131" text-anchor="middle">9 factors</text>
+<text class="arch-s" x="565" y="145" text-anchor="middle">+ RAG context</text>
+<path class="arch-line" d="M630 128 L660 128" marker-end="url(#arrG)"/>
+<rect class="arch-key" x="660" y="93" width="90" height="70" rx="4"/>
+<text class="arch-t" x="705" y="124" text-anchor="middle">Strength %</text>
+<text class="arch-s" x="705" y="138" text-anchor="middle">gold outlook</text>
+<text class="arch-s arch-note" x="380" y="268" text-anchor="middle">LangGraph parallel subgraphs · SQLite checkpoint and factor cache · RAG + MCP tools</text>
+</svg>
+</div>
+<img class="demo-gif" alt="" loading="lazy" decoding="async"></div>
           </details>
           <div class="entry-links">
             <a href="https://goldbot-raj.streamlit.app" target="_blank" rel="noopener" class="link-demo">Live demo ↗</a>
@@ -470,8 +507,38 @@
             <span>LangGraph</span><span>FAISS</span><span>RAG</span><span>Streamlit</span>
           </div>
           <details class="demo-details" data-gif="https://raw.githubusercontent.com/khatikraj2653-collab/SilverBot/main/silverbot-demo.gif" data-alt="SilverBot demo: running a dual-regime silver analysis">
-            <summary>Demo</summary>
-            <div class="demo-body"><img class="demo-gif" alt="" loading="lazy" decoding="async"></div>
+            <summary>Architecture &amp; demo</summary>
+            <div class="demo-body" data-arch="project-silverbot">
+<div class="arch-wrap">
+<svg class="arch-svg" viewBox="0 0 760 246" role="img" aria-label="SilverBot architecture: a request fans out to two parallel LangGraph subgraphs, industrial with three factors and monetary with six, which feed one scoring step with RAG context that returns separate industrial and monetary strength scores.">
+<defs><marker id="arrV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" class="arch-arrowhead"/></marker></defs>
+<rect class="arch-key" x="10" y="92" width="90" height="62" rx="4"/>
+<text class="arch-t" x="55" y="119" text-anchor="middle">Request</text>
+<text class="arch-s" x="55" y="133" text-anchor="middle">user input</text>
+<rect class="arch-box" x="140" y="22" width="320" height="56" rx="4"/>
+<text class="arch-t" x="300" y="46" text-anchor="middle">Industrial · 3 factors</text>
+<text class="arch-s" x="300" y="60" text-anchor="middle">mining supply · solar demand · industrial production</text>
+<rect class="arch-box" x="140" y="108" width="320" height="80" rx="4"/>
+<text class="arch-t" x="300" y="137" text-anchor="middle">Monetary · 6 factors</text>
+<text class="arch-s" x="300" y="151" text-anchor="middle">rate environment · gold/silver ratio · risk sentiment</text>
+<text class="arch-s" x="300" y="165" text-anchor="middle">USD index · geopolitical risk · inflation expectations</text>
+<path class="arch-line" d="M100 123 L140 50" marker-end="url(#arrV)"/>
+<path class="arch-line" d="M100 123 L140 148" marker-end="url(#arrV)"/>
+<path class="arch-line" d="M460 50 L500 112" marker-end="url(#arrV)"/>
+<path class="arch-line" d="M460 148 L500 134" marker-end="url(#arrV)"/>
+<rect class="arch-key" x="500" y="88" width="130" height="70" rx="4"/>
+<text class="arch-t" x="565" y="112" text-anchor="middle">Scoring + LLM</text>
+<text class="arch-s" x="565" y="126" text-anchor="middle">factor scores</text>
+<text class="arch-s" x="565" y="140" text-anchor="middle">RAG context</text>
+<path class="arch-line" d="M630 123 L655 123" marker-end="url(#arrV)"/>
+<rect class="arch-key" x="655" y="88" width="95" height="70" rx="4"/>
+<text class="arch-t" x="702.5" y="112" text-anchor="middle">Two scores</text>
+<text class="arch-s" x="702.5" y="126" text-anchor="middle">Industrial</text>
+<text class="arch-s" x="702.5" y="140" text-anchor="middle">and Monetary</text>
+<text class="arch-s arch-note" x="380" y="232" text-anchor="middle">LangGraph parallel subgraphs · RAG context · two independent scores rather than one gold-style score</text>
+</svg>
+</div>
+<img class="demo-gif" alt="" loading="lazy" decoding="async"></div>
           </details>
           <div class="entry-links">
             <a href="https://silverbot-raj.streamlit.app" target="_blank" rel="noopener" class="link-demo">Live demo ↗</a>
@@ -569,6 +636,46 @@
           <div class="entry-tags">
             <span>LangGraph</span><span>FastAPI</span><span>Chrome Ext (MV3)</span><span>Gmail API</span>
           </div>
+          <details class="demo-details" data-arch="project-hitl-email-agent">
+<summary>Architecture</summary>
+<div class="demo-body">
+<div class="arch-wrap">
+<svg class="arch-svg" viewBox="0 0 760 292" role="img" aria-label="HITL Email Agent architecture: the agent fetches the inbox, pauses for you to pick an email, summarises it and emails you a Response or Ignore choice, pauses again, drafts short and long replies, pauses a third time for you to pick short, long or redraft (redraft loops back), and only then sends the reply.">
+<defs><marker id="arrE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" class="arch-arrowhead"/></marker></defs>
+<rect class="arch-box" x="10" y="40" width="150" height="54" rx="4"/>
+<text class="arch-t" x="85" y="63" text-anchor="middle">Fetch inbox</text>
+<text class="arch-s" x="85" y="77" text-anchor="middle">last 20 emails</text>
+<rect class="arch-key" x="200" y="40" width="150" height="54" rx="4"/>
+<text class="arch-t" x="275" y="63" text-anchor="middle">Pause 1</text>
+<text class="arch-s" x="275" y="77" text-anchor="middle">you pick an email</text>
+<rect class="arch-box" x="390" y="40" width="150" height="54" rx="4"/>
+<text class="arch-t" x="465" y="63" text-anchor="middle">Summarise</text>
+<text class="arch-s" x="465" y="77" text-anchor="middle">LLM summary, then email</text>
+<rect class="arch-key" x="580" y="40" width="170" height="54" rx="4"/>
+<text class="arch-t" x="665" y="63" text-anchor="middle">Pause 2</text>
+<text class="arch-s" x="665" y="77" text-anchor="middle">Response, Ignore or custom</text>
+<path class="arch-line" d="M160 67 L200 67" marker-end="url(#arrE)"/>
+<path class="arch-line" d="M350 67 L390 67" marker-end="url(#arrE)"/>
+<path class="arch-line" d="M540 67 L580 67" marker-end="url(#arrE)"/>
+<rect class="arch-box" x="580" y="170" width="170" height="54" rx="4"/>
+<text class="arch-t" x="665" y="193" text-anchor="middle">Draft reply</text>
+<text class="arch-s" x="665" y="207" text-anchor="middle">SHORT and LONG drafts</text>
+<path class="arch-line" d="M665 94 L665 170" marker-end="url(#arrE)"/>
+<rect class="arch-key" x="390" y="170" width="150" height="54" rx="4"/>
+<text class="arch-t" x="465" y="193" text-anchor="middle">Pause 3</text>
+<text class="arch-s" x="465" y="207" text-anchor="middle">short, long or redraft</text>
+<path class="arch-line" d="M580 197 L540 197" marker-end="url(#arrE)"/>
+<rect class="arch-box" x="200" y="170" width="150" height="54" rx="4"/>
+<text class="arch-t" x="275" y="193" text-anchor="middle">Send reply</text>
+<text class="arch-s" x="275" y="207" text-anchor="middle">only after you choose</text>
+<path class="arch-line" d="M390 197 L350 197" marker-end="url(#arrE)"/>
+<path class="arch-line arch-loop" d="M465 224 L465 252 L665 252 L665 224" marker-end="url(#arrE)"/>
+<text class="arch-s arch-note" x="565" y="246" text-anchor="middle">redraft</text>
+<text class="arch-s arch-note" x="380" y="282" text-anchor="middle">LangGraph interrupt() and resume · SqliteSaver checkpointer · answer from Streamlit buttons or by email</text>
+</svg>
+</div>
+</div>
+</details>
           <div class="entry-links">
             <a href="https://github.com/khatikraj2653-collab/EmailHITLAgent" target="_blank" rel="noopener" class="link-source">Source code ↗</a>
           </div>
@@ -586,8 +693,41 @@
             <span>LangGraph</span><span>FAISS</span><span>Streamlit</span><span>Python</span>
           </div>
           <details class="demo-details" data-gif="https://raw.githubusercontent.com/khatikraj2653-collab/RetailResearchAssistant/main/retailresearch-demo.gif" data-alt="Retail Research Assistant demo: exploring S&amp;P 500 companies">
-            <summary>Demo</summary>
-            <div class="demo-body"><img class="demo-gif" alt="" loading="lazy" decoding="async"></div>
+            <summary>Architecture &amp; demo</summary>
+            <div class="demo-body" data-arch="project-retail-research-assistant">
+<div class="arch-wrap">
+<svg class="arch-svg" viewBox="0 0 760 232" role="img" aria-label="Retail Research Assistant architecture: one of six pages triggers one of five LangGraph workflows, which pull market data through yfinance and pandas with a SQLite cache, then an LLM narrates what the data shows; a guardrail layer means it explains and never advises, verified by a 100-question adversarial safety test.">
+<defs><marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" class="arch-arrowhead"/></marker></defs>
+<rect class="arch-key" x="10" y="40" width="118" height="84" rx="4"/>
+<text class="arch-t" x="69" y="71" text-anchor="middle">Six pages</text>
+<text class="arch-s" x="69" y="85" text-anchor="middle">dashboard to</text>
+<text class="arch-s" x="69" y="99" text-anchor="middle">guided learning</text>
+<rect class="arch-box" x="168" y="40" width="118" height="84" rx="4"/>
+<text class="arch-t" x="227" y="71" text-anchor="middle">LangGraph</text>
+<text class="arch-s" x="227" y="85" text-anchor="middle">five workflows,</text>
+<text class="arch-s" x="227" y="99" text-anchor="middle">one per feature</text>
+<rect class="arch-box" x="326" y="40" width="118" height="84" rx="4"/>
+<text class="arch-t" x="385" y="71" text-anchor="middle">Data layer</text>
+<text class="arch-s" x="385" y="85" text-anchor="middle">yfinance + pandas</text>
+<text class="arch-s" x="385" y="99" text-anchor="middle">SQLite cache</text>
+<rect class="arch-box" x="484" y="40" width="118" height="84" rx="4"/>
+<text class="arch-t" x="543" y="71" text-anchor="middle">LLM narration</text>
+<text class="arch-s" x="543" y="85" text-anchor="middle">describes what</text>
+<text class="arch-s" x="543" y="99" text-anchor="middle">the data shows</text>
+<rect class="arch-key" x="642" y="40" width="108" height="84" rx="4"/>
+<text class="arch-t" x="696" y="71" text-anchor="middle">Answer</text>
+<text class="arch-s" x="696" y="85" text-anchor="middle">plain English,</text>
+<text class="arch-s" x="696" y="99" text-anchor="middle">no advice</text>
+<path class="arch-line" d="M128 82 L168 82" marker-end="url(#arrR)"/>
+<path class="arch-line" d="M286 82 L326 82" marker-end="url(#arrR)"/>
+<path class="arch-line" d="M444 82 L484 82" marker-end="url(#arrR)"/>
+<path class="arch-line" d="M602 82 L642 82" marker-end="url(#arrR)"/>
+<rect class="arch-box" x="168" y="160" width="582" height="44" rx="4"/>
+<text class="arch-t" x="459" y="178" text-anchor="middle">Guardrail: explains, never recommends what to buy</text>
+<text class="arch-s" x="459" y="192" text-anchor="middle">100 out of 100 on a 100-question adversarial safety test, results committed to the repo</text>
+</svg>
+</div>
+<img class="demo-gif" alt="" loading="lazy" decoding="async"></div>
           </details>
           <div class="entry-links">
             <a href="https://retailresearch-raj.streamlit.app" target="_blank" rel="noopener" class="link-demo">Live demo ↗</a>
@@ -790,6 +930,52 @@
         </div>
       </div>
 
+      <div class="diss-glance reveal" id="dissGlance">
+        <h3 class="dg-title">Dissertation at a glance</h3>
+        <p class="dg-sub">Figures from the three objectives below.</p>
+        <div class="dg-grid">
+          <div class="dg-card">
+            <p class="dg-label">Obj. 1 · Literature funnel (PRISMA)</p>
+            <div class="dg-bars">
+              <div class="dg-row"><span>Candidates</span><span class="dg-track"><i style="--w:100%"></i></span><b data-count="1509">1,509</b></div>
+              <div class="dg-row"><span>Screened</span><span class="dg-track"><i style="--w:35.7%"></i></span><b data-count="538">538</b></div>
+              <div class="dg-row"><span>Analysed</span><span class="dg-track"><i style="--w:13.8%"></i></span><b data-count="209">209</b></div>
+            </div>
+            <p class="dg-note">Plus 8 commercial AI-powered LCA platforms reviewed against the four ISO 14040/14044 stages.</p>
+          </div>
+          <div class="dg-card">
+            <p class="dg-label">Obj. 2 · Redundant indicators, merged</p>
+            <div class="dg-dots" aria-hidden="true"></div>
+            <div class="dg-legend"><span>68 climate indicators</span><span>7 distinct features</span></div>
+            <p class="dg-note">49.6% of indicator pairs correlated above 0.98, so they were reduced to seven. The grouping drawn here is illustrative.</p>
+          </div>
+          <div class="dg-card">
+            <p class="dg-label">Obj. 2 · ecoinvent 3.11 records</p>
+            <p class="dg-big"><span data-count="25412">25,412</span><small>activity-geography records</small></p>
+            <p class="dg-note">Three clustering algorithms and two anomaly detectors cross-checked against each other. KMeans and Agglomerative silhouettes: 0.689 vs. 0.686 (k=8).</p>
+          </div>
+          <div class="dg-card">
+            <p class="dg-label">Obj. 3 · Paraphrase accuracy collapse</p>
+            <div class="dg-model">GPT-4o-mini</div>
+            <div class="dg-pair">
+              <div class="dg-row"><span class="dg-track"><i class="before" style="--w:91%"></i></span><b>91%</b></div>
+              <div class="dg-row"><span class="dg-track"><i class="after" style="--w:26%"></i></span><b>26%</b></div>
+            </div>
+            <div class="dg-model">GPT-OSS 120B</div>
+            <div class="dg-pair">
+              <div class="dg-row"><span class="dg-track"><i class="before" style="--w:100%"></i></span><b>100%</b></div>
+              <div class="dg-row"><span class="dg-track"><i class="after" style="--w:44%"></i></span><b>44%</b></div>
+            </div>
+            <div class="dg-model">Gemini 3.5 Flash</div>
+            <div class="dg-pair">
+              <div class="dg-row"><span class="dg-track"><i class="before" style="--w:100%"></i></span><b>100%</b></div>
+              <div class="dg-row"><span class="dg-track"><i class="after" style="--w:86%"></i></span><b>86%</b></div>
+            </div>
+            <p class="dg-note">Grey: original extraction. Gold: paraphrased variant.</p>
+          </div>
+        </div>
+      </div>
+
       <div class="entry-list">
         <article class="entry reveal">
           <div class="entry-head">
@@ -832,6 +1018,9 @@
     <section id="skills" class="section">
       <div class="section-num">§8</div>
       <h2 class="section-title reveal">Skills</h2>
+      <p class="section-lede reveal">Each skill is linked to the projects where I actually used it. Select a skill or a project to see the connections, and drag to rotate.</p>
+      <div class="constellation reveal" id="constellation"><canvas id="constCv" role="img" aria-label="Interactive 3D graph connecting skills to the projects and dissertation that use them. The same skills are listed below as buttons."></canvas><div class="const-legend"><span><i style="background:var(--indigo)"></i>Project</span><span><i style="background:var(--gold)"></i>Skill used in projects</span><span><i style="background:var(--faint)"></i>Tool</span></div></div>
+      <p class="const-info" id="constInfo" aria-live="polite"></p>
       <div class="skill-grid reveal">
         <span>LangGraph</span>
         <span>LangChain</span>
