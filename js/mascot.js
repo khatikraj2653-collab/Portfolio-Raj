@@ -211,8 +211,8 @@
       }, 350);
     }
     window.addEventListener('scroll', checkTips, { passive: true });
-    if (!local('guide-welcomed')) {
-      local('guide-welcomed', '1');
+    if (!sess('guide-welcomed')) {
+      sess('guide-welcomed', '1');
       setTimeout(function () { say("Hi, welcome to Raj's portfolio!", { wave: true, ms: 3200 }); say("I'm your guide. Click me to chat, or drag me around.", { ms: 5200 }); }, 1300);
     } else {
       setTimeout(checkTips, 900);
