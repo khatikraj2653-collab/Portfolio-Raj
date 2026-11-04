@@ -913,8 +913,7 @@ button.biblio-link-btn{cursor:pointer;}
 @media print{.guide,.guide-back{display:none !important;}}
 
 /* ---------- 3D tilt cards ---------- */
-.entry{perspective:800px;transform-style:preserve-3d;}
-.entry>.tilt-wrap{transition:transform .15s ease-out;will-change:transform;transform-style:preserve-3d;position:relative;}
-.entry>.tilt-wrap>.tilt-glare{position:absolute;inset:0;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .25s ease;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,0.18) 0%,transparent 70%);}
-.entry:hover>.tilt-wrap>.tilt-glare{opacity:1;}
-@media(prefers-reduced-motion:reduce){.entry>.tilt-wrap{transition:none !important;transform:none !important;}.entry>.tilt-wrap>.tilt-glare{display:none;}}
+.entry{position:relative;transition:border-left-color .2s ease, background .2s ease, transform .15s ease-out;will-change:transform;}
+.tilt-glare{position:absolute;inset:0;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .25s ease;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,0.18) 0%,transparent 70%);z-index:10;}
+.entry:hover>.tilt-glare{opacity:1;}
+@media(prefers-reduced-motion:reduce){.entry{transition:border-left-color .2s ease, background .2s ease !important;transform:none !important;}.tilt-glare{display:none;}}
