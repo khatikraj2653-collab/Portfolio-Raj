@@ -174,6 +174,37 @@
 </head>
 <body>
 
+<script>
+// Static-mirror detector: when this site is viewed on GitHub Pages instead
+// of the normal Cloudflare host, show a small banner so visitors know the
+// chatbot / backend-dependent widgets are disabled here, and link them
+// back to the canonical URL. Runs first so the banner renders before anything else.
+(function () {
+  var isMirror = /github\.io$/i.test(location.hostname);
+  if (!isMirror) return;
+  document.documentElement.setAttribute('data-mirror', '1');
+  function paint() {
+    var bar = document.createElement('div');
+    bar.setAttribute('role', 'status');
+    bar.style.cssText =
+      'position:sticky;top:0;z-index:9999;padding:9px 16px;' +
+      'background:#FFF4D6;color:#5A3E00;border-bottom:1px solid #E5C76B;' +
+      'font-family:Inter,sans-serif;font-size:13px;text-align:center;line-height:1.4;';
+    bar.innerHTML =
+      'This is a <strong>temporary backup</strong> of the portfolio. ' +
+      'Chatbot and contact form are disabled here. ' +
+      'Primary URL: <a href="https://portfolio-raj.pages.dev/" style="color:#22326B;font-weight:600;text-decoration:underline;">portfolio-raj.pages.dev</a>';
+    document.body.insertBefore(bar, document.body.firstChild);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', paint);
+  } else {
+    paint();
+  }
+})();
+</script>
+
+
 <div class="scroll-progress" id="scrollProgress"></div>
 
 <header class="mobile-header">
