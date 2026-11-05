@@ -1,0 +1,55 @@
+name: AI Studio Monitoring Cron
+
+# Cloudflare Pages Functions don't natively support cron triggers, so
+# we drive the scheduler from GitHub Actions. The actual work (probe +
+# Resend send) happens inside Pages Functions at Cloudflare's edge —
+# this workflow just hits the authenticated endpoints at the right times.
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # 06:00 UTC = 06:00 UK winter / 07:00 UK summer — health probe
+    - cron: '0 7 * * *'  # 07:00 UTC = 07:00 UK winter / 08:00 UK summer — digest email
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Which endpoint to hit'
+        required: true
+        default: 'both'
+        type: choice
+        options: ['probe', 'digest', 'both']
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine action
+        id: which
+        run: |
+          # On schedule, use the cron pattern to pick endpoint.
+          # On manual trigger, use the input.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "action=${{ inputs.action }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" = "0 6 * * *" ]; then
+            echo "action=probe" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" = "0 7 * * *" ]; then
+            echo "action=digest" >> $GITHUB_OUTPUT
+          else
+            echo "action=both" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Probe apps
+        if: steps.which.outputs.action == 'probe' || steps.which.outputs.action == 'both'
+        run: |
+          curl -sS -X POST \
+            -H "X-Cron-Token: ${{ secrets.CRON_TOKEN }}" \
+            https://portfolio-raj.pages.dev/api/_cron/probe | tee probe.json
+          # Fail the step if the HTTP body contains "error"
+          grep -v '"error"' probe.json
+
+      - name: Send daily digest
+        if: steps.which.outputs.action == 'digest' || steps.which.outputs.action == 'both'
+        run: |
+          curl -sS -X POST \
+            -H "X-Cron-Token: ${{ secrets.CRON_TOKEN }}" \
+            https://portfolio-raj.pages.dev/api/_cron/digest | tee digest.json
+          grep -v '"error"' digest.json

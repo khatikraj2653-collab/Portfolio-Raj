@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Raj — AI Studio Status</title>
+<style>
+  :root {
+    --bg: #0A0D14;
+    --card: #141922;
+    --card-2: #1A212D;
+    --border: #232B3A;
+    --ink: #F0F4FB;
+    --muted: #8491A8;
+    --faint: #5B6477;
+    --indigo: #5B9BFF;
+    --indigo-soft: rgba(91,155,255,.14);
+    --green: #34D399;
+    --amber: #F5A524;
+    --red: #F87171;
+    --mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+    --sans: 'Inter', -apple-system, system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: var(--indigo); }
+
+  .page { max-width: 1120px; margin: 0 auto; padding: 32px 24px 80px; }
+  header.studio-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; gap: 12px; }
+  header.studio-head h1 { font-size: 22px; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+  header.studio-head h1 em { color: var(--indigo); font-style: normal; }
+  header.studio-head .sub { color: var(--muted); font-size: 13px; }
+  .refresh-btn { background: var(--indigo); color: #06101F; border: none; border-radius: 6px; padding: 8px 16px; font-family: var(--mono); font-size: 12px; cursor: pointer; font-weight: 600; }
+  .refresh-btn:hover { filter: brightness(1.05); }
+
+  #loginBox { max-width: 360px; margin: 120px auto; padding: 28px 28px 24px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; text-align: center; }
+  #loginBox h2 { font-size: 16px; margin: 0 0 16px; }
+  #loginBox input { width: 100%; padding: 11px 14px; border: 1px solid var(--border); background: var(--bg); color: var(--ink); border-radius: 6px; font-family: var(--mono); font-size: 13px; margin-bottom: 10px; }
+  #loginBox input:focus { outline: none; border-color: var(--indigo); }
+  #loginBox button { width: 100%; padding: 11px; background: var(--indigo); color: #06101F; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-family: var(--mono); font-size: 13px; }
+  #loginError { color: var(--red); font-size: 12px; margin-top: 10px; min-height: 16px; }
+
+  #dashboard { display: none; }
+  .summary { display: flex; gap: 16px; margin: 24px 0 32px; flex-wrap: wrap; }
+  .summary-stat { flex: 1; min-width: 160px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; }
+  .summary-stat .lbl { font-family: var(--mono); font-size: 10.5px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .summary-stat .val { font-size: 26px; font-weight: 600; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+  .app-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: border-color .15s; }
+  .app-card.status-green { border-left: 3px solid var(--green); }
+  .app-card.status-yellow { border-left: 3px solid var(--amber); }
+  .app-card.status-red { border-left: 3px solid var(--red); }
+
+  .app-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .app-head .name { font-size: 16px; font-weight: 700; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 12px; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  .badge.green { background: rgba(52,211,153,.12); color: var(--green); }
+  .badge.yellow { background: rgba(245,165,36,.12); color: var(--amber); }
+  .badge.red { background: rgba(248,113,113,.12); color: var(--red); }
+
+  .metrics-row { display: flex; gap: 20px; margin: 12px 0; }
+  .metric { display: flex; flex-direction: column; }
+  .metric .mv { font-size: 22px; font-weight: 600; }
+  .metric .ml { font-family: var(--mono); font-size: 10px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .errors { margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 10px; max-height: 240px; overflow-y: auto; }
+  .errors h4 { font-family: var(--mono); font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 8px; }
+  .err-item { padding: 8px 0; border-bottom: 1px dashed var(--border); font-size: 12px; }
+  .err-item:last-child { border-bottom: none; }
+  .err-item .src { color: var(--amber); font-family: var(--mono); font-size: 11px; }
+  .err-item .msg { color: var(--muted); margin-top: 3px; font-size: 11.5px; }
+  .err-item .ts { color: var(--faint); font-family: var(--mono); font-size: 10px; margin-left: 8px; }
+  .errors-none { color: var(--muted); font-size: 12px; font-style: italic; }
+
+  .open-link { display: inline-block; margin-top: 12px; color: var(--indigo); font-size: 12px; font-weight: 600; text-decoration: none; }
+  .open-link:hover { text-decoration: underline; }
+
+  footer { margin-top: 40px; text-align: center; color: var(--faint); font-size: 11.5px; font-family: var(--mono); }
+</style>
+</head>
+<body>
+
+<div id="loginBox">
+  <h2>AI Studio Status</h2>
+  <input type="password" id="pwInput" placeholder="Admin password" autofocus>
+  <button id="loginBtn">Enter</button>
+  <div id="loginError"></div>
+</div>
+
+<div id="dashboard" class="page">
+  <header class="studio-head">
+    <div>
+      <h1>Raj's <em>AI Studio</em> — Status</h1>
+      <div class="sub" id="genAt">Loading…</div>
+    </div>
+    <button class="refresh-btn" id="refreshBtn">↻ Refresh</button>
+  </header>
+
+  <div class="summary" id="summary"></div>
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    Raj Khatik · AI Studio monitoring dashboard · Private (noindex, nofollow)
+  </footer>
+</div>
+
+<script>
+const loginBox = document.getElementById('loginBox');
+const dashboard = document.getElementById('dashboard');
+const pwInput = document.getElementById('pwInput');
+const loginError = document.getElementById('loginError');
+
+async function loadStatus(pw) {
+  loginError.textContent = '';
+  let res;
+  try {
+    res = await fetch('/api/studio-status', { headers: { 'X-Admin-Password': pw } });
+  } catch (err) {
+    loginError.textContent = 'Network error.';
+    return;
+  }
+  if (res.status === 401) {
+    loginError.textContent = 'Wrong password.';
+    return;
+  }
+  if (!res.ok) {
+    loginError.textContent = 'Error ' + res.status;
+    return;
+  }
+  const data = await res.json();
+  sessionStorage.setItem('studioPw', pw);
+  render(data);
+  loginBox.style.display = 'none';
+  dashboard.style.display = 'block';
+}
+
+function render(data) {
+  document.getElementById('genAt').textContent =
+    'Last updated: ' + new Date(data.generated_at).toLocaleString();
+
+  const apps = data.apps || {};
+  const keys = Object.keys(apps);
+  const healthy = keys.filter(k => apps[k].status === 'green').length;
+  const warn = keys.filter(k => apps[k].status === 'yellow').length;
+  const broken = keys.filter(k => apps[k].status === 'red').length;
+  const totalErr = keys.reduce((s, k) => s + (apps[k].errors_24h || 0), 0);
+
+  document.getElementById('summary').innerHTML = `
+    <div class="summary-stat"><div class="lbl">Apps</div><div class="val">${keys.length}</div></div>
+    <div class="summary-stat"><div class="lbl">Healthy</div><div class="val" style="color:var(--green)">${healthy}</div></div>
+    <div class="summary-stat"><div class="lbl">Degraded</div><div class="val" style="color:var(--amber)">${warn}</div></div>
+    <div class="summary-stat"><div class="lbl">Down</div><div class="val" style="color:var(--red)">${broken}</div></div>
+    <div class="summary-stat"><div class="lbl">Errors / 24h</div><div class="val">${totalErr}</div></div>
+  `;
+
+  document.getElementById('grid').innerHTML = keys.map(k => {
+    const a = apps[k];
+    const errHtml = (a.recent_errors && a.recent_errors.length)
+      ? a.recent_errors.map(e => `
+          <div class="err-item">
+            <span class="src">${e.source || '(unknown)'}</span>
+            <span class="ts">${new Date(e.timestamp).toLocaleTimeString()}</span>
+            <div class="msg">${(e.type || '') + ' — ' + (e.message || '')}</div>
+          </div>`).join('')
+      : '<div class="errors-none">No errors in last 24h ✓</div>';
+    return `
+      <div class="app-card status-${a.status}">
+        <div class="app-head">
+          <div class="name">${a.label}</div>
+          <span class="badge ${a.status}">● ${a.status}</span>
+        </div>
+        <div class="metrics-row">
+          <div class="metric"><div class="mv">${a.errors_24h}</div><div class="ml">Errors 24h</div></div>
+          <div class="metric"><div class="mv">${a.errors_total}</div><div class="ml">Total logged</div></div>
+        </div>
+        <div class="errors">
+          <h4>Recent errors</h4>
+          ${errHtml}
+        </div>
+        <a href="${a.url}" target="_blank" class="open-link">Open ${a.label} ↗</a>
+      </div>
+    `;
+  }).join('');
+}
+
+document.getElementById('loginBtn').addEventListener('click', () => loadStatus(pwInput.value));
+pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') loadStatus(pwInput.value); });
+document.getElementById('refreshBtn').addEventListener('click', () => {
+  const pw = sessionStorage.getItem('studioPw');
+  if (pw) loadStatus(pw);
+});
+
+const saved = sessionStorage.getItem('studioPw');
+if (saved) loadStatus(saved);
+</script>
+
+</body>
+</html>

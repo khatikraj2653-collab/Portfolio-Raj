@@ -5,3 +5,7 @@ pages_build_output_dir = "."
 [[kv_namespaces]]
 binding = "ANALYTICS"
 id = "62dc7050a8f04cdbb43ce74bf81d80ca"
+
+# Cron is handled by GitHub Actions (.github/workflows/studio-cron.yml)
+# hitting /api/_cron/probe and /api/_cron/digest, because Cloudflare
+# Pages Functions don't natively support scheduled triggers.
