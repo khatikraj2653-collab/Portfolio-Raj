@@ -29,10 +29,18 @@ export async function onRequestPost({ request, env }) {
     const start = Date.now();
     let result;
     try {
-      const res = await fetch(app.url, { cf: { cacheTtl: 0 } });
+      // Don't follow redirects — Streamlit Community Cloud's SSO flow
+      // can send us into an auth redirect loop that both exhausts
+      // Cloudflare Worker's 50-subrequest limit AND wrongly reports
+      // an up app as "down". A 2xx OR a 3xx is "up".
+      const res = await fetch(app.url, {
+        cf: { cacheTtl: 0 },
+        redirect: "manual",
+      });
+      const isHealthy = (res.status >= 200 && res.status < 400);
       result = {
         app: app.key,
-        status: res.ok ? "up" : "down",
+        status: isHealthy ? "up" : "down",
         http: res.status,
         latency_ms: Date.now() - start,
         timestamp: new Date().toISOString(),
