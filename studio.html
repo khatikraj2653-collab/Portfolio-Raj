@@ -11,73 +11,128 @@
     --card: #141922;
     --card-2: #1A212D;
     --border: #232B3A;
+    --border-strong: #2F3A4E;
     --ink: #F0F4FB;
     --muted: #8491A8;
     --faint: #5B6477;
     --indigo: #5B9BFF;
     --indigo-soft: rgba(91,155,255,.14);
     --green: #34D399;
+    --green-soft: rgba(52,211,153,.14);
     --amber: #F5A524;
+    --amber-soft: rgba(245,165,36,.14);
     --red: #F87171;
+    --red-soft: rgba(248,113,113,.14);
     --mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
     --sans: 'Inter', -apple-system, system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
-  a { color: var(--indigo); }
+  a { color: var(--indigo); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  button { font-family: var(--sans); cursor: pointer; }
 
-  .page { max-width: 1120px; margin: 0 auto; padding: 32px 24px 80px; }
-  header.studio-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; gap: 12px; }
-  header.studio-head h1 { font-size: 22px; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+  .page { max-width: 1240px; margin: 0 auto; padding: 24px 24px 80px; }
+
+  header.studio-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  header.studio-head h1 { font-size: 20px; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
   header.studio-head h1 em { color: var(--indigo); font-style: normal; }
-  header.studio-head .sub { color: var(--muted); font-size: 13px; }
-  .refresh-btn { background: var(--indigo); color: #06101F; border: none; border-radius: 6px; padding: 8px 16px; font-family: var(--mono); font-size: 12px; cursor: pointer; font-weight: 600; }
-  .refresh-btn:hover { filter: brightness(1.05); }
+  header.studio-head .sub { color: var(--muted); font-size: 12px; margin-top: 3px; }
+  .head-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .btn { background: var(--card); color: var(--ink); border: 1px solid var(--border-strong); border-radius: 6px; padding: 8px 14px; font-size: 12px; font-weight: 600; transition: all .15s; }
+  .btn:hover { border-color: var(--indigo); background: var(--indigo-soft); }
+  .btn.primary { background: var(--indigo); color: #06101F; border-color: var(--indigo); }
+  .btn.primary:hover { filter: brightness(1.08); background: var(--indigo); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .auto-refresh { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 11.5px; font-family: var(--mono); }
+  .auto-refresh input { accent-color: var(--indigo); }
 
-  #loginBox { max-width: 360px; margin: 120px auto; padding: 28px 28px 24px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; text-align: center; }
-  #loginBox h2 { font-size: 16px; margin: 0 0 16px; }
+  /* Login */
+  #loginBox { max-width: 360px; margin: 120px auto; padding: 32px 28px 24px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; text-align: center; }
+  #loginBox h2 { font-size: 16px; margin: 0 0 20px; }
   #loginBox input { width: 100%; padding: 11px 14px; border: 1px solid var(--border); background: var(--bg); color: var(--ink); border-radius: 6px; font-family: var(--mono); font-size: 13px; margin-bottom: 10px; }
   #loginBox input:focus { outline: none; border-color: var(--indigo); }
   #loginBox button { width: 100%; padding: 11px; background: var(--indigo); color: #06101F; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-family: var(--mono); font-size: 13px; }
   #loginError { color: var(--red); font-size: 12px; margin-top: 10px; min-height: 16px; }
 
   #dashboard { display: none; }
-  .summary { display: flex; gap: 16px; margin: 24px 0 32px; flex-wrap: wrap; }
-  .summary-stat { flex: 1; min-width: 160px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; }
-  .summary-stat .lbl { font-family: var(--mono); font-size: 10.5px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
-  .summary-stat .val { font-size: 26px; font-weight: 600; }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
-  .app-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: border-color .15s; }
-  .app-card.status-green { border-left: 3px solid var(--green); }
-  .app-card.status-yellow { border-left: 3px solid var(--amber); }
-  .app-card.status-red { border-left: 3px solid var(--red); }
+  /* Summary stats */
+  .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .stat .lbl { font-family: var(--mono); font-size: 10px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .stat .val { font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; }
 
-  .app-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-  .app-head .name { font-size: 16px; font-weight: 700; }
-  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 12px; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
-  .badge.green { background: rgba(52,211,153,.12); color: var(--green); }
-  .badge.yellow { background: rgba(245,165,36,.12); color: var(--amber); }
-  .badge.red { background: rgba(248,113,113,.12); color: var(--red); }
+  /* Wake-all result banner */
+  #wakeStatus { display: none; background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--indigo); border-radius: 8px; padding: 10px 16px; margin-bottom: 16px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
 
-  .metrics-row { display: flex; gap: 20px; margin: 12px 0; }
-  .metric { display: flex; flex-direction: column; }
-  .metric .mv { font-size: 22px; font-weight: 600; }
-  .metric .ml { font-family: var(--mono); font-size: 10px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.08em; }
+  /* Per-app grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 14px; }
+  .app-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; border-left: 3px solid var(--faint); transition: border-color .15s; }
+  .app-card.status-green { border-left-color: var(--green); }
+  .app-card.status-yellow { border-left-color: var(--amber); }
+  .app-card.status-red { border-left-color: var(--red); }
 
-  .errors { margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 10px; max-height: 240px; overflow-y: auto; }
-  .errors h4 { font-family: var(--mono); font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 8px; }
-  .err-item { padding: 8px 0; border-bottom: 1px dashed var(--border); font-size: 12px; }
+  .app-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 10px; }
+  .app-head .name { font-size: 15px; font-weight: 700; }
+  .app-head .url { font-size: 11px; color: var(--faint); font-family: var(--mono); display: block; margin-top: 2px; word-break: break-all; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 10px; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; white-space: nowrap; }
+  .badge.green { background: var(--green-soft); color: var(--green); }
+  .badge.yellow { background: var(--amber-soft); color: var(--amber); }
+  .badge.red { background: var(--red-soft); color: var(--red); }
+
+  /* Chart blocks */
+  .chart-block { margin: 12px 0; }
+  .chart-label { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+  .chart-label .note { color: var(--faint); text-transform: none; letter-spacing: 0; }
+
+  /* 14d uptime bars */
+  .uptime-row { display: flex; gap: 3px; }
+  .uptime-cell { flex: 1; height: 22px; border-radius: 3px; background: var(--border); position: relative; cursor: default; transition: transform .1s; }
+  .uptime-cell.up { background: var(--green); }
+  .uptime-cell.down { background: var(--red); }
+  .uptime-cell:hover { transform: scaleY(1.2); }
+  .uptime-cell .tip { display: none; position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); background: var(--card-2); border: 1px solid var(--border-strong); border-radius: 5px; padding: 5px 9px; font-family: var(--mono); font-size: 10.5px; white-space: nowrap; z-index: 10; }
+  .uptime-cell:hover .tip { display: block; }
+
+  /* 24h error sparkline */
+  .spark-row { display: flex; gap: 2px; align-items: flex-end; height: 44px; }
+  .spark-cell { flex: 1; min-height: 2px; background: var(--border); border-radius: 2px 2px 0 0; position: relative; transition: transform .1s; }
+  .spark-cell.err { background: var(--amber); }
+  .spark-cell.err.hi { background: var(--red); }
+  .spark-cell:hover { transform: scaleY(1.05) scaleX(1.5); z-index: 5; }
+  .spark-cell:hover .tip { display: block; }
+  .spark-cell .tip { display: none; position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%); background: var(--card-2); border: 1px solid var(--border-strong); border-radius: 5px; padding: 5px 9px; font-family: var(--mono); font-size: 10.5px; white-space: nowrap; z-index: 10; }
+
+  /* Metric row */
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 14px 0 10px; padding: 10px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .metric .mv { font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .metric .ml { font-family: var(--mono); font-size: 9.5px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+
+  /* Error log */
+  .errors-head { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+  .errors-head h4 { font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 0; }
+  .filter-input { background: var(--bg); border: 1px solid var(--border); color: var(--ink); font-family: var(--mono); font-size: 11px; padding: 4px 8px; border-radius: 4px; width: 130px; }
+  .filter-input:focus { outline: none; border-color: var(--indigo); }
+  .errors { max-height: 260px; overflow-y: auto; margin-top: 8px; padding-right: 4px; }
+  .errors::-webkit-scrollbar { width: 6px; }
+  .errors::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+  .err-item { padding: 7px 0; border-bottom: 1px dashed var(--border); font-size: 11.5px; }
   .err-item:last-child { border-bottom: none; }
-  .err-item .src { color: var(--amber); font-family: var(--mono); font-size: 11px; }
-  .err-item .msg { color: var(--muted); margin-top: 3px; font-size: 11.5px; }
+  .err-item .src { color: var(--amber); font-family: var(--mono); font-size: 10.5px; font-weight: 600; }
   .err-item .ts { color: var(--faint); font-family: var(--mono); font-size: 10px; margin-left: 8px; }
-  .errors-none { color: var(--muted); font-size: 12px; font-style: italic; }
+  .err-item .msg { color: var(--muted); margin-top: 3px; font-size: 11px; line-height: 1.45; word-break: break-word; }
+  .errors-none { color: var(--muted); font-size: 11.5px; font-style: italic; padding: 10px 0; }
 
-  .open-link { display: inline-block; margin-top: 12px; color: var(--indigo); font-size: 12px; font-weight: 600; text-decoration: none; }
-  .open-link:hover { text-decoration: underline; }
+  .card-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .card-actions a { font-size: 11.5px; font-weight: 600; }
 
-  footer { margin-top: 40px; text-align: center; color: var(--faint); font-size: 11.5px; font-family: var(--mono); }
+  footer { margin-top: 40px; text-align: center; color: var(--faint); font-size: 11px; font-family: var(--mono); }
+
+  @media (max-width: 720px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -95,8 +150,14 @@
       <h1>Raj's <em>AI Studio</em> — Status</h1>
       <div class="sub" id="genAt">Loading…</div>
     </div>
-    <button class="refresh-btn" id="refreshBtn">↻ Refresh</button>
+    <div class="head-actions">
+      <label class="auto-refresh"><input type="checkbox" id="autoRefresh"> Auto-refresh (60s)</label>
+      <button class="btn" id="wakeAllBtn">⚡ Wake all</button>
+      <button class="btn primary" id="refreshBtn">↻ Refresh</button>
+    </div>
   </header>
+
+  <div id="wakeStatus"></div>
 
   <div class="summary" id="summary"></div>
   <div class="grid" id="grid"></div>
@@ -111,6 +172,10 @@ const loginBox = document.getElementById('loginBox');
 const dashboard = document.getElementById('dashboard');
 const pwInput = document.getElementById('pwInput');
 const loginError = document.getElementById('loginError');
+const wakeStatus = document.getElementById('wakeStatus');
+
+let autoRefreshTimer = null;
+let lastData = null;
 
 async function loadStatus(pw) {
   loginError.textContent = '';
@@ -121,24 +186,77 @@ async function loadStatus(pw) {
     loginError.textContent = 'Network error.';
     return;
   }
-  if (res.status === 401) {
-    loginError.textContent = 'Wrong password.';
-    return;
-  }
-  if (!res.ok) {
-    loginError.textContent = 'Error ' + res.status;
-    return;
-  }
+  if (res.status === 401) { loginError.textContent = 'Wrong password.'; return; }
+  if (!res.ok) { loginError.textContent = 'Error ' + res.status; return; }
   const data = await res.json();
   sessionStorage.setItem('studioPw', pw);
+  lastData = data;
   render(data);
   loginBox.style.display = 'none';
   dashboard.style.display = 'block';
 }
 
+function fmtTimeShort(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+function fmtRelative(iso) {
+  if (!iso) return 'never';
+  const sec = Math.round((Date.now() - new Date(iso).getTime()) / 1000);
+  if (sec < 60) return sec + 's ago';
+  if (sec < 3600) return Math.round(sec / 60) + 'm ago';
+  if (sec < 86400) return Math.round(sec / 3600) + 'h ago';
+  return Math.round(sec / 86400) + 'd ago';
+}
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c])); }
+
+// Reduce probes_14d → 14-day uptime array. Each cell is one calendar day.
+function bucketProbesByDay(probes14d) {
+  const now = new Date();
+  const days = [];
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - i);
+    d.setHours(0, 0, 0, 0);
+    days.push({ day: d, probes: [], state: 'none' });
+  }
+  for (const p of (probes14d || [])) {
+    const t = new Date(p.timestamp);
+    const dayStart = new Date(t); dayStart.setHours(0, 0, 0, 0);
+    const bucket = days.find(b => b.day.getTime() === dayStart.getTime());
+    if (bucket) bucket.probes.push(p);
+  }
+  for (const b of days) {
+    if (!b.probes.length) continue;
+    const anyDown = b.probes.some(p => p.status === 'down');
+    b.state = anyDown ? 'down' : 'up';
+  }
+  return days;
+}
+
+function renderUptimeBar(probes14d) {
+  const days = bucketProbesByDay(probes14d);
+  return `<div class="uptime-row">${days.map(d => {
+    const label = d.day.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    const tip = d.state === 'none' ? label + ' · no probe' : label + ' · ' + d.state.toUpperCase();
+    return `<div class="uptime-cell ${d.state}"><span class="tip">${tip}</span></div>`;
+  }).join('')}</div>`;
+}
+
+function renderSparkline(hourly) {
+  const max = Math.max(1, ...hourly);
+  return `<div class="spark-row">${hourly.map((n, i) => {
+    const h = max ? Math.max(2, Math.round((n / max) * 40)) : 2;
+    const hoursAgo = 23 - i;
+    const hr = hoursAgo === 0 ? 'this hour' : hoursAgo + 'h ago';
+    const cls = n === 0 ? '' : (n >= max * 0.7 && n > 2 ? 'err hi' : 'err');
+    return `<div class="spark-cell ${cls}" style="height:${h}px"><span class="tip">${n} err · ${hr}</span></div>`;
+  }).join('')}</div>`;
+}
+
 function render(data) {
-  document.getElementById('genAt').textContent =
-    'Last updated: ' + new Date(data.generated_at).toLocaleString();
+  document.getElementById('genAt').textContent = 'Last updated: ' + new Date(data.generated_at).toLocaleTimeString();
 
   const apps = data.apps || {};
   const keys = Object.keys(apps);
@@ -146,43 +264,142 @@ function render(data) {
   const warn = keys.filter(k => apps[k].status === 'yellow').length;
   const broken = keys.filter(k => apps[k].status === 'red').length;
   const totalErr = keys.reduce((s, k) => s + (apps[k].errors_24h || 0), 0);
+  const totalLogged = keys.reduce((s, k) => s + (apps[k].errors_total || 0), 0);
 
   document.getElementById('summary').innerHTML = `
-    <div class="summary-stat"><div class="lbl">Apps</div><div class="val">${keys.length}</div></div>
-    <div class="summary-stat"><div class="lbl">Healthy</div><div class="val" style="color:var(--green)">${healthy}</div></div>
-    <div class="summary-stat"><div class="lbl">Degraded</div><div class="val" style="color:var(--amber)">${warn}</div></div>
-    <div class="summary-stat"><div class="lbl">Down</div><div class="val" style="color:var(--red)">${broken}</div></div>
-    <div class="summary-stat"><div class="lbl">Errors / 24h</div><div class="val">${totalErr}</div></div>
+    <div class="stat"><div class="lbl">Apps</div><div class="val">${keys.length}</div></div>
+    <div class="stat"><div class="lbl">Healthy</div><div class="val" style="color:var(--green)">${healthy}</div></div>
+    <div class="stat"><div class="lbl">Degraded</div><div class="val" style="color:var(--amber)">${warn}</div></div>
+    <div class="stat"><div class="lbl">Down</div><div class="val" style="color:var(--red)">${broken}</div></div>
+    <div class="stat"><div class="lbl">Errors / 24h</div><div class="val">${totalErr}</div></div>
+    <div class="stat"><div class="lbl">Errors (all time)</div><div class="val">${totalLogged}</div></div>
   `;
 
   document.getElementById('grid').innerHTML = keys.map(k => {
     const a = apps[k];
-    const errHtml = (a.recent_errors && a.recent_errors.length)
-      ? a.recent_errors.map(e => `
-          <div class="err-item">
-            <span class="src">${e.source || '(unknown)'}</span>
-            <span class="ts">${new Date(e.timestamp).toLocaleTimeString()}</span>
-            <div class="msg">${(e.type || '') + ' — ' + (e.message || '')}</div>
-          </div>`).join('')
-      : '<div class="errors-none">No errors in last 24h ✓</div>';
+    const lastProbe = a.last_probe;
+    const lastProbeTime = lastProbe ? fmtRelative(lastProbe.timestamp) : 'never';
+    const avgLat = a.avg_latency_ms != null ? a.avg_latency_ms + 'ms' : '—';
     return `
-      <div class="app-card status-${a.status}">
+      <div class="app-card status-${a.status}" data-app="${esc(k)}">
         <div class="app-head">
-          <div class="name">${a.label}</div>
+          <div>
+            <div class="name">${esc(a.label)}</div>
+            <span class="url">${esc(a.url.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</span>
+          </div>
           <span class="badge ${a.status}">● ${a.status}</span>
         </div>
-        <div class="metrics-row">
+
+        <div class="chart-block">
+          <div class="chart-label"><span>14-day uptime</span><span class="note">one bar per day</span></div>
+          ${renderUptimeBar(a.probes_14d)}
+        </div>
+
+        <div class="chart-block">
+          <div class="chart-label"><span>Errors · last 24h</span><span class="note">per hour</span></div>
+          ${renderSparkline(a.errors_24h_hourly || new Array(24).fill(0))}
+        </div>
+
+        <div class="metrics">
           <div class="metric"><div class="mv">${a.errors_24h}</div><div class="ml">Errors 24h</div></div>
-          <div class="metric"><div class="mv">${a.errors_total}</div><div class="ml">Total logged</div></div>
+          <div class="metric"><div class="mv">${a.errors_total}</div><div class="ml">Total</div></div>
+          <div class="metric"><div class="mv">${avgLat}</div><div class="ml">Avg latency</div></div>
+          <div class="metric"><div class="mv">${lastProbeTime}</div><div class="ml">Last probe</div></div>
         </div>
-        <div class="errors">
-          <h4>Recent errors</h4>
-          ${errHtml}
+
+        <div class="errors-head">
+          <h4>Recent errors (${a.recent_errors.length})</h4>
+          <input class="filter-input" placeholder="filter…" data-filter="${esc(k)}">
         </div>
-        <a href="${a.url}" target="_blank" class="open-link">Open ${a.label} ↗</a>
+        <div class="errors" data-errors="${esc(k)}">
+          ${renderErrors(a.recent_errors, '')}
+        </div>
+
+        <div class="card-actions">
+          <a href="${esc(a.url)}" target="_blank" rel="noopener">Open ${esc(a.label)} ↗</a>
+          <button class="btn" data-wake="${esc(a.url)}">Wake</button>
+        </div>
       </div>
     `;
   }).join('');
+
+  // Wire per-card filters.
+  dashboard.querySelectorAll('.filter-input').forEach(inp => {
+    inp.addEventListener('input', e => {
+      const key = e.target.dataset.filter;
+      const q = e.target.value.trim().toLowerCase();
+      const box = dashboard.querySelector(`[data-errors="${key}"]`);
+      if (box && lastData) box.innerHTML = renderErrors(lastData.apps[key].recent_errors, q);
+    });
+  });
+
+  // Per-card wake.
+  dashboard.querySelectorAll('button[data-wake]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const url = btn.dataset.wake;
+      btn.disabled = true; btn.textContent = 'Waking…';
+      await pingApp(url);
+      btn.textContent = 'Pinged';
+      setTimeout(() => { btn.disabled = false; btn.textContent = 'Wake'; }, 2000);
+    });
+  });
+}
+
+function renderErrors(errors, q) {
+  const filtered = q
+    ? errors.filter(e => JSON.stringify(e).toLowerCase().includes(q))
+    : errors;
+  if (!filtered.length) return '<div class="errors-none">' + (q ? 'No matches.' : 'No errors in last 24h ✓') + '</div>';
+  return filtered.map(e => `
+    <div class="err-item">
+      <span class="src">${esc(e.source || '(unknown)')}</span>
+      <span class="ts">${fmtTimeShort(e.timestamp)}</span>
+      <div class="msg"><b>${esc(e.type || '')}</b>${e.type ? ' — ' : ''}${esc(e.message || '')}</div>
+    </div>
+  `).join('');
+}
+
+async function pingApp(url) {
+  try {
+    // no-cors so Streamlit's lack of CORS headers doesn't block the fetch.
+    // We don't need to read the response — just arriving triggers a wake.
+    await fetch(url, { mode: 'no-cors', cache: 'no-store' });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function wakeAll() {
+  const btn = document.getElementById('wakeAllBtn');
+  btn.disabled = true; btn.textContent = '⚡ Waking…';
+  wakeStatus.style.display = 'block';
+  wakeStatus.textContent = 'Pinging all 5 apps…';
+  if (!lastData) { btn.disabled = false; btn.textContent = '⚡ Wake all'; return; }
+  const urls = Object.values(lastData.apps).map(a => a.url);
+  await Promise.all(urls.map(pingApp));
+  wakeStatus.textContent = 'Pinged ' + urls.length + ' apps at ' + new Date().toLocaleTimeString() + '. Give Streamlit ~30s to boot any that were asleep.';
+  btn.textContent = '⚡ Wake all'; btn.disabled = false;
+}
+
+function setupAutoRefresh() {
+  const cb = document.getElementById('autoRefresh');
+  const saved = localStorage.getItem('studioAutoRefresh');
+  if (saved === '1') cb.checked = true;
+  const apply = () => {
+    if (autoRefreshTimer) { clearInterval(autoRefreshTimer); autoRefreshTimer = null; }
+    if (cb.checked) {
+      autoRefreshTimer = setInterval(() => {
+        const pw = sessionStorage.getItem('studioPw');
+        if (pw) loadStatus(pw);
+      }, 60000);
+      localStorage.setItem('studioAutoRefresh', '1');
+    } else {
+      localStorage.removeItem('studioAutoRefresh');
+    }
+  };
+  cb.addEventListener('change', apply);
+  apply();
 }
 
 document.getElementById('loginBtn').addEventListener('click', () => loadStatus(pwInput.value));
@@ -191,6 +408,8 @@ document.getElementById('refreshBtn').addEventListener('click', () => {
   const pw = sessionStorage.getItem('studioPw');
   if (pw) loadStatus(pw);
 });
+document.getElementById('wakeAllBtn').addEventListener('click', wakeAll);
+setupAutoRefresh();
 
 const saved = sessionStorage.getItem('studioPw');
 if (saved) loadStatus(saved);
