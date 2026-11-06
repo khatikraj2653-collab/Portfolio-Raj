@@ -10,6 +10,57 @@
     if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
   })();
 </script>
+<script>
+  // Primary/backup failover. Visitors who land on the GitHub Pages mirror
+  // get redirected to the Cloudflare primary when it's reachable; if primary
+  // is unreachable (blocked / outage), they stay on the mirror and get a
+  // banner telling them so. Visitors on the primary don't trigger anything.
+  (function() {
+    var PRIMARY = 'https://portfolio-raj.pages.dev';
+    var BACKUP = 'https://khatikraj2653-collab.github.io/Portfolio-Raj';
+    var host = location.hostname;
+    var onBackup = host.indexOf('github.io') !== -1;
+    if (!onBackup) return;
+
+    // Let the user force-stay on backup (click the banner link once and we
+    // remember for the rest of the browser session).
+    try { if (sessionStorage.getItem('portfolio_stay_backup') === '1') return showBanner(); } catch(e){}
+
+    var done = false;
+    function finish(onPrimary) {
+      if (done) return; done = true;
+      if (onPrimary) {
+        // Primary is up — redirect, preserving the current path and hash.
+        var rest = location.pathname.replace(/^\/Portfolio-Raj/, '') || '/';
+        location.replace(PRIMARY + rest + location.search + location.hash);
+      } else {
+        try { sessionStorage.setItem('portfolio_stay_backup', '1'); } catch(e){}
+        showBanner();
+      }
+    }
+
+    function showBanner() {
+      var render = function() {
+        if (document.getElementById('__failover_banner')) return;
+        var b = document.createElement('div');
+        b.id = '__failover_banner';
+        b.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#F5A524;color:#1a1a1a;padding:8px 16px;text-align:center;font-size:13px;z-index:999999;font-family:system-ui,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.2);';
+        b.innerHTML = 'You are viewing the backup mirror. Primary site unreachable. <a href="' + PRIMARY + '" style="color:#1a1a1a;text-decoration:underline;font-weight:600">Retry primary</a>';
+        document.body.appendChild(b);
+      };
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render);
+      else render();
+    }
+
+    // Health-check the primary by loading its favicon (cheap, cached).
+    var img = new Image();
+    img.onload = function() { finish(true); };
+    img.onerror = function() { finish(false); };
+    img.src = PRIMARY + '/favicon.svg?_hc=' + Date.now();
+    // 2.5s timeout — if primary doesn't respond fast, assume it's down.
+    setTimeout(function() { finish(false); }, 2500);
+  })();
+</script>
 <title>Raj Tejpal Khatik — AI/ML Engineer</title>
 <meta name="description" content="Raj Tejpal Khatik — AI/ML Engineer building SemiBot, GoldBot, SilverBot, Hallucination Detector, HITL Email Agent, and Retail Research Assistant. Agentic AI & GenAI systems. MSc Applied Artificial Intelligence, University of Warwick (programme completed 2026).">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
